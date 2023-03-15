@@ -1,0 +1,8 @@
+__pycache__
+*.wpr
+*.wpu
+.coverage
+src/pyocf.egg-info/
+Open-Cap-Format-OCF
+docs/build/
+docs/source/generated/

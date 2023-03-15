@@ -1,0 +1,8 @@
+Changes
+=======
+
+1.0b1 (unreleased)
+------------------
+
+- First beta
+

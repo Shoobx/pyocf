@@ -1,0 +1,8 @@
+include *.txt
+include *.yaml
+include Makefile
+recursive-include src *.py
+recursive-include utils *.mako
+recursive-include utils *.py
+recursive-include tests *.py
+recursive-include tests *.zip
