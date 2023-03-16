@@ -1,4 +1,4 @@
-pyOCF
+pyocf
 =====
 
 ``pyocf`` is a Python library to read and create
