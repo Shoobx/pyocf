@@ -63,4 +63,7 @@ Before making a release, make sure that the CHANGES.txt is updated, and that
 all changes are pushed to the VCS. Then run ``make check test`` to check that
 the style and formatting is correct, and that all tests pass.
 
-Then use ``fullrelease`` to make a release and upload it to PyPI.
+Then use ``make release`` to make a release and upload it to PyPI. This will
+run some checks on the pacaging data, with ``pyroma`` and ``check-manifest``,
+ask for the version number to be used, update the packaging info, make the
+release and push it to PyPI.
