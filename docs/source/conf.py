@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'pyocf'
-copyright = '2023, Lennart Regebro'
+copyright = '2023, Shoobx'
 author = 'Lennart Regebro'
 
 # -- General configuration ---------------------------------------------------
