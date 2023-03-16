@@ -422,6 +422,9 @@ def make_inits(path, types):
         elif not filepath.name.endswith(".py"):
             continue
 
+    print(path)
+    if "_" in str(path):
+        import pdb;pdb.set_trace()
     with pathlib.Path(path, "__init__.py").open("wt") as initfile:
         initfile.write(f'"""OCF {path.parts[-1]}"""')
 

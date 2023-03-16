@@ -6,3 +6,4 @@ recursive-include utils *.mako
 recursive-include utils *.py
 recursive-include tests *.py
 recursive-include tests *.zip
+recursive-exclude docs *
