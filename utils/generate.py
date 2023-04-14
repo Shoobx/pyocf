@@ -16,8 +16,11 @@ PROPERTY_TYPES_MAP = {
     "boolean": "bool",
     "null": "None",
 }
+
 # Schema object storage
 all_schemas = {}
+
+type_map = {}
 
 
 def multilinewrap(text):
@@ -352,13 +355,21 @@ class Schema:
         return sorted(imports)
 
     @property
-    def import_statement(self):
-        """The import statement to this schema"""
+    def package(self):
+        """The package this schema is located in"""
         root = self.path.parts.index("schema") + 1
         path = ("pyocf",) + self.path.parts[root:]
-        pkg = ".".join(path[:-1])
-        module = self.filename.split(".")[0]
-        imp = f"from {pkg}.{module} import {self.name}"
+        return ".".join(path[:-1])
+
+    @property
+    def module(self):
+        """The module this schema is located in"""
+        return self.filename.split(".")[0]
+
+    @property
+    def import_statement(self):
+        """The import statement to this schema"""
+        imp = f"from {self.package}.{self.module} import {self.name}"
         return imp
 
     @property
@@ -406,7 +417,8 @@ class Schema:
 def load_schemas(path):
     for directory in pathlib.Path(path).rglob("*.schema.json"):
         print(f"importing {directory}")
-        schema = Schema(directory, json.loads(directory.read_text("utf8")))
+        schema_data = json.loads(directory.read_text("utf8"))
+        schema = Schema(directory, schema_data)
         print(f"found {schema.name}")
         all_schemas[schema.id] = schema
 
@@ -432,6 +444,13 @@ def generate_files():
     types = defaultdict(dict)
     roottypes = defaultdict(dict)
     for schema in all_schemas.values():
+        for discriminator in ("file_type", "object_type", "type"):
+            if discriminator in schema.json.get("properties", {}):
+                schema_type = schema.json["properties"][discriminator]
+                if "const" in schema_type:
+                    spec = (f"{schema.package}.{schema.module}", schema.name)
+                    type_map[schema_type["const"]] = spec
+
         rootlevel = schema.path.parts.index("schema") + 1
         schema_dir = pathlib.Path(*schema.path.parts[rootlevel:-1])
         object_type = schema.object_type
@@ -444,7 +463,18 @@ def generate_files():
         outfile.parent.mkdir(parents=True, exist_ok=True)
         with outfile.open("tw") as outfile:
             outfile.write(tmpl.render(schema=schema))
+
     make_inits(outdir, types)
+
+    # Add factory to root:
+    with pathlib.Path(outdir, "__init__.py").open("at") as initfile:
+        initfile.write("\n\nfrom .utils import get_factory\n")
+
+    # Make type_map:
+    with pathlib.Path(outdir, "registry.py").open("wt") as initfile:
+        initfile.write('"""OCF type map"""\n')
+        initfile.write("\nOCF_TYPE_MAP = ")
+        initfile.write(repr(type_map))
 
 
 if __name__ == "__main__":
