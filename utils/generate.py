@@ -413,6 +413,66 @@ def load_schemas(path):
     return all_schemas
 
 
+class SchemaChecker:
+    def __init__(self, schema):
+        self.seen = []
+        self.schema = schema
+
+    def check(self):
+        self._check_schema(self.schema)
+
+    def _check_ref(self, ref):
+        if ref is None:
+            return
+
+        if ref.refid in self.seen:
+            refstack = "\n".join(self.seen)
+            msg = f"Circular reference found: {ref.refid}\nRefstack: {refstack}"
+            raise ValueError(msg, self.seen)
+
+    def _check_prop(self, propjson):
+        if "$ref" in propjson:
+            self._check_ref(propjson["$ref"])
+
+        for p in propjson.get("oneOf", []):
+            self._check_prop(p)
+
+        for p in propjson.get("anyOf", []):
+            self._check_prop(p)
+
+    def _check_schema(self, schema):
+        self.see(schema.id)
+
+        for supe in schema.superclasses:
+            if not isinstance(supe, str):
+                self._check_schema(supe)
+
+        for prop in schema.properties:
+            self._check_prop(prop.json)
+
+        self.unsee(schema.id)
+
+    def see(self, value):
+        print("SEE", value)
+        if self.has_seen(value):
+            raise ValueError(f"I have already seen {value}")
+        self.seen.append(value)
+
+    def has_seen(self, value):
+        return value in self.seen
+
+    def unsee(self, value):
+        print("UNSEE", value)
+        # We can only unsee the last value, it's a stack, after all
+        assert value == self.seen.pop()
+
+
+def check_schemas():
+    # A few checks that print out warnings
+    for schema in all_schemas.values():
+        SchemaChecker(schema).check()
+
+
 def make_inits(path, types):
     for filepath in path.iterdir():
         if filepath.name.startswith("_"):
@@ -449,4 +509,5 @@ def generate_files():
 
 if __name__ == "__main__":
     load_schemas("./Open-Cap-Format-OCF/schema")
+    check_schemas()
     generate_files()
