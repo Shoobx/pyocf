@@ -13,6 +13,7 @@ from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.primitives.objects.object import Object
 from pyocf.types.address import Address
 from pyocf.types.contactinfo import ContactInfo
+from pyocf.types.contactinfowithoutname import ContactInfoWithoutName
 from pyocf.types.name import Name
 from pyocf.types.taxid import TaxID
 from typing import Literal
@@ -32,8 +33,10 @@ class Stakeholder(Object):
     issuer_assigned_id: Optional[str]
     # What is the current relationship of the stakeholder to the issuer?
     current_relationship: Optional[StakeholderRelationshipType]
-    # The primary contact info for the stakeholder
+    # The primary contact info for an institutional stakeholder
     primary_contact: Optional[ContactInfo]
+    # The contact info for an individual stakeholder
+    contact_info: Optional[ContactInfoWithoutName]
     # Addresses for the stakeholder
     addresses: Optional[list[Address]]
     # The tax ids for this stakeholder

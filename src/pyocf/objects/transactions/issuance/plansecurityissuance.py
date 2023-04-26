@@ -8,7 +8,6 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
 # ree/main/schema/objects/transactions/issuance/PlanSecurityIssuance.schema.json
 
-from pydantic import root_validator
 from pyocf.enums.compensationtype import CompensationType
 from pyocf.enums.optiontype import OptionType
 from pyocf.primitives.objects.object import Object
@@ -76,15 +75,3 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
     consideration_text: Optional[str]
     # List of security law exemptions (and applicable jurisdictions) for this security
     security_law_exemptions: list[SecurityExemption]
-
-    @root_validator(pre=True)
-    def validator_compensation_type(cls, values):
-        if (
-            values.get("compensation_type") == "OPTION"
-            and values.get("option_grant_type") is None
-        ):
-            raise ValueError(
-                "When compensation_type is 'OPTION' then option_grant_type is required"
-            )
-
-        return values
