@@ -338,9 +338,6 @@ class Schema:
             elif superclass == "SimpleBaseModel":
                 imports.add("from pyocf.simplebase import SimpleBaseModel")
 
-        if list(self.validators):
-            imports.add("from pydantic import root_validator")
-
         if self.root_constraint:
             if "constr" in self.root_constraint:
                 imports.add("from pydantic import constr")
@@ -360,35 +357,6 @@ class Schema:
         module = self.filename.split(".")[0]
         imp = f"from {pkg}.{module} import {self.name}"
         return imp
-
-    @property
-    def validators(self):
-        """Custom validators, pretty unique per class"""
-        if "anyOf" in self.json:
-            # This currently just supports the case when one property is
-            # required when another property is set to a specific value,
-            # like PlanSecurityIssuance.schema.json
-            assert len(self.json["anyOf"]) == 2
-            for item in self.json["anyOf"]:
-                if "required" in item:
-                    break
-            else:
-                return None
-
-            parameter = list(item["properties"].keys())[0]
-            value = item["properties"][parameter]["const"]
-            required = item["required"][0]
-
-            yield f"""@root_validator(pre=True)
-    def validator_{parameter}(cls, values):
-        if (values.get("{parameter}") == "{value}" and
-            values.get("{required}") is None):
-            raise ValueError(
-                "When {parameter} is '{value}' then {required} is required"
-            )
-
-        return values
-"""
 
     @property
     def root_constraint(self):

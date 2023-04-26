@@ -29,7 +29,3 @@ class ${schema.name}(${schema.superclass_string}):
     % endfor
     ${property.definition}
     % endfor
-
-    % for validator in schema.validators:
-    ${validator}
-    % endfor

@@ -5,7 +5,6 @@ from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.files.stakeholdersfile import StakeholdersFile
 from pyocf.objects.stakeholder import Stakeholder
 from pyocf.types import name, phone, countrycode
-from pyocf.objects.transactions.issuance import plansecurityissuance
 
 
 def test_basic_loading():
@@ -61,58 +60,6 @@ def test_minimal():
     # but you don't have to pass them in.
     sh = StakeholdersFile(items=[])
     assert sh.file_type == "OCF_STAKEHOLDERS_FILE"
-
-
-def test_plansecurity_validator():
-    # If option is RSU, you don't need an option_grant_type
-    plansecurityissuance.PlanSecurityIssuance(
-        object_type="TX_PLAN_SECURITY_ISSUANCE",
-        stock_plan_id="test",
-        id="RSU Issuance",
-        custom_id="test",
-        stakeholder_id="test",
-        compensation_type="RSU",
-        quantity=1,
-        exercise_price={"amount": 1, "currency": "USD"},
-        termination_exercise_windows=[],
-        security_id="",
-        date="2022-12-12",
-        security_law_exemptions=[],
-    )
-
-    # But for compensation_type == OPTION, it is required
-    with pytest.raises(ValueError):
-        plansecurityissuance.PlanSecurityIssuance(
-            object_type="TX_PLAN_SECURITY_ISSUANCE",
-            stock_plan_id="test",
-            id="Failed OPTION",
-            custom_id="test",
-            stakeholder_id="test",
-            compensation_type="OPTION",
-            quantity=1,
-            exercise_price={"amount": 1, "currency": "USD"},
-            termination_exercise_windows=[],
-            security_id="",
-            date="2022-12-12",
-            security_law_exemptions=[],
-        )
-
-    # And now it works
-    plansecurityissuance.PlanSecurityIssuance(
-        object_type="TX_PLAN_SECURITY_ISSUANCE",
-        stock_plan_id="test",
-        id="Success OPTION",
-        custom_id="test",
-        stakeholder_id="test",
-        option_grant_type="ISO",
-        compensation_type="OPTION",
-        quantity=1,
-        exercise_price={"amount": 1, "currency": "USD"},
-        termination_exercise_windows=[],
-        security_id="",
-        date="2022-12-12",
-        security_law_exemptions=[],
-    )
 
 
 def test_constrained_strings():
