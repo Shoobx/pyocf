@@ -18,5 +18,3 @@ should install the development requirements, but for normal usage that is not ne
 or::
 
     $ python3 -m pip install pyocf[build]
-
-
