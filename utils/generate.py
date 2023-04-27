@@ -390,7 +390,7 @@ def make_inits(path, types):
         elif not filepath.name.endswith(".py"):
             continue
 
-    with pathlib.Path(path, "__init__.py").open("wt") as initfile:
+    with pathlib.Path(path, "__init__.py").open("wt", encoding="utf-8") as initfile:
         initfile.write(f'"""OCF {path.parts[-1]}"""')
 
 
@@ -410,7 +410,7 @@ def generate_files():
         path = pathlib.Path(schema_dir, schema.filename + ".py")
         outfile = pathlib.Path(outdir, path)
         outfile.parent.mkdir(parents=True, exist_ok=True)
-        with outfile.open("tw") as outfile:
+        with outfile.open("wt", encoding="utf-8") as outfile:
             outfile.write(tmpl.render(schema=schema))
     make_inits(outdir, types)
 

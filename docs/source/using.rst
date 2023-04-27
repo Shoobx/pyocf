@@ -92,10 +92,11 @@ A captable will then be created and Python objects will be stored in it.
     >>> cap.stakeholders  # doctest: +NORMALIZE_WHITESPACE
     [Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
-    last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL: 'INDIVIDUAL'>,
-    issuer_assigned_id=None, current_relationship=None, primary_contact=None,
-    addresses=None, tax_ids=None), Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719',
-    comments=[], object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
-    last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL: 'INDIVIDUAL'>,
-    issuer_assigned_id=None, current_relationship=None, primary_contact=None, addresses=None,
-    tax_ids=None)]
+    last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
+    'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
+    primary_contact=None, contact_info=None, addresses=None, tax_ids=None),
+    Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
+    object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
+    last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
+    'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
+    primary_contact=None, contact_info=None, addresses=None, tax_ids=None)]
