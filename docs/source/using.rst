@@ -15,6 +15,19 @@ with information:
 * ``captable.valuations``: A list of all ``Valuation`` objects.
 * ``captable.vesting_terms``: A list of all ``VestingTerm`` objects.
 
+All the classes generated are kept in the same hierarchy as the original schema, but for
+ease of access, they are also accessible through the ``pyocf.api`` module::
+
+.. doctest::
+
+    >>> from pyocf import api
+    >>> api.StockLegendTemplate
+    <class 'pyocf.objects.stocklegendtemplate.StockLegendTemplate'>
+
+The ``pyocf.api`` module only contains classes from the OCF schema, supporting classes,
+like ``pyocf.captable.Captable()`` are not included there, to clarify the separation
+from the schema.
+
 In addition to that, there is a ``captable.manifest`` that holds an ``OCFManifestFile``
 object. It will be created automatically when saving if you pass in an ``Issuer`` object
 as in this example. You can also create a manifest and set it on the ``Captable`` object,
@@ -24,13 +37,11 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
 
     >>> from datetime import date, datetime
     >>> from os import path
-    >>> from pyocf import captable
-    >>> from pyocf.objects import issuer, stakeholder
-    >>> from pyocf.objects.transactions.issuance import plansecurityissuance
+    >>> from pyocf import captable, api
 
     >>> cap = captable.Captable()
     >>> cap.stakeholders.append(
-    ...     stakeholder.Stakeholder(
+    ...     api.Stakeholder(
     ...         object_type="STAKEHOLDER",
     ...         id="d6c49a5a-257d-4b41-9f1d-073a77dfe719",
     ...         name={"legal_name": "Person Y"},
@@ -40,7 +51,7 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
     ... )
 
     >>> cap.transactions.append(
-    ...     plansecurityissuance.PlanSecurityIssuance(
+    ...     api.PlanSecurityIssuance(
     ...             object_type="TX_PLAN_SECURITY_ISSUANCE",
     ...             stock_plan_id="test",
     ...             id="Success OPTION",
@@ -62,7 +73,7 @@ the captable:
 
 .. doctest::
 
-    >>> ocf_issuer = issuer.Issuer(
+    >>> ocf_issuer = api.Issuer(
     ...     id="pyocf",
     ...     legal_name="pyocf example docs",
     ...     formation_date="2023-01-01",
@@ -94,9 +105,9 @@ A captable will then be created and Python objects will be stored in it.
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
     last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
     'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
-    primary_contact=None, contact_info=None, addresses=None, tax_ids=None),
+    primary_contact=None, addresses=None, tax_ids=None),
     Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
     last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
     'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
-    primary_contact=None, contact_info=None, addresses=None, tax_ids=None)]
+    primary_contact=None, addresses=None, tax_ids=None)]

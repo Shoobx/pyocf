@@ -399,6 +399,7 @@ def generate_files():
     outdir = pathlib.Path(templdir.parent, "src/pyocf")
     types = defaultdict(dict)
     roottypes = defaultdict(dict)
+    all_classes = {}
     for schema in all_schemas.values():
         rootlevel = schema.path.parts.index("schema") + 1
         schema_dir = pathlib.Path(*schema.path.parts[rootlevel:-1])
@@ -412,6 +413,21 @@ def generate_files():
         outfile.parent.mkdir(parents=True, exist_ok=True)
         with outfile.open("wt", encoding="utf-8") as outfile:
             outfile.write(tmpl.render(schema=schema))
+        if schema.name in all_classes:
+            raise ValueError(
+                "The schema has changed to include duplicate class names, "
+                "that's new and needs dealing with!"
+            )
+        all_classes[schema.name] = schema.import_statement
+
+    classes_file = pathlib.Path(outdir, "api.py")
+    with classes_file.open("wt", encoding="utf-8") as outfile:
+        outfile.write('"""All PyOCF classes, for easier import"""\n\n')
+        for imports in sorted(all_classes.values()):
+            outfile.write(f"{imports}\n")
+
+        outfile.write(f"\n__all__ = [{', '.join(sorted(all_classes))}]")
+
     make_inits(outdir, types)
 
 

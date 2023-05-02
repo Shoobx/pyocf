@@ -1,10 +1,10 @@
 import pytest
 import pydantic
 
-from pyocf.enums.stakeholdertype import StakeholderType
-from pyocf.files.stakeholdersfile import StakeholdersFile
-from pyocf.objects.stakeholder import Stakeholder
-from pyocf.types import name, phone, countrycode
+from pyocf.api import StakeholderType
+from pyocf.api import StakeholdersFile
+from pyocf.api import Stakeholder
+from pyocf.api import Name, Phone, CountryCode
 
 
 def test_basic_loading():
@@ -20,7 +20,7 @@ def test_basic_loading():
 
     assert sh.id == "d6c49a5a-257d-4b41-9f1d-073a77dfe719"
     assert sh.object_type == "STAKEHOLDER"
-    assert isinstance(sh.name, name.Name)
+    assert isinstance(sh.name, Name)
     assert sh.stakeholder_type == StakeholderType.ENUM_INDIVIDUAL
     assert sh.stakeholder_type.value == "INDIVIDUAL"
     assert sh.comments == []
@@ -64,16 +64,16 @@ def test_minimal():
 
 def test_constrained_strings():
     # Phone numbers must be phone numbers:
-    phone.Phone(phone_type="HOME", phone_number="+1 555 123 4567")
+    Phone(phone_type="HOME", phone_number="+1 555 123 4567")
 
     with pytest.raises(ValueError):
-        phone.Phone(phone_type="HOME", phone_number="It's a pizza")
+        Phone(phone_type="HOME", phone_number="It's a pizza")
 
     # Many types uses a root validator, test that:
-    countrycode.CountryCode("SE")
+    CountryCode("SE")
 
     with pytest.raises(ValueError):
-        countrycode.CountryCode("S2")
+        CountryCode("S2")
 
     with pytest.raises(ValueError):
-        countrycode.CountryCode("SPUT")
+        CountryCode("SPUT")
