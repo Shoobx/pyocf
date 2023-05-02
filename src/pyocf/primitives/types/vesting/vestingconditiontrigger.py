@@ -4,9 +4,9 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/main/schema/primitives/types/vesting/VestingConditionTrigger.schema.json
+# ree/v1.0.0/schema/primitives/types/vesting/VestingConditionTrigger.schema.json
 
 from pydantic import BaseModel
 from pyocf.enums.vestingtriggertype import VestingTriggerType

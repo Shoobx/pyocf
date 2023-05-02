@@ -4,9 +4,9 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/main/schema/types/StockParent.schema.json
+# OCF/tree/v1.0.0/schema/types/StockParent.schema.json
 
 from pydantic import BaseModel
 from pyocf.enums.parentsecuritytype import ParentSecurityType

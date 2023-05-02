@@ -4,16 +4,15 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/main/schema/objects/Stakeholder.schema.json
+# OCF/tree/v1.0.0/schema/objects/Stakeholder.schema.json
 
 from pyocf.enums.stakeholderrelationshiptype import StakeholderRelationshipType
 from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.primitives.objects.object import Object
 from pyocf.types.address import Address
 from pyocf.types.contactinfo import ContactInfo
-from pyocf.types.contactinfowithoutname import ContactInfoWithoutName
 from pyocf.types.name import Name
 from pyocf.types.taxid import TaxID
 from typing import Literal
@@ -33,10 +32,8 @@ class Stakeholder(Object):
     issuer_assigned_id: Optional[str]
     # What is the current relationship of the stakeholder to the issuer?
     current_relationship: Optional[StakeholderRelationshipType]
-    # The primary contact info for an institutional stakeholder
+    # The primary contact info for the stakeholder
     primary_contact: Optional[ContactInfo]
-    # The contact info for an individual stakeholder
-    contact_info: Optional[ContactInfoWithoutName]
     # Addresses for the stakeholder
     addresses: Optional[list[Address]]
     # The tax ids for this stakeholder

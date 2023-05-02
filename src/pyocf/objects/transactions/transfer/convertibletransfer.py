@@ -4,9 +4,9 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/main/schema/objects/transactions/transfer/ConvertibleTransfer.schema.json
+# ree/v1.0.0/schema/objects/transactions/transfer/ConvertibleTransfer.schema.json
 
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.securitytransaction import (

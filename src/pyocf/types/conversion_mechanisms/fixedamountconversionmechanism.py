@@ -4,10 +4,10 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/main/schema/types/conversion_mechanisms/FixedAmountConversionMechanism.schem
-# a.json
+# ree/v1.0.0/schema/types/conversion_mechanisms/FixedAmountConversionMechanism.sch
+# ema.json
 
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
