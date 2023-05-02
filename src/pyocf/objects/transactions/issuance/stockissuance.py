@@ -4,11 +4,10 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/main/schema/objects/transactions/issuance/StockIssuance.schema.json
+# OCF/tree/v1.0.0/schema/objects/transactions/issuance/StockIssuance.schema.json
 
-from pyocf.enums.stockissuancetype import StockIssuanceType
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.issuance.issuance import Issuance
 from pyocf.primitives.objects.transactions.securitytransaction import (
@@ -32,9 +31,6 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
     object_type: Literal["TX_STOCK_ISSUANCE"] = "TX_STOCK_ISSUANCE"
     # Identifier of the stock class for this stock issuance
     stock_class_id: str
-    # Identifier of StockPlan the Stock was issued from (in the case of RSAs or Stock
-    # issued from a plan).
-    stock_plan_id: Optional[str]
     # Range(s) of the specific share numbers included in this issuance. This is
     # different from a certificate number you might include in the `custom_id` field
     # or the `security_id` created in this issuance. This field should be used where,
@@ -53,8 +49,6 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
     cost_basis: Optional[Monetary]
     # List of stock legend ids that apply to this stock
     stock_legend_ids: list[str]
-    # Optional field to flag certain special types of issuances (like RSAs)
-    issuance_type: Optional[StockIssuanceType]
     # Identifier for the object
     id: str
     # Unstructured text comments related to and stored for the object

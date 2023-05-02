@@ -4,15 +4,15 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/main/schema/types/conversion_mechanisms/SAFEConversionMechanism.schema.json
+# ree/v1.0.0/schema/types/conversion_mechanisms/SAFEConversionMechanism.schema.jso
+# n
 
 from pyocf.enums.conversiontimingtype import ConversionTimingType
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
-from pyocf.types.capitalizationdefinitionrules import CapitalizationDefinitionRules
 from pyocf.types.monetary import Monetary
 from pyocf.types.percentage import Percentage
 from pyocf.types.ratio import Ratio
@@ -36,10 +36,7 @@ class SAFEConversionMechanism(ConversionMechanism):
     # Is this an MFN flavored SAFE?
     conversion_mfn: bool
     # Should the conversion amount be based on pre or post money capitalization
-    conversion_timing: Optional[ConversionTimingType]
+    conversion_timing: ConversionTimingType
     # How is company capitalization defined for purposes of conversion? If possible,
     # include the legal language from the instrument.
     capitalization_definition: Optional[str]
-    # The rules for which types of securities would be included in the capitalization
-    # definition.
-    capitalization_definition_rules: Optional[CapitalizationDefinitionRules]

@@ -8,7 +8,7 @@ bin_dir := $(root_dir)/ve/bin/
 python_exe := $(bin_dir)python3
 endif
 git_source := https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF.git
-git_branch := main
+git_branch := release-v1.0.0
 
 all: devenv fetch build
 

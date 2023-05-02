@@ -4,15 +4,14 @@
 # Copyright © 2023 Shoobx, Fidelity Investments
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/main/schema/types/conversion_mechanisms/PercentCapitalizationConversionMecha
-# nism.schema.json
+# ree/v1.0.0/schema/types/conversion_mechanisms/PercentCapitalizationConversionMec
+# hanism.schema.json
 
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
-from pyocf.types.capitalizationdefinitionrules import CapitalizationDefinitionRules
 from pyocf.types.percentage import Percentage
 from typing import Literal
 from typing import Optional
@@ -32,6 +31,3 @@ class PercentCapitalizationConversionMechanism(ConversionMechanism):
     # How is company capitalization defined for purposes of conversion? If possible,
     # include the legal language from the instrument.
     capitalization_definition: Optional[str]
-    # The rules for which types of securities would be included in the capitalization
-    # definition.
-    capitalization_definition_rules: Optional[CapitalizationDefinitionRules]
