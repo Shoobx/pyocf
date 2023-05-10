@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0b2 (unreleased)
+1.0.0 (2023-05-10)
 ------------------
 
 - Added all the classes to api.py, so you can more easily import them.
