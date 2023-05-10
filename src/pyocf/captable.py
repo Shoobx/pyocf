@@ -1,4 +1,7 @@
 """OCF Captable object"""
+
+# Copyright © 2023 FMR LLC
+
 import datetime
 import hashlib
 import json

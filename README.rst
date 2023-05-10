@@ -10,4 +10,4 @@ Documentation is available at `Read the Docs <https://pyocf.readthedocs.io/en/la
 Contributors
 ------------
 
-Lennart Regebro, regebro@shoobx.com
+Lennart Regebro, lennart.regebro@fidelity.com

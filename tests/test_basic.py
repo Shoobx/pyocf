@@ -1,3 +1,5 @@
+# Copyright © 2023 FMR LLC
+
 import pytest
 import pydantic
 

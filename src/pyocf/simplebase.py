@@ -1,5 +1,7 @@
 """A pydantic model for simple types with no attributes"""
 
+# Copyright © 2023 FMR LLC
+
 from pydantic import BaseModel
 
 
