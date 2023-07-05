@@ -50,55 +50,103 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
     held by a stakeholder
     """
 
-    object_type: Literal["TX_CONVERTIBLE_ISSUANCE"] = "TX_CONVERTIBLE_ISSUANCE"
-    # Amount invested and outstanding on date of issuance of this convertible
-    investment_amount: Monetary
-    # What kind of convertible instrument is this (of the supported, enumerated types)
-    convertible_type: ConvertibleType
-    # In event the convertible can convert due to trigger events (e.g. Maturity, Next
-    # Qualified Financing, Change of Control, at Election of Holder), what are the
-    # terms?
-    conversion_triggers: list[
+    object_type: Annotated[
+        Literal["TX_CONVERTIBLE_ISSUANCE"], Field(description="")
+    ] = "TX_CONVERTIBLE_ISSUANCE"
+    investment_amount: Annotated[
+        Monetary,
+        Field(
+            description="Amount invested and outstanding on date of issuance of this convertible"
+        ),
+    ]
+    convertible_type: Annotated[
+        ConvertibleType,
+        Field(
+            description="What kind of convertible instrument is this (of the supported, enumerated types)"
+        ),
+    ]
+    conversion_triggers: Annotated[
+        list[
+            Annotated[
+                Union[
+                    AutomaticConversionOnConditionTrigger,
+                    AutomaticConversionOnDateTrigger,
+                    ElectiveConversionAtWillTrigger,
+                    ElectiveConversionInDateRangeTrigger,
+                    ElectiveConversionOnConditionTrigger,
+                    UnspecifiedConversionTrigger,
+                ],
+                Field(discriminator="type"),
+            ]
+        ],
+        Field(
+            description="In event the convertible can convert due to trigger events (e.g. Maturity, Next"
+            "Qualified Financing, Change of Control, at Election of Holder), what are the"
+            "terms?"
+        ),
+    ]
+    pro_rata: Optional[
         Annotated[
-            Union[
-                AutomaticConversionOnConditionTrigger,
-                AutomaticConversionOnDateTrigger,
-                ElectiveConversionAtWillTrigger,
-                ElectiveConversionInDateRangeTrigger,
-                ElectiveConversionOnConditionTrigger,
-                UnspecifiedConversionTrigger,
-            ],
-            Field(discriminator="type"),
+            Numeric,
+            Field(
+                description="What pro-rata (if any) is the holder entitled to buy at the next round?"
+            ),
         ]
     ]
-    # What pro-rata (if any) is the holder entitled to buy at the next round?
-    pro_rata: Optional[Numeric]
-    # If different convertible instruments have seniorty over one another, use this
-    # value to build a seniority stack, with 1 being highest seniority and equal
-    # seniority values assumed to be equal priority
-    seniority: int
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Identifier for the security (stock, plan security, warrant, or convertible) by
-    # which it can be referenced by other transaction objects. Note that while this
-    # identifier is created with an issuance object, it should be different than the
-    # issuance object's `id` field which identifies the issuance transaction object
-    # itself. All future transactions on the security (e.g. acceptance, transfer,
-    # cancel, etc.) must reference this `security_id` to qualify which security the
-    # transaction applies to.
-    security_id: str
-    # Date on which the transaction occurred
-    date: Date
-    # A custom ID for this security (e.g. CN-1.)
-    custom_id: str
-    # Identifier for the stakeholder that holds legal title to this security
-    stakeholder_id: str
-    # Date of board approval for the security
-    board_approval_date: Optional[Date]
-    # Unstructured text description of consideration provided in exchange for security
-    # issuance
-    consideration_text: Optional[str]
-    # List of security law exemptions (and applicable jurisdictions) for this security
-    security_law_exemptions: list[SecurityExemption]
+    seniority: Annotated[
+        int,
+        Field(
+            description="If different convertible instruments have seniorty over one another, use this"
+            "value to build a seniority stack, with 1 being highest seniority and equal"
+            "seniority values assumed to be equal priority"
+        ),
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    security_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the security (stock, plan security, warrant, or convertible) by"
+            "which it can be referenced by other transaction objects. Note that while this"
+            "identifier is created with an issuance object, it should be different than the"
+            "issuance object's `id` field which identifies the issuance transaction object"
+            "itself. All future transactions on the security (e.g. acceptance, transfer,"
+            "cancel, etc.) must reference this `security_id` to qualify which security the"
+            "transaction applies to."
+        ),
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    custom_id: Annotated[
+        str, Field(description="A custom ID for this security (e.g. CN-1.)")
+    ]
+    stakeholder_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the stakeholder that holds legal title to this security"
+        ),
+    ]
+    board_approval_date: Optional[
+        Annotated[Date, Field(description="Date of board approval for the security")]
+    ]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "issuance"
+            ),
+        ]
+    ]
+    security_law_exemptions: Annotated[
+        list[SecurityExemption],
+        Field(
+            description="List of security law exemptions (and applicable jurisdictions) for this security"
+        ),
+    ]

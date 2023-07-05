@@ -9,6 +9,7 @@
 # ree/v1.0.0/schema/types/conversion_mechanisms/NoteConversionMechanism.schema.jso
 # n
 
+from pydantic import Field
 from pyocf.enums.accrualperiodtype import AccrualPeriodType
 from pyocf.enums.compoundingtype import CompoundingType
 from pyocf.enums.daycounttype import DayCountType
@@ -20,6 +21,7 @@ from pyocf.types.interestrate import InterestRate
 from pyocf.types.monetary import Monetary
 from pyocf.types.percentage import Percentage
 from pyocf.types.ratio import Ratio
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -27,23 +29,57 @@ from typing import Optional
 class NoteConversionMechanism(ConversionMechanism):
     """Sets forth inputs and conversion mechanism of a convertible note"""
 
-    type: Literal["CONVERTIBLE_NOTE_CONVERSION"] = "CONVERTIBLE_NOTE_CONVERSION"
-    # Interest rate(s) of the convertible (if applicable)
-    interest_rates: list[InterestRate]
-    # How many days are there is a given period for calculation purposes?
-    day_count_convention: DayCountType
-    # How is interest paid out (if at applicable)
-    interest_payout: InterestPayoutType
-    # What is the period over which interest is calculated?
-    interest_accrual_period: AccrualPeriodType
-    # What type of interest compounding?
-    compounding_type: CompoundingType
-    # What is the percentage discount available upon conversion, if applicable?
-    # (decimal representation - e.g. 0.125 for 12.5%)
-    conversion_discount: Optional[Percentage]
-    # What is the valuation cap (if applicable)?
-    conversion_valuation_cap: Optional[Monetary]
-    # For cash proceeds calculation during a liquidity event.
-    exit_multiple: Optional[Ratio]
-    # Is this an MFN (Most Favored Nations) flavored Convertible Note?
-    conversion_mfn: Optional[bool]
+    type: Annotated[
+        Literal["CONVERTIBLE_NOTE_CONVERSION"], Field(description="")
+    ] = "CONVERTIBLE_NOTE_CONVERSION"
+    interest_rates: Annotated[
+        list[InterestRate],
+        Field(description="Interest rate(s) of the convertible (if applicable)"),
+    ]
+    day_count_convention: Annotated[
+        DayCountType,
+        Field(
+            description="How many days are there is a given period for calculation purposes?"
+        ),
+    ]
+    interest_payout: Annotated[
+        InterestPayoutType,
+        Field(description="How is interest paid out (if at applicable)"),
+    ]
+    interest_accrual_period: Annotated[
+        AccrualPeriodType,
+        Field(description="What is the period over which interest is calculated?"),
+    ]
+    compounding_type: Annotated[
+        CompoundingType, Field(description="What type of interest compounding?")
+    ]
+    conversion_discount: Optional[
+        Annotated[
+            Percentage,
+            Field(
+                description="What is the percentage discount available upon conversion, if applicable?"
+                "(decimal representation - e.g. 0.125 for 12.5%)"
+            ),
+        ]
+    ]
+    conversion_valuation_cap: Optional[
+        Annotated[
+            Monetary, Field(description="What is the valuation cap (if applicable)?")
+        ]
+    ]
+    exit_multiple: Optional[
+        Annotated[
+            Ratio,
+            Field(
+                description="For cash proceeds calculation during a liquidity event."
+            ),
+        ]
+    ]
+    conversion_mfn: Optional[
+        Annotated[
+            bool,
+            Field(
+                description="Is this an MFN (Most Favored Nations) flavored Convertible Note?"
+            ),
+        ]
+    ]

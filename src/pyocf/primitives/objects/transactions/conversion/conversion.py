@@ -10,10 +10,16 @@
 # son
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class Conversion(BaseModel):
     """Abstract object describing fields common to all conversion transaction objects"""
 
-    # Identifier for the security (or securities) that resulted from the conversion
-    resulting_security_ids: list[str]
+    resulting_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Identifier for the security (or securities) that resulted from the conversion"
+        ),
+    ]

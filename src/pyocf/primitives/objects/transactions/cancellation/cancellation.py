@@ -10,14 +10,21 @@
 # ma.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 from typing import Optional
 
 
 class Cancellation(BaseModel):
     """Abstract object describing fields common to all cancellation transaction objects"""
 
-    # Identifier for the security that holds the remainder balance (for partial
-    # cancellations)
-    balance_security_id: Optional[str]
-    # Reason for the cancellation
-    reason_text: str
+    balance_security_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier for the security that holds the remainder balance (for partial"
+                "cancellations)"
+            ),
+        ]
+    ]
+    reason_text: Annotated[str, Field(description="Reason for the cancellation")]

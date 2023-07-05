@@ -25,13 +25,22 @@ class VestingScheduleRelativeTrigger(VestingConditionTrigger):
     another vesting condition, has elapsed.
     """
 
-    type: Literal["VESTING_SCHEDULE_RELATIVE"] = "VESTING_SCHEDULE_RELATIVE"
-    # The span of time that must have elapsed since the condition
-    # `relative_to_condition_id` occurred for this condition to trigger. For weeks or
-    # "ideal" years (365 days), use `VestingPeriodInDays`. For calendar years use
-    # `VestingPeriodInMonths`.
+    type: Annotated[
+        Literal["VESTING_SCHEDULE_RELATIVE"], Field(description="")
+    ] = "VESTING_SCHEDULE_RELATIVE"
     period: Annotated[
-        Union[VestingPeriodInDays, VestingPeriodInMonths], Field(discriminator="type")
+        Union[VestingPeriodInDays, VestingPeriodInMonths],
+        Field(
+            discriminator="type",
+            description="The span of time that must have elapsed since the condition"
+            "`relative_to_condition_id` occurred for this condition to trigger. For weeks or"
+            '"ideal" years (365 days), use `VestingPeriodInDays`. For calendar years use'
+            "`VestingPeriodInMonths`.",
+        ),
     ]
-    # Reference to the vesting condition ID to which the `period` is relative
-    relative_to_condition_id: str
+    relative_to_condition_id: Annotated[
+        str,
+        Field(
+            description="Reference to the vesting condition ID to which the `period` is relative"
+        ),
+    ]

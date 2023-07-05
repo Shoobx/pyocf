@@ -9,20 +9,36 @@
 # OCF/tree/v1.0.0/schema/types/InterestRate.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.date import Date
 from pyocf.types.percentage import Percentage
+from typing import Annotated
 from typing import Optional
 
 
 class InterestRate(BaseModel):
     """Type representation of an interest rate, including accrual start and end dates"""
 
-    # Interest rate for the convertible (decimal representation - e.g. 0.125 for
-    # 12.5%)
-    rate: Percentage
-    # Commencement date for interest accruing at the specified rate
-    accrual_start_date: Date
-    # Optional end date (inclusive) for interest accruing at the specified rate. If
-    # none specified, interest will accrue indefinitely or until accrual of next
-    # interest rate commences
-    accrual_end_date: Optional[Date]
+    rate: Annotated[
+        Percentage,
+        Field(
+            description="Interest rate for the convertible (decimal representation - e.g. 0.125 for"
+            "12.5%)"
+        ),
+    ]
+    accrual_start_date: Annotated[
+        Date,
+        Field(
+            description="Commencement date for interest accruing at the specified rate"
+        ),
+    ]
+    accrual_end_date: Optional[
+        Annotated[
+            Date,
+            Field(
+                description="Optional end date (inclusive) for interest accruing at the specified rate. If"
+                "none specified, interest will accrue indefinitely or until accrual of next"
+                "interest rate commences"
+            ),
+        ]
+    ]

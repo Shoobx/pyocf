@@ -10,10 +10,11 @@
 # son
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class Retraction(BaseModel):
     """Abstract object describing a security retraction transaction"""
 
-    # Reason for the retraction
-    reason_text: str
+    reason_text: Annotated[str, Field(description="Reason for the retraction")]

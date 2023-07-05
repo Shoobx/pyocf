@@ -10,6 +10,8 @@ part of the company (e.g. post-money capitalization vs pre-money for a security)
 # OCF/tree/v1.0.0/schema/types/CapitalizationDefinition.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class CapitalizationDefinition(BaseModel):
@@ -17,18 +19,34 @@ class CapitalizationDefinition(BaseModel):
     part of the company (e.g. post-money capitalization vs pre-money for a security)
     """
 
-    # All issuances of stock classes with these ids should be included (unless such an
-    # issuance is specifically included in `exclude_security_ids`
-    include_stock_class_ids: list[str]
-    # All issuances of plan securities from stock plans with these ids should be
-    # included (unless such an issuance is specifically excluded in
-    # `exclude_security_ids`
-    include_stock_plans_ids: list[str]
-    # Securities (whether Stock, Plan Securities, Convertibles or Warrants) with these
-    # security ids should be included from this definition of capitalization
-    # (overrides plan or class-level rules)
-    include_security_ids: list[str]
-    # Securities (whether Stock, Plan Securities, Convertibles or Warrants) with these
-    # security ids should be excluded from this definition of capitalization
-    # (overrides plan or class-level rules)
-    exclude_security_ids: list[str]
+    include_stock_class_ids: Annotated[
+        list[str],
+        Field(
+            description="All issuances of stock classes with these ids should be included (unless such an"
+            "issuance is specifically included in `exclude_security_ids`"
+        ),
+    ]
+    include_stock_plans_ids: Annotated[
+        list[str],
+        Field(
+            description="All issuances of plan securities from stock plans with these ids should be"
+            "included (unless such an issuance is specifically excluded in"
+            "`exclude_security_ids`"
+        ),
+    ]
+    include_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Securities (whether Stock, Plan Securities, Convertibles or Warrants) with these"
+            "security ids should be included from this definition of capitalization"
+            "(overrides plan or class-level rules)"
+        ),
+    ]
+    exclude_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Securities (whether Stock, Plan Securities, Convertibles or Warrants) with these"
+            "security ids should be excluded from this definition of capitalization"
+            "(overrides plan or class-level rules)"
+        ),
+    ]

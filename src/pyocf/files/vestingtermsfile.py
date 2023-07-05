@@ -8,14 +8,19 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/files/VestingTermsFile.schema.json
 
+from pydantic import Field
 from pyocf.objects.vestingterms import VestingTerms
 from pyocf.primitives.files.file import FileObject
+from typing import Annotated
 from typing import Literal
 
 
 class VestingTermsFile(FileObject):
     """JSON containing file type identifier and list of vesting terms"""
 
-    # List of OCF vesting terms objects
-    items: list[VestingTerms]
-    file_type: Literal["OCF_VESTING_TERMS_FILE"] = "OCF_VESTING_TERMS_FILE"
+    items: Annotated[
+        list[VestingTerms], Field(description="List of OCF vesting terms objects")
+    ]
+    file_type: Annotated[
+        Literal["OCF_VESTING_TERMS_FILE"], Field(description="")
+    ] = "OCF_VESTING_TERMS_FILE"

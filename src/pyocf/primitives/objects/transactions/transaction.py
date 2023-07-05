@@ -9,11 +9,12 @@
 # OCF/tree/v1.0.0/schema/primitives/objects/transactions/Transaction.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.date import Date
+from typing import Annotated
 
 
 class Transaction(BaseModel):
     """Abstract transaction object to be extended by all other transaction objects"""
 
-    # Date on which the transaction occurred
-    date: Date
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]

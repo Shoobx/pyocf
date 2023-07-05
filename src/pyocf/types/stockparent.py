@@ -11,7 +11,9 @@ previous stock entry)"""
 # OCF/tree/v1.0.0/schema/types/StockParent.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.parentsecuritytype import ParentSecurityType
+from typing import Annotated
 
 
 class StockParent(BaseModel):
@@ -20,8 +22,16 @@ class StockParent(BaseModel):
     previous stock entry)
     """
 
-    # Parent object type for this stock issuance (e.g. a stock plan or warrant)
-    parent_object_type: ParentSecurityType
-    # Parent object's ID must be a valid ID pointing to an object of the type
-    # specified in parent_object_type
-    parent_object_id: str
+    parent_object_type: Annotated[
+        ParentSecurityType,
+        Field(
+            description="Parent object type for this stock issuance (e.g. a stock plan or warrant)"
+        ),
+    ]
+    parent_object_id: Annotated[
+        str,
+        Field(
+            description="Parent object's ID must be a valid ID pointing to an object of the type"
+            "specified in parent_object_type"
+        ),
+    ]

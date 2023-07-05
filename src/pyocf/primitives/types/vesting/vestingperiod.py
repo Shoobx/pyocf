@@ -10,7 +10,9 @@ months, 365 days) for use in Vesting Terms"""
 # OCF/tree/v1.0.0/schema/primitives/types/vesting/VestingPeriod.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.periodtype import PeriodType
+from typing import Annotated
 
 
 class VestingPeriod(BaseModel):
@@ -18,11 +20,21 @@ class VestingPeriod(BaseModel):
     months, 365 days) for use in Vesting Terms
     """
 
-    # The quantity of `type` units of time; e.g. for 3 months, this would be `3`; for
-    # 30 days, this would be `30`
-    length: int
-    # The unit of time for the period, e.g. `MONTHS` or `DAYS`
-    type: PeriodType
-    # The number of times this vesting period triggers. If vesting occurs monthly for
-    # 36 months, for example, this would be `36`
-    occurrences: int
+    length: Annotated[
+        int,
+        Field(
+            description="The quantity of `type` units of time; e.g. for 3 months, this would be `3`; for"
+            "30 days, this would be `30`"
+        ),
+    ]
+    type: Annotated[
+        PeriodType,
+        Field(description="The unit of time for the period, e.g. `MONTHS` or `DAYS`"),
+    ]
+    occurrences: Annotated[
+        int,
+        Field(
+            description="The number of times this vesting period triggers. If vesting occurs monthly for"
+            "36 months, for example, this would be `36`"
+        ),
+    ]

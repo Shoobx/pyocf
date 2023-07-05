@@ -9,6 +9,7 @@
 # ree/v1.0.0/schema/objects/transactions/cancellation/PlanSecurityCancellation.sch
 # ema.json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.cancellation.cancellation import Cancellation
 from pyocf.primitives.objects.transactions.securitytransaction import (
@@ -17,6 +18,7 @@ from pyocf.primitives.objects.transactions.securitytransaction import (
 from pyocf.primitives.objects.transactions.transaction import Transaction
 from pyocf.types.date import Date
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -24,27 +26,41 @@ from typing import Optional
 class PlanSecurityCancellation(Object, Transaction, SecurityTransaction, Cancellation):
     """Object describing a cancellation of a plan security"""
 
-    object_type: Literal[
-        "TX_PLAN_SECURITY_CANCELLATION"
+    object_type: Annotated[
+        Literal["TX_PLAN_SECURITY_CANCELLATION"], Field(description="")
     ] = "TX_PLAN_SECURITY_CANCELLATION"
-    # Quantity of non-monetary security units cancelled
-    quantity: Numeric
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Identifier for the security (stock, plan security, warrant, or convertible) by
-    # which it can be referenced by other transaction objects. Note that while this
-    # identifier is created with an issuance object, it should be different than the
-    # issuance object's `id` field which identifies the issuance transaction object
-    # itself. All future transactions on the security (e.g. acceptance, transfer,
-    # cancel, etc.) must reference this `security_id` to qualify which security the
-    # transaction applies to.
-    security_id: str
-    # Date on which the transaction occurred
-    date: Date
-    # Identifier for the security that holds the remainder balance (for partial
-    # cancellations)
-    balance_security_id: Optional[str]
-    # Reason for the cancellation
-    reason_text: str
+    quantity: Annotated[
+        Numeric, Field(description="Quantity of non-monetary security units cancelled")
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    security_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the security (stock, plan security, warrant, or convertible) by"
+            "which it can be referenced by other transaction objects. Note that while this"
+            "identifier is created with an issuance object, it should be different than the"
+            "issuance object's `id` field which identifies the issuance transaction object"
+            "itself. All future transactions on the security (e.g. acceptance, transfer,"
+            "cancel, etc.) must reference this `security_id` to qualify which security the"
+            "transaction applies to."
+        ),
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    balance_security_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier for the security that holds the remainder balance (for partial"
+                "cancellations)"
+            ),
+        ]
+    ]
+    reason_text: Annotated[str, Field(description="Reason for the cancellation")]

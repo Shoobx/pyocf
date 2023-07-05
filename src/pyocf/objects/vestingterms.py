@@ -8,9 +8,11 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/objects/VestingTerms.schema.json
 
+from pydantic import Field
 from pyocf.enums.allocationtype import AllocationType
 from pyocf.primitives.objects.object import Object
 from pyocf.types.vesting.vestingcondition import VestingCondition
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -18,16 +20,29 @@ from typing import Optional
 class VestingTerms(Object):
     """Object describing the terms under which a security vests"""
 
-    object_type: Literal["VESTING_TERMS"] = "VESTING_TERMS"
-    # Concise name for the vesting schedule
-    name: str
-    # Detailed description of the vesting schedule
-    description: str
-    # Allocation/rounding type for the vesting schedule
-    allocation_type: AllocationType
-    # Conditions and triggers that describe the graph of vesting schedules and events
-    vesting_conditions: list[VestingCondition]
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
+    object_type: Annotated[
+        Literal["VESTING_TERMS"], Field(description="")
+    ] = "VESTING_TERMS"
+    name: Annotated[str, Field(description="Concise name for the vesting schedule")]
+    description: Annotated[
+        str, Field(description="Detailed description of the vesting schedule")
+    ]
+    allocation_type: Annotated[
+        AllocationType,
+        Field(description="Allocation/rounding type for the vesting schedule"),
+    ]
+    vesting_conditions: Annotated[
+        list[VestingCondition],
+        Field(
+            description="Conditions and triggers that describe the graph of vesting schedules and events"
+        ),
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]

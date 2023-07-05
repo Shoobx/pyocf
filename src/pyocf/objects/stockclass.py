@@ -8,6 +8,7 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/objects/StockClass.schema.json
 
+from pydantic import Field
 from pyocf.enums.stockclasstype import StockClassType
 from pyocf.primitives.objects.object import Object
 from pyocf.types.conversion_rights.stockclassconversionright import (
@@ -16,6 +17,7 @@ from pyocf.types.conversion_rights.stockclassconversionright import (
 from pyocf.types.date import Date
 from pyocf.types.monetary import Monetary
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -23,46 +25,101 @@ from typing import Optional
 class StockClass(Object):
     """Object describing a class of stock issued by the issuer"""
 
-    object_type: Literal["STOCK_CLASS"] = "STOCK_CLASS"
-    # Name for the stock type (e.g. Series A Preferred or Class A Common)
-    name: str
-    # The type of this stock class (e.g. Preferred or Common)
-    class_type: StockClassType
-    # Default prefix for certificate numbers in certificated shares (e.g. CS- in
-    # CS-1). If certificate IDs have a dash, the prefix should end in the dash like
-    # CS-
-    default_id_prefix: str
-    # The initial number of shares authorized for this stock class
-    initial_shares_authorized: Numeric
-    # Date on which the board approved the stock class
-    board_approval_date: Optional[Date]
-    # The number of votes each share of this stock class gets
-    votes_per_share: Numeric
-    # Per-share par value of this stock class
-    par_value: Optional[Monetary]
-    # Per-share price this stock class was issued for
-    price_per_share: Optional[Monetary]
-    # Seniority of the stock - determines repayment priority. Seniority is ordered by
-    # increasing number so that stock classes with a higher seniority have higher
-    # repayment priority. The following properties hold for all stock classes for a
-    # given company:
-    # a) transitivity: stock classes are absolutely stackable by seniority and in
-    # increasing numerical order,
-    # b) non-uniqueness: multiple stock classes can have the same Seniority number and
-    # therefore have the same liquidation/repayment order.
-    # In practice, stock classes with same seniority may be created at different
-    # points in time and (for example, an extension of an existing preferred financing
-    # round), and also a new stock class can be created with seniority between two
-    # existing stock classes, in which case it is assigned some decimal number between
-    # the numbers representing seniority of the respective classes.
-    seniority: Numeric
-    # List of stock class conversion rights possible for this stock class
-    conversion_rights: Optional[list[StockClassConversionRight]]
-    # The liquidation preference per share for this stock class
-    liquidation_preference_multiple: Optional[Numeric]
-    # The participation cap multiple per share for this stock class
-    participation_cap_multiple: Optional[Numeric]
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
+    object_type: Annotated[
+        Literal["STOCK_CLASS"], Field(description="")
+    ] = "STOCK_CLASS"
+    name: Annotated[
+        str,
+        Field(
+            description="Name for the stock type (e.g. Series A Preferred or Class A Common)"
+        ),
+    ]
+    class_type: Annotated[
+        StockClassType,
+        Field(description="The type of this stock class (e.g. Preferred or Common)"),
+    ]
+    default_id_prefix: Annotated[
+        str,
+        Field(
+            description="Default prefix for certificate numbers in certificated shares (e.g. CS- in"
+            "CS-1). If certificate IDs have a dash, the prefix should end in the dash like"
+            "CS-"
+        ),
+    ]
+    initial_shares_authorized: Annotated[
+        Numeric,
+        Field(
+            description="The initial number of shares authorized for this stock class"
+        ),
+    ]
+    board_approval_date: Optional[
+        Annotated[
+            Date, Field(description="Date on which the board approved the stock class")
+        ]
+    ]
+    votes_per_share: Annotated[
+        Numeric,
+        Field(description="The number of votes each share of this stock class gets"),
+    ]
+    par_value: Optional[
+        Annotated[
+            Monetary, Field(description="Per-share par value of this stock class")
+        ]
+    ]
+    price_per_share: Optional[
+        Annotated[
+            Monetary,
+            Field(description="Per-share price this stock class was issued for"),
+        ]
+    ]
+    seniority: Annotated[
+        Numeric,
+        Field(
+            description="Seniority of the stock - determines repayment priority. Seniority is ordered by"
+            "increasing number so that stock classes with a higher seniority have higher"
+            "repayment priority. The following properties hold for all stock classes for a"
+            "given company:"
+            "a) transitivity: stock classes are absolutely stackable by seniority and in"
+            "increasing numerical order,"
+            "b) non-uniqueness: multiple stock classes can have the same Seniority number and"
+            "therefore have the same liquidation/repayment order."
+            "In practice, stock classes with same seniority may be created at different"
+            "points in time and (for example, an extension of an existing preferred financing"
+            "round), and also a new stock class can be created with seniority between two"
+            "existing stock classes, in which case it is assigned some decimal number between"
+            "the numbers representing seniority of the respective classes."
+        ),
+    ]
+    conversion_rights: Optional[
+        Annotated[
+            list[StockClassConversionRight],
+            Field(
+                description="List of stock class conversion rights possible for this stock class"
+            ),
+        ]
+    ]
+    liquidation_preference_multiple: Optional[
+        Annotated[
+            Numeric,
+            Field(
+                description="The liquidation preference per share for this stock class"
+            ),
+        ]
+    ]
+    participation_cap_multiple: Optional[
+        Annotated[
+            Numeric,
+            Field(
+                description="The participation cap multiple per share for this stock class"
+            ),
+        ]
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]

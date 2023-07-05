@@ -10,6 +10,7 @@ inputs of the Y Combinator SAFE)"""
 # ree/v1.0.0/schema/types/conversion_mechanisms/SAFEConversionMechanism.schema.jso
 # n
 
+from pydantic import Field
 from pyocf.enums.conversiontimingtype import ConversionTimingType
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
@@ -17,6 +18,7 @@ from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
 from pyocf.types.monetary import Monetary
 from pyocf.types.percentage import Percentage
 from pyocf.types.ratio import Ratio
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -26,18 +28,44 @@ class SAFEConversionMechanism(ConversionMechanism):
     inputs of the Y Combinator SAFE)
     """
 
-    type: Literal["SAFE_CONVERSION"] = "SAFE_CONVERSION"
-    # What is the percentage discount available upon conversion, if applicable?
-    # (decimal representation - e.g. 0.125 for 12.5%)
-    conversion_discount: Optional[Percentage]
-    # What is the valuation cap (if applicable)?
-    conversion_valuation_cap: Optional[Monetary]
-    # For cash proceeds calculation during a liquidity event.
-    exit_multiple: Optional[Ratio]
-    # Is this an MFN flavored SAFE?
-    conversion_mfn: bool
-    # Should the conversion amount be based on pre or post money capitalization
-    conversion_timing: ConversionTimingType
-    # How is company capitalization defined for purposes of conversion? If possible,
-    # include the legal language from the instrument.
-    capitalization_definition: Optional[str]
+    type: Annotated[
+        Literal["SAFE_CONVERSION"], Field(description="")
+    ] = "SAFE_CONVERSION"
+    conversion_discount: Optional[
+        Annotated[
+            Percentage,
+            Field(
+                description="What is the percentage discount available upon conversion, if applicable?"
+                "(decimal representation - e.g. 0.125 for 12.5%)"
+            ),
+        ]
+    ]
+    conversion_valuation_cap: Optional[
+        Annotated[
+            Monetary, Field(description="What is the valuation cap (if applicable)?")
+        ]
+    ]
+    exit_multiple: Optional[
+        Annotated[
+            Ratio,
+            Field(
+                description="For cash proceeds calculation during a liquidity event."
+            ),
+        ]
+    ]
+    conversion_mfn: Annotated[bool, Field(description="Is this an MFN flavored SAFE?")]
+    conversion_timing: Annotated[
+        ConversionTimingType,
+        Field(
+            description="Should the conversion amount be based on pre or post money capitalization"
+        ),
+    ]
+    capitalization_definition: Optional[
+        Annotated[
+            str,
+            Field(
+                description="How is company capitalization defined for purposes of conversion? If possible,"
+                "include the legal language from the instrument."
+            ),
+        ]
+    ]

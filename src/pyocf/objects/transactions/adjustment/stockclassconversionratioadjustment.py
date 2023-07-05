@@ -14,6 +14,7 @@ anti-dilution protection."""
 # ree/v1.0.0/schema/objects/transactions/adjustment/StockClassConversionRatioAdjus
 # tment.schema.json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.stockclasstransaction import (
     StockClassTransaction,
@@ -23,6 +24,7 @@ from pyocf.types.conversion_mechanisms.ratioconversionmechanism import (
     RatioConversionMechanism,
 )
 from pyocf.types.date import Date
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -36,19 +38,31 @@ class StockClassConversionRatioAdjustment(Object, Transaction, StockClassTransac
     anti-dilution protection.
     """
 
-    object_type: Literal[
-        "TX_STOCK_CLASS_CONVERSION_RATIO_ADJUSTMENT"
+    object_type: Annotated[
+        Literal["TX_STOCK_CLASS_CONVERSION_RATIO_ADJUSTMENT"], Field(description="")
     ] = "TX_STOCK_CLASS_CONVERSION_RATIO_ADJUSTMENT"
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Date on which the transaction occurred
-    date: Date
-    # Identifier of the StockClass object, a subject of this transaction
-    stock_class_id: str
-    # New conversion ratio mechanism describing new conversion price and conversion
-    # ratio in effect following a repricing - based on original issue price to new
-    # conversion price (provided in this transaction). For 2-for-1 split the numerator
-    # of the ratio is 2 and the denominator is 1.
-    new_ratio_conversion_mechanism: RatioConversionMechanism
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    stock_class_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the StockClass object, a subject of this transaction"
+        ),
+    ]
+    new_ratio_conversion_mechanism: Annotated[
+        RatioConversionMechanism,
+        Field(
+            description="New conversion ratio mechanism describing new conversion price and conversion"
+            "ratio in effect following a repricing - based on original issue price to new"
+            "conversion price (provided in this transaction). For 2-for-1 split the numerator"
+            "of the ratio is 2 and the denominator is 1."
+        ),
+    ]

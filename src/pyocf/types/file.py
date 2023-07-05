@@ -9,13 +9,15 @@
 # OCF/tree/v1.0.0/schema/types/File.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.md5 import Md5
+from typing import Annotated
 
 
 class File(BaseModel):
     """Type representation of a file"""
 
-    # Path to the file within the OCF container
-    filepath: str
-    # MD5 file checksum
-    md5: Md5
+    filepath: Annotated[
+        str, Field(description="Path to the file within the OCF container")
+    ]
+    md5: Annotated[Md5, Field(description="MD5 file checksum")]

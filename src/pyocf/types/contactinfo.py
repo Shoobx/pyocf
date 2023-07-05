@@ -9,17 +9,18 @@
 # OCF/tree/v1.0.0/schema/types/ContactInfo.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.email import Email
 from pyocf.types.name import Name
 from pyocf.types.phone import Phone
+from typing import Annotated
 
 
 class ContactInfo(BaseModel):
     """Type representation of a primary contact person for a stakeholder (e.g. a fund)"""
 
-    # Contact's name
-    name: Name
-    # Phone numbers to reach the contact at
-    phone_numbers: list[Phone]
-    # Emails to reach the contact at
-    emails: list[Email]
+    name: Annotated[Name, Field(description="Contact's name")]
+    phone_numbers: Annotated[
+        list[Phone], Field(description="Phone numbers to reach the contact at")
+    ]
+    emails: Annotated[list[Email], Field(description="Emails to reach the contact at")]

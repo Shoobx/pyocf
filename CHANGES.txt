@@ -4,7 +4,8 @@ Changes
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Made all properties have a Field with a description, to improve documentation.
+  No actual schema changes.
 
 
 1.0.0 (2023-05-10)

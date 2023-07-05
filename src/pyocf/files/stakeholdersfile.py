@@ -8,14 +8,19 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/files/StakeholdersFile.schema.json
 
+from pydantic import Field
 from pyocf.objects.stakeholder import Stakeholder
 from pyocf.primitives.files.file import FileObject
+from typing import Annotated
 from typing import Literal
 
 
 class StakeholdersFile(FileObject):
     """JSON containing file type identifier and list of stakeholders"""
 
-    # List of OCF stakeholder objects
-    items: list[Stakeholder]
-    file_type: Literal["OCF_STAKEHOLDERS_FILE"] = "OCF_STAKEHOLDERS_FILE"
+    items: Annotated[
+        list[Stakeholder], Field(description="List of OCF stakeholder objects")
+    ]
+    file_type: Annotated[
+        Literal["OCF_STAKEHOLDERS_FILE"], Field(description="")
+    ] = "OCF_STAKEHOLDERS_FILE"

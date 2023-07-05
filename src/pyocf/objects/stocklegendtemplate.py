@@ -8,7 +8,9 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/objects/StockLegendTemplate.schema.json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -16,12 +18,17 @@ from typing import Optional
 class StockLegendTemplate(Object):
     """Object describing a stock legend template"""
 
-    object_type: Literal["STOCK_LEGEND_TEMPLATE"] = "STOCK_LEGEND_TEMPLATE"
-    # Name for the stock legend template
-    name: str
-    # The full text of the stock legend
-    text: str
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
+    object_type: Annotated[
+        Literal["STOCK_LEGEND_TEMPLATE"], Field(description="")
+    ] = "STOCK_LEGEND_TEMPLATE"
+    name: Annotated[str, Field(description="Name for the stock legend template")]
+    text: Annotated[str, Field(description="The full text of the stock legend")]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]

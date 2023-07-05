@@ -10,7 +10,9 @@ corresponding country code (ISO-3166)"""
 # OCF/tree/v1.0.0/schema/types/TaxID.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.countrycode import CountryCode
+from typing import Annotated
 
 
 class TaxID(BaseModel):
@@ -18,7 +20,10 @@ class TaxID(BaseModel):
     corresponding country code (ISO-3166)
     """
 
-    # Tax identifier as string
-    tax_id: str
-    # Issuing country code (ISO 3166-1 alpha-2) for the tax identifier
-    country: CountryCode
+    tax_id: Annotated[str, Field(description="Tax identifier as string")]
+    country: Annotated[
+        CountryCode,
+        Field(
+            description="Issuing country code (ISO 3166-1 alpha-2) for the tax identifier"
+        ),
+    ]

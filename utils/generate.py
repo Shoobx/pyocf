@@ -25,6 +25,7 @@ def multilinewrap(text):
     # But that's the easy bit anyway. We let Black handle the code formatting.
     result = []
     for line in text.splitlines():
+        line = line.replace('"', '\\"').replace("'", "\\'")
         result.extend(textwrap.wrap(line, 80))
 
     return result
@@ -100,7 +101,8 @@ class Property:
 
     @property
     def description(self):
-        return multilinewrap(self.json.get("description", ""))
+        desc = "'\n         '".join(multilinewrap(self.json.get("description", "")))
+        return f"{desc}"
 
     def get_discriminator(self, json):
         if "anyOf" in json:
@@ -150,8 +152,11 @@ class Property:
             discriminator = self.get_discriminator(self.json)
             if discriminator is not None:
                 type_ = (
-                    f"Annotated[{type_}, " f"Field(discriminator='{discriminator}')]"
+                    f"Annotated[{type_}, "
+                    f"Field(discriminator='{discriminator}', description='{self.description}')]"
                 )
+        else:
+            type_ = f"Annotated[{type_}, " f"Field(description='{self.description}')]"
 
         if not self.required:
             type_ = f"Optional[{type_}]"

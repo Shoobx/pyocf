@@ -11,12 +11,14 @@ Common)"""
 # ree/v1.0.0/schema/types/conversion_mechanisms/RatioConversionMechanism.schema.js
 # on
 
+from pydantic import Field
 from pyocf.enums.roundingtype import RoundingType
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
 from pyocf.types.monetary import Monetary
 from pyocf.types.ratio import Ratio
+from typing import Annotated
 from typing import Literal
 
 
@@ -26,10 +28,21 @@ class RatioConversionMechanism(ConversionMechanism):
     Common)
     """
 
-    type: Literal["RATIO_CONVERSION"] = "RATIO_CONVERSION"
-    # What is the effective conversion price per share of this stock class?
-    conversion_price: Monetary
-    # One share of this stock class converts into this many target stock class shares
-    ratio: Ratio
-    # How should fractional shares be rounded?
-    rounding_type: RoundingType
+    type: Annotated[
+        Literal["RATIO_CONVERSION"], Field(description="")
+    ] = "RATIO_CONVERSION"
+    conversion_price: Annotated[
+        Monetary,
+        Field(
+            description="What is the effective conversion price per share of this stock class?"
+        ),
+    ]
+    ratio: Annotated[
+        Ratio,
+        Field(
+            description="One share of this stock class converts into this many target stock class shares"
+        ),
+    ]
+    rounding_type: Annotated[
+        RoundingType, Field(description="How should fractional shares be rounded?")
+    ]

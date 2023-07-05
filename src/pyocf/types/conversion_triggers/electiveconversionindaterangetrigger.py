@@ -33,24 +33,37 @@ class ElectiveConversionInDateRangeTrigger(ConversionTrigger):
     or before end_date.
     """
 
-    # Id for this conversion trigger, unique within list of ConversionTriggers in
-    # parent convertible issuance's `conversion_triggers` field.
-    trigger_id: str
-    type: Literal["ELECTIVE_IN_RANGE"] = "ELECTIVE_IN_RANGE"
-    # Start date of range (inclusive)
-    start_date: Date
-    # End date of range (inclusive)
-    end_date: Date
-    # Human-friendly nickname to describe the conversion right
-    nickname: Optional[str]
-    # Long-form description of the trigger
-    trigger_description: Optional[str]
-    # When the conditions of the trigger are met, how does the convertible convert?
+    trigger_id: Annotated[
+        str,
+        Field(
+            description="Id for this conversion trigger, unique within list of ConversionTriggers in"
+            "parent convertible issuance's `conversion_triggers` field."
+        ),
+    ]
+    type: Annotated[
+        Literal["ELECTIVE_IN_RANGE"], Field(description="")
+    ] = "ELECTIVE_IN_RANGE"
+    start_date: Annotated[Date, Field(description="Start date of range (inclusive)")]
+    end_date: Annotated[Date, Field(description="End date of range (inclusive)")]
+    nickname: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Human-friendly nickname to describe the conversion right"
+            ),
+        ]
+    ]
+    trigger_description: Optional[
+        Annotated[str, Field(description="Long-form description of the trigger")]
+    ]
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,
             WarrantConversionRight,
             StockClassConversionRight,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="When the conditions of the trigger are met, how does the convertible convert?",
+        ),
     ]

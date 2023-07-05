@@ -10,17 +10,33 @@
 # son
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 from typing import Optional
 
 
 class Reissuance(BaseModel):
     """Abstract object describing common properties to a reissuance of a security"""
 
-    # Identifier of the new security (or securities) issuance resulting from a
-    # reissuance
-    resulting_security_ids: list[str]
-    # When stock is reissued as a result of a stock split, this field contains id of
-    # the respective stock class split transaction. It is not set otherwise.
-    split_transaction_id: Optional[str]
-    # Free-form human-readable reason for stock reissuance
-    reason_text: Optional[str]
+    resulting_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Identifier of the new security (or securities) issuance resulting from a"
+            "reissuance"
+        ),
+    ]
+    split_transaction_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="When stock is reissued as a result of a stock split, this field contains id of"
+                "the respective stock class split transaction. It is not set otherwise."
+            ),
+        ]
+    ]
+    reason_text: Optional[
+        Annotated[
+            str,
+            Field(description="Free-form human-readable reason for stock reissuance"),
+        ]
+    ]
