@@ -29,24 +29,43 @@ from typing import Union
 class ElectiveConversionOnConditionTrigger(ConversionTrigger):
     """Type representation of elective trigger on fulfillment of a condition."""
 
-    # Legal language describing what conditions must be satisfied for the conversion
-    # to take place (ideally, this should be excerpted from the instrument where
-    # possible)
-    trigger_condition: str
-    # Id for this conversion trigger, unique within list of ConversionTriggers in
-    # parent convertible issuance's `conversion_triggers` field.
-    trigger_id: str
-    # Human-friendly nickname to describe the conversion right
-    nickname: Optional[str]
-    # Long-form description of the trigger
-    trigger_description: Optional[str]
-    type: Literal["ELECTIVE_ON_CONDITION"] = "ELECTIVE_ON_CONDITION"
-    # When the conditions of the trigger are met, how does the convertible convert?
+    trigger_condition: Annotated[
+        str,
+        Field(
+            description="Legal language describing what conditions must be satisfied for the conversion"
+            "to take place (ideally, this should be excerpted from the instrument where"
+            "possible)"
+        ),
+    ]
+    trigger_id: Annotated[
+        str,
+        Field(
+            description="Id for this conversion trigger, unique within list of ConversionTriggers in"
+            "parent convertible issuance's `conversion_triggers` field."
+        ),
+    ]
+    nickname: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Human-friendly nickname to describe the conversion right"
+            ),
+        ]
+    ]
+    trigger_description: Optional[
+        Annotated[str, Field(description="Long-form description of the trigger")]
+    ]
+    type: Annotated[
+        Literal["ELECTIVE_ON_CONDITION"], Field(description="")
+    ] = "ELECTIVE_ON_CONDITION"
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,
             WarrantConversionRight,
             StockClassConversionRight,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="When the conditions of the trigger are met, how does the convertible convert?",
+        ),
     ]

@@ -31,20 +31,36 @@ class WarrantConversionRight(ConversionRight):
     plan security
     """
 
-    type: Optional[Literal["WARRANT_CONVERSION_RIGHT"]] = "WARRANT_CONVERSION_RIGHT"
-    # What conversion mechanism applies to calculate the number of resulting stock
-    # class shares?
+    type: Optional[
+        Annotated[Literal["WARRANT_CONVERSION_RIGHT"], Field(description="")]
+    ] = "WARRANT_CONVERSION_RIGHT"
     conversion_mechanism: Annotated[
         Union[
             CustomConversionMechanism,
             PercentCapitalizationConversionMechanism,
             FixedAmountConversionMechanism,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="What conversion mechanism applies to calculate the number of resulting stock"
+            "class shares?",
+        ),
     ]
-    # Is this stock class potentially convertible into a future, as-yet undetermined
-    # stock class (e.g. Founder Preferred)
-    converts_to_future_round: Optional[bool]
-    # The identifier of the existing, known stock class this stock class can convert
-    # into
-    converts_to_stock_class_id: Optional[str]
+    converts_to_future_round: Optional[
+        Annotated[
+            bool,
+            Field(
+                description="Is this stock class potentially convertible into a future, as-yet undetermined"
+                "stock class (e.g. Founder Preferred)"
+            ),
+        ]
+    ]
+    converts_to_stock_class_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="The identifier of the existing, known stock class this stock class can convert"
+                "into"
+            ),
+        ]
+    ]

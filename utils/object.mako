@@ -24,8 +24,5 @@ class ${schema.name}(${schema.superclass_string}):
 
     % endif
     % for property in schema.properties:
-    % for line in property.description:
-    # ${line}
-    % endfor
     ${property.definition}
     % endfor

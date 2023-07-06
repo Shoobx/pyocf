@@ -10,6 +10,7 @@ class."""
 # ree/v1.0.0/schema/objects/transactions/adjustment/StockClassAuthorizedSharesAdju
 # stment.schema.json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.stockclasstransaction import (
     StockClassTransaction,
@@ -17,6 +18,7 @@ from pyocf.primitives.objects.transactions.stockclasstransaction import (
 from pyocf.primitives.objects.transactions.transaction import Transaction
 from pyocf.types.date import Date
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -26,19 +28,37 @@ class StockClassAuthorizedSharesAdjustment(Object, Transaction, StockClassTransa
     class.
     """
 
-    object_type: Literal[
-        "TX_STOCK_CLASS_AUTHORIZED_SHARES_ADJUSTMENT"
+    object_type: Annotated[
+        Literal["TX_STOCK_CLASS_AUTHORIZED_SHARES_ADJUSTMENT"], Field(description="")
     ] = "TX_STOCK_CLASS_AUTHORIZED_SHARES_ADJUSTMENT"
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Date on which the transaction occurred
-    date: Date
-    # Identifier of the StockClass object, a subject of this transaction
-    stock_class_id: str
-    # The new number of shares authorized for this stock class as of the event of this
-    # transaction
-    new_shares_authorized: Numeric
-    # Date on which the board approved the change to the stock class
-    board_approval_date: Optional[Date]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    stock_class_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the StockClass object, a subject of this transaction"
+        ),
+    ]
+    new_shares_authorized: Annotated[
+        Numeric,
+        Field(
+            description="The new number of shares authorized for this stock class as of the event of this"
+            "transaction"
+        ),
+    ]
+    board_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(
+                description="Date on which the board approved the change to the stock class"
+            ),
+        ]
+    ]

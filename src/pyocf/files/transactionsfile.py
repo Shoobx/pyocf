@@ -80,46 +80,50 @@ from typing import Union
 class TransactionsFile(FileObject):
     """JSON containing file type identifier and list transactions"""
 
-    # List of OCF transaction objects
-    items: list[
-        Annotated[
-            Union[
-                ConvertibleAcceptance,
-                PlanSecurityAcceptance,
-                StockAcceptance,
-                WarrantAcceptance,
-                ConvertibleCancellation,
-                PlanSecurityCancellation,
-                StockCancellation,
-                WarrantCancellation,
-                ConvertibleConversion,
-                StockConversion,
-                PlanSecurityExercise,
-                WarrantExercise,
-                ConvertibleIssuance,
-                PlanSecurityIssuance,
-                StockIssuance,
-                WarrantIssuance,
-                StockReissuance,
-                StockRepurchase,
-                PlanSecurityRelease,
-                ConvertibleRetraction,
-                PlanSecurityRetraction,
-                StockRetraction,
-                WarrantRetraction,
-                StockClassSplit,
-                StockClassConversionRatioAdjustment,
-                StockClassAuthorizedSharesAdjustment,
-                ConvertibleTransfer,
-                PlanSecurityTransfer,
-                StockTransfer,
-                WarrantTransfer,
-                VestingAcceleration,
-                VestingStart,
-                VestingEvent,
-                StockPlanPoolAdjustment,
-            ],
-            Field(discriminator="object_type"),
-        ]
+    items: Annotated[
+        list[
+            Annotated[
+                Union[
+                    ConvertibleAcceptance,
+                    PlanSecurityAcceptance,
+                    StockAcceptance,
+                    WarrantAcceptance,
+                    ConvertibleCancellation,
+                    PlanSecurityCancellation,
+                    StockCancellation,
+                    WarrantCancellation,
+                    ConvertibleConversion,
+                    StockConversion,
+                    PlanSecurityExercise,
+                    WarrantExercise,
+                    ConvertibleIssuance,
+                    PlanSecurityIssuance,
+                    StockIssuance,
+                    WarrantIssuance,
+                    StockReissuance,
+                    StockRepurchase,
+                    PlanSecurityRelease,
+                    ConvertibleRetraction,
+                    PlanSecurityRetraction,
+                    StockRetraction,
+                    WarrantRetraction,
+                    StockClassSplit,
+                    StockClassConversionRatioAdjustment,
+                    StockClassAuthorizedSharesAdjustment,
+                    ConvertibleTransfer,
+                    PlanSecurityTransfer,
+                    StockTransfer,
+                    WarrantTransfer,
+                    VestingAcceleration,
+                    VestingStart,
+                    VestingEvent,
+                    StockPlanPoolAdjustment,
+                ],
+                Field(discriminator="object_type"),
+            ]
+        ],
+        Field(description="List of OCF transaction objects"),
     ]
-    file_type: Literal["OCF_TRANSACTIONS_FILE"] = "OCF_TRANSACTIONS_FILE"
+    file_type: Annotated[
+        Literal["OCF_TRANSACTIONS_FILE"], Field(description="")
+    ] = "OCF_TRANSACTIONS_FILE"

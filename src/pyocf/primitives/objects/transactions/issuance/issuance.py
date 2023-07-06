@@ -9,22 +9,40 @@
 # ree/v1.0.0/schema/primitives/objects/transactions/issuance/Issuance.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.date import Date
 from pyocf.types.securityexemption import SecurityExemption
+from typing import Annotated
 from typing import Optional
 
 
 class Issuance(BaseModel):
     """Abstract object describing fields common to all issuance objects"""
 
-    # A custom ID for this security (e.g. CN-1.)
-    custom_id: str
-    # Identifier for the stakeholder that holds legal title to this security
-    stakeholder_id: str
-    # Date of board approval for the security
-    board_approval_date: Optional[Date]
-    # Unstructured text description of consideration provided in exchange for security
-    # issuance
-    consideration_text: Optional[str]
-    # List of security law exemptions (and applicable jurisdictions) for this security
-    security_law_exemptions: list[SecurityExemption]
+    custom_id: Annotated[
+        str, Field(description="A custom ID for this security (e.g. CN-1.)")
+    ]
+    stakeholder_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the stakeholder that holds legal title to this security"
+        ),
+    ]
+    board_approval_date: Optional[
+        Annotated[Date, Field(description="Date of board approval for the security")]
+    ]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "issuance"
+            ),
+        ]
+    ]
+    security_law_exemptions: Annotated[
+        list[SecurityExemption],
+        Field(
+            description="List of security law exemptions (and applicable jurisdictions) for this security"
+        ),
+    ]

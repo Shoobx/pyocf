@@ -9,6 +9,7 @@
 # ree/v1.0.0/schema/objects/transactions/adjustment/StockPlanPoolAdjustment.schema
 # .json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.stockplantransaction import (
     StockPlanTransaction,
@@ -16,6 +17,7 @@ from pyocf.primitives.objects.transactions.stockplantransaction import (
 from pyocf.primitives.objects.transactions.transaction import Transaction
 from pyocf.types.date import Date
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -23,24 +25,43 @@ from typing import Optional
 class StockPlanPoolAdjustment(Object, Transaction, StockPlanTransaction):
     """Object describing the change in the size of a Stock Plan pool."""
 
-    object_type: Literal[
-        "TX_STOCK_PLAN_POOL_ADJUSTMENT"
+    object_type: Annotated[
+        Literal["TX_STOCK_PLAN_POOL_ADJUSTMENT"], Field(description="")
     ] = "TX_STOCK_PLAN_POOL_ADJUSTMENT"
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Date on which the transaction occurred
-    date: Date
-    # Identifier of the Stock Plan object, a subject of this transaction
-    stock_plan_id: str
-    # Date on which board approved the change to the plan.
-    board_approval_date: Date
-    # This optional field tracks when the stockholders approved this change to the
-    # stock plan. This is intended for use by US companies that want to issue
-    # Incentive Stock Options (ISOs), as the issuing StockPlan must receive
-    # shareholder approval within a specified time frame in order to issue valid ISOs.
-    stockholder_approval_date: Optional[Date]
-    # The number of shares reserved in the pool for this stock plan by the Board or
-    # equivalent body as of the effective date of this pool adjustment.
-    shares_reserved: Numeric
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    stock_plan_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the Stock Plan object, a subject of this transaction"
+        ),
+    ]
+    board_approval_date: Annotated[
+        Date, Field(description="Date on which board approved the change to the plan.")
+    ]
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(
+                description="This optional field tracks when the stockholders approved this change to the"
+                "stock plan. This is intended for use by US companies that want to issue"
+                "Incentive Stock Options (ISOs), as the issuing StockPlan must receive"
+                "shareholder approval within a specified time frame in order to issue valid ISOs."
+            ),
+        ]
+    ]
+    shares_reserved: Annotated[
+        Numeric,
+        Field(
+            description="The number of shares reserved in the pool for this stock plan by the Board or"
+            "equivalent body as of the effective date of this pool adjustment."
+        ),
+    ]

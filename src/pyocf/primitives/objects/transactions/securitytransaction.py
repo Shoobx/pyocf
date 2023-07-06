@@ -11,6 +11,8 @@ with individual securities"""
 # n
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class SecurityTransaction(BaseModel):
@@ -18,11 +20,15 @@ class SecurityTransaction(BaseModel):
     with individual securities
     """
 
-    # Identifier for the security (stock, plan security, warrant, or convertible) by
-    # which it can be referenced by other transaction objects. Note that while this
-    # identifier is created with an issuance object, it should be different than the
-    # issuance object's `id` field which identifies the issuance transaction object
-    # itself. All future transactions on the security (e.g. acceptance, transfer,
-    # cancel, etc.) must reference this `security_id` to qualify which security the
-    # transaction applies to.
-    security_id: str
+    security_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the security (stock, plan security, warrant, or convertible) by"
+            "which it can be referenced by other transaction objects. Note that while this"
+            "identifier is created with an issuance object, it should be different than the"
+            "issuance object's `id` field which identifies the issuance transaction object"
+            "itself. All future transactions on the security (e.g. acceptance, transfer,"
+            "cancel, etc.) must reference this `security_id` to qualify which security the"
+            "transaction applies to."
+        ),
+    ]

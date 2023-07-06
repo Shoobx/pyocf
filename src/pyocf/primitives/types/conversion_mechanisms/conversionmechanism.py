@@ -10,11 +10,15 @@
 # ema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.conversionmechanismtype import ConversionMechanismType
+from typing import Annotated
 
 
 class ConversionMechanism(BaseModel):
     """Abstract type setting forth required field(s) for ALL conversion mechanism types"""
 
-    # Identifies the specific conversion trigger type
-    type: ConversionMechanismType
+    type: Annotated[
+        ConversionMechanismType,
+        Field(description="Identifies the specific conversion trigger type"),
+    ]

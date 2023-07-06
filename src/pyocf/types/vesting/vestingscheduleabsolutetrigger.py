@@ -8,16 +8,21 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/types/vesting/VestingScheduleAbsoluteTrigger.schema.json
 
+from pydantic import Field
 from pyocf.primitives.types.vesting.vestingconditiontrigger import (
     VestingConditionTrigger,
 )
 from pyocf.types.date import Date
+from typing import Annotated
 from typing import Literal
 
 
 class VestingScheduleAbsoluteTrigger(VestingConditionTrigger):
     """Describes a vesting condition satisfied on an absolute date."""
 
-    type: Literal["VESTING_SCHEDULE_ABSOLUTE"] = "VESTING_SCHEDULE_ABSOLUTE"
-    # The date on which this condition triggers.
-    date: Date
+    type: Annotated[
+        Literal["VESTING_SCHEDULE_ABSOLUTE"], Field(description="")
+    ] = "VESTING_SCHEDULE_ABSOLUTE"
+    date: Annotated[
+        Date, Field(description="The date on which this condition triggers.")
+    ]

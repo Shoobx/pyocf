@@ -10,21 +10,37 @@
 # son
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.monetary import Monetary
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Optional
 
 
 class Repurchase(BaseModel):
     """Abstract object describing common properties to a repurchase transaction"""
 
-    # Repurchase price per share of the stock
-    price: Monetary
-    # Number of shares of stock repurchased
-    quantity: Numeric
-    # Unstructured text description of consideration provided in exchange for security
-    # repurchase
-    consideration_text: Optional[str]
-    # Identifier for the security that holds the remainder balance (for partial
-    # repurchases)
-    balance_security_id: Optional[str]
+    price: Annotated[
+        Monetary, Field(description="Repurchase price per share of the stock")
+    ]
+    quantity: Annotated[
+        Numeric, Field(description="Number of shares of stock repurchased")
+    ]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "repurchase"
+            ),
+        ]
+    ]
+    balance_security_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier for the security that holds the remainder balance (for partial"
+                "repurchases)"
+            ),
+        ]
+    ]

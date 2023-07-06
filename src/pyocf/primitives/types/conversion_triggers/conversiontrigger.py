@@ -30,22 +30,39 @@ class ConversionTrigger(BaseModel):
     types.
     """
 
-    # When the trigger condition is met, is the conversion automatic, elective or
-    # automatic with an elective right not to convert
-    type: ConversionTriggerType
-    # Id for this conversion trigger, unique within list of ConversionTriggers in
-    # parent convertible issuance's `conversion_triggers` field.
-    trigger_id: str
-    # Human-friendly nickname to describe the conversion right
-    nickname: Optional[str]
-    # Long-form description of the trigger
-    trigger_description: Optional[str]
-    # When the conditions of the trigger are met, how does the convertible convert?
+    type: Annotated[
+        ConversionTriggerType,
+        Field(
+            description="When the trigger condition is met, is the conversion automatic, elective or"
+            "automatic with an elective right not to convert"
+        ),
+    ]
+    trigger_id: Annotated[
+        str,
+        Field(
+            description="Id for this conversion trigger, unique within list of ConversionTriggers in"
+            "parent convertible issuance's `conversion_triggers` field."
+        ),
+    ]
+    nickname: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Human-friendly nickname to describe the conversion right"
+            ),
+        ]
+    ]
+    trigger_description: Optional[
+        Annotated[str, Field(description="Long-form description of the trigger")]
+    ]
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,
             WarrantConversionRight,
             StockClassConversionRight,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="When the conditions of the trigger are met, how does the convertible convert?",
+        ),
     ]

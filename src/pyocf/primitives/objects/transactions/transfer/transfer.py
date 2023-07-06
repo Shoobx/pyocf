@@ -9,18 +9,36 @@
 # ree/v1.0.0/schema/primitives/objects/transactions/transfer/Transfer.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 from typing import Optional
 
 
 class Transfer(BaseModel):
     """Abstract object describing a security transfer or secondary sale transaction"""
 
-    # Unstructured text description of consideration provided in exchange for security
-    # transfer
-    consideration_text: Optional[str]
-    # Identifier for the security that holds the remainder balance (for partial
-    # transfers)
-    balance_security_id: Optional[str]
-    # Array of identifiers for new security (or securities) created as a result of the
-    # transaction
-    resulting_security_ids: list[str]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "transfer"
+            ),
+        ]
+    ]
+    balance_security_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier for the security that holds the remainder balance (for partial"
+                "transfers)"
+            ),
+        ]
+    ]
+    resulting_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Array of identifiers for new security (or securities) created as a result of the"
+            "transaction"
+        ),
+    ]

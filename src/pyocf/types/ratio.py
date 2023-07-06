@@ -10,7 +10,9 @@ denominator numeric values"""
 # OCF/tree/v1.0.0/schema/types/Ratio.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 
 
 class Ratio(BaseModel):
@@ -18,9 +20,17 @@ class Ratio(BaseModel):
     denominator numeric values
     """
 
-    # Numerator of the ratio, i.e. the ratio of A to B (A:B) can be expressed as a
-    # fraction (A/B), where A is the numerator
-    numerator: Numeric
-    # Denominator of the ratio, i.e. the ratio of A to B (A:B) can be expressed as a
-    # fraction (A/B), where B is the denominator
-    denominator: Numeric
+    numerator: Annotated[
+        Numeric,
+        Field(
+            description="Numerator of the ratio, i.e. the ratio of A to B (A:B) can be expressed as a"
+            "fraction (A/B), where A is the numerator"
+        ),
+    ]
+    denominator: Annotated[
+        Numeric,
+        Field(
+            description="Denominator of the ratio, i.e. the ratio of A to B (A:B) can be expressed as a"
+            "fraction (A/B), where B is the denominator"
+        ),
+    ]

@@ -9,26 +9,45 @@
 # ree/v1.0.0/schema/primitives/objects/transactions/release/Release.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.date import Date
 from pyocf.types.monetary import Monetary
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Optional
 
 
 class Release(BaseModel):
     """Abstract object describing fields common to all release transaction objects"""
 
-    # The settlement date for the shares released, typically after the release
-    # transaction date
-    settlement_date: Date
-    # The release price used to determine the value of the security at the time of
-    # release
-    release_price: Monetary
-    # Quantity of shares released
-    quantity: Numeric
-    # Unstructured text description of consideration provided in exchange for security
-    # release
-    consideration_text: Optional[str]
-    # Identifier of the new security (or securities) issuance resulting from a release
-    # transaction
-    resulting_security_ids: list[str]
+    settlement_date: Annotated[
+        Date,
+        Field(
+            description="The settlement date for the shares released, typically after the release"
+            "transaction date"
+        ),
+    ]
+    release_price: Annotated[
+        Monetary,
+        Field(
+            description="The release price used to determine the value of the security at the time of"
+            "release"
+        ),
+    ]
+    quantity: Annotated[Numeric, Field(description="Quantity of shares released")]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "release"
+            ),
+        ]
+    ]
+    resulting_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Identifier of the new security (or securities) issuance resulting from a release"
+            "transaction"
+        ),
+    ]

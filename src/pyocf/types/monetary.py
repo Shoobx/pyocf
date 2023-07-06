@@ -9,14 +9,14 @@
 # OCF/tree/v1.0.0/schema/types/Monetary.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.currencycode import CurrencyCode
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 
 
 class Monetary(BaseModel):
     """Type representation of an amount of money in a specified currency"""
 
-    # Numeric amount of money
-    amount: Numeric
-    # ISO 4217 currency code
-    currency: CurrencyCode
+    amount: Annotated[Numeric, Field(description="Numeric amount of money")]
+    currency: Annotated[CurrencyCode, Field(description="ISO 4217 currency code")]

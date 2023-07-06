@@ -8,6 +8,7 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/objects/Stakeholder.schema.json
 
+from pydantic import Field
 from pyocf.enums.stakeholderrelationshiptype import StakeholderRelationshipType
 from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.primitives.objects.object import Object
@@ -15,6 +16,7 @@ from pyocf.types.address import Address
 from pyocf.types.contactinfo import ContactInfo
 from pyocf.types.name import Name
 from pyocf.types.taxid import TaxID
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -22,23 +24,48 @@ from typing import Optional
 class Stakeholder(Object):
     """Object describing a stakeholder"""
 
-    object_type: Literal["STAKEHOLDER"] = "STAKEHOLDER"
-    # Name for the stakeholder
-    name: Name
-    # Distinguish individuals from institutions
-    stakeholder_type: StakeholderType
-    # This might be any sort of id assigned to the stakeholder by the issuer, such as
-    # an internal company ID for an employee stakeholder
-    issuer_assigned_id: Optional[str]
-    # What is the current relationship of the stakeholder to the issuer?
-    current_relationship: Optional[StakeholderRelationshipType]
-    # The primary contact info for the stakeholder
-    primary_contact: Optional[ContactInfo]
-    # Addresses for the stakeholder
-    addresses: Optional[list[Address]]
-    # The tax ids for this stakeholder
-    tax_ids: Optional[list[TaxID]]
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
+    object_type: Annotated[
+        Literal["STAKEHOLDER"], Field(description="")
+    ] = "STAKEHOLDER"
+    name: Annotated[Name, Field(description="Name for the stakeholder")]
+    stakeholder_type: Annotated[
+        StakeholderType, Field(description="Distinguish individuals from institutions")
+    ]
+    issuer_assigned_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="This might be any sort of id assigned to the stakeholder by the issuer, such as"
+                "an internal company ID for an employee stakeholder"
+            ),
+        ]
+    ]
+    current_relationship: Optional[
+        Annotated[
+            StakeholderRelationshipType,
+            Field(
+                description="What is the current relationship of the stakeholder to the issuer?"
+            ),
+        ]
+    ]
+    primary_contact: Optional[
+        Annotated[
+            ContactInfo,
+            Field(description="The primary contact info for the stakeholder"),
+        ]
+    ]
+    addresses: Optional[
+        Annotated[list[Address], Field(description="Addresses for the stakeholder")]
+    ]
+    tax_ids: Optional[
+        Annotated[list[TaxID], Field(description="The tax ids for this stakeholder")]
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]

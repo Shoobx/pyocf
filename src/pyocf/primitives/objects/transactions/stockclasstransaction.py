@@ -11,6 +11,8 @@ affect the stock class"""
 # son
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class StockClassTransaction(BaseModel):
@@ -18,5 +20,9 @@ class StockClassTransaction(BaseModel):
     affect the stock class
     """
 
-    # Identifier of the StockClass object, a subject of this transaction
-    stock_class_id: str
+    stock_class_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the StockClass object, a subject of this transaction"
+        ),
+    ]

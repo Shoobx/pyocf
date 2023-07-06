@@ -32,20 +32,33 @@ class UnspecifiedConversionTrigger(ConversionTrigger):
     conversion of a given security.
     """
 
-    # Id for this conversion trigger, unique within list of ConversionTriggers in
-    # parent convertible issuance's `conversion_triggers` field.
-    trigger_id: str
-    # Human-friendly nickname to describe the conversion right
-    nickname: Optional[str]
-    # Long-form description of the trigger
-    trigger_description: Optional[str]
-    type: Literal["UNSPECIFIED"] = "UNSPECIFIED"
-    # When the conditions of the trigger are met, how does the convertible convert?
+    trigger_id: Annotated[
+        str,
+        Field(
+            description="Id for this conversion trigger, unique within list of ConversionTriggers in"
+            "parent convertible issuance's `conversion_triggers` field."
+        ),
+    ]
+    nickname: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Human-friendly nickname to describe the conversion right"
+            ),
+        ]
+    ]
+    trigger_description: Optional[
+        Annotated[str, Field(description="Long-form description of the trigger")]
+    ]
+    type: Annotated[Literal["UNSPECIFIED"], Field(description="")] = "UNSPECIFIED"
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,
             WarrantConversionRight,
             StockClassConversionRight,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="When the conditions of the trigger are met, how does the convertible convert?",
+        ),
     ]

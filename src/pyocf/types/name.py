@@ -9,15 +9,20 @@
 # OCF/tree/v1.0.0/schema/types/Name.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 from typing import Optional
 
 
 class Name(BaseModel):
     """Type comprising of multiple name components"""
 
-    # Legal full name for the individual/institution
-    legal_name: str
-    # First/given name for the individual
-    first_name: Optional[str]
-    # Last/family name for the individual
-    last_name: Optional[str]
+    legal_name: Annotated[
+        str, Field(description="Legal full name for the individual/institution")
+    ]
+    first_name: Optional[
+        Annotated[str, Field(description="First/given name for the individual")]
+    ]
+    last_name: Optional[
+        Annotated[str, Field(description="Last/family name for the individual")]
+    ]

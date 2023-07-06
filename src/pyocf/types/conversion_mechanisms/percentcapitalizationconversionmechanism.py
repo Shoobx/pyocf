@@ -11,10 +11,12 @@ capitalization at some point in time)"""
 # ree/v1.0.0/schema/types/conversion_mechanisms/PercentCapitalizationConversionMec
 # hanism.schema.json
 
+from pydantic import Field
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
 from pyocf.types.percentage import Percentage
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -25,11 +27,21 @@ class PercentCapitalizationConversionMechanism(ConversionMechanism):
     capitalization at some point in time)
     """
 
-    type: Literal[
-        "FIXED_PERCENT_OF_CAPITALIZATION_CONVERSION"
+    type: Annotated[
+        Literal["FIXED_PERCENT_OF_CAPITALIZATION_CONVERSION"], Field(description="")
     ] = "FIXED_PERCENT_OF_CAPITALIZATION_CONVERSION"
-    # What percentage of the company capitalization does this convert to
-    converts_to_percent: Percentage
-    # How is company capitalization defined for purposes of conversion? If possible,
-    # include the legal language from the instrument.
-    capitalization_definition: Optional[str]
+    converts_to_percent: Annotated[
+        Percentage,
+        Field(
+            description="What percentage of the company capitalization does this convert to"
+        ),
+    ]
+    capitalization_definition: Optional[
+        Annotated[
+            str,
+            Field(
+                description="How is company capitalization defined for purposes of conversion? If possible,"
+                "include the legal language from the instrument."
+            ),
+        ]
+    ]

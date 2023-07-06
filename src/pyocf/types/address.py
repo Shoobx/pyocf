@@ -9,25 +9,38 @@
 # OCF/tree/v1.0.0/schema/types/Address.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.addresstype import AddressType
 from pyocf.types.countrycode import CountryCode
 from pyocf.types.countrysubdivisioncode import CountrySubdivisionCode
+from typing import Annotated
 from typing import Optional
 
 
 class Address(BaseModel):
     """Type representation of an address"""
 
-    # What type of address is this (e.g. legal address, contact address, etc.)
-    address_type: AddressType
-    # Street address (multi-line string)
-    street_suite: Optional[str]
-    # City
-    city: Optional[str]
-    # State, province, or equivalent identifier required for an address in this
-    # country
-    country_subdivision: Optional[CountrySubdivisionCode]
-    # Country code for this address (ISO 3166-1 alpha-2)
-    country: CountryCode
-    # Address postal code
-    postal_code: Optional[str]
+    address_type: Annotated[
+        AddressType,
+        Field(
+            description="What type of address is this (e.g. legal address, contact address, etc.)"
+        ),
+    ]
+    street_suite: Optional[
+        Annotated[str, Field(description="Street address (multi-line string)")]
+    ]
+    city: Optional[Annotated[str, Field(description="City")]]
+    country_subdivision: Optional[
+        Annotated[
+            CountrySubdivisionCode,
+            Field(
+                description="State, province, or equivalent identifier required for an address in this"
+                "country"
+            ),
+        ]
+    ]
+    country: Annotated[
+        CountryCode,
+        Field(description="Country code for this address (ISO 3166-1 alpha-2)"),
+    ]
+    postal_code: Optional[Annotated[str, Field(description="Address postal code")]]

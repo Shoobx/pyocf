@@ -49,57 +49,103 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
     stakeholder
     """
 
-    object_type: Literal["TX_WARRANT_ISSUANCE"] = "TX_WARRANT_ISSUANCE"
-    # Quantity of shares the warrant is exercisable for
-    quantity: Numeric
-    # The exercise price of the warrant
-    exercise_price: Monetary
-    # Actual purchase price of the warrant (sum up purported value of all
-    # consideration, including in-kind)
-    purchase_price: Monetary
-    # In event the Warrant can convert due to trigger events (e.g. Maturity, Next
-    # Qualified Financing, Change of Control, at Election of Holder), what are the
-    # terms?
-    exercise_triggers: list[
+    object_type: Annotated[
+        Literal["TX_WARRANT_ISSUANCE"], Field(description="")
+    ] = "TX_WARRANT_ISSUANCE"
+    quantity: Annotated[
+        Numeric, Field(description="Quantity of shares the warrant is exercisable for")
+    ]
+    exercise_price: Annotated[
+        Monetary, Field(description="The exercise price of the warrant")
+    ]
+    purchase_price: Annotated[
+        Monetary,
+        Field(
+            description="Actual purchase price of the warrant (sum up purported value of all"
+            "consideration, including in-kind)"
+        ),
+    ]
+    exercise_triggers: Annotated[
+        list[
+            Annotated[
+                Union[
+                    AutomaticConversionOnConditionTrigger,
+                    AutomaticConversionOnDateTrigger,
+                    ElectiveConversionAtWillTrigger,
+                    ElectiveConversionInDateRangeTrigger,
+                    ElectiveConversionOnConditionTrigger,
+                    UnspecifiedConversionTrigger,
+                ],
+                Field(discriminator="type"),
+            ]
+        ],
+        Field(
+            description="In event the Warrant can convert due to trigger events (e.g. Maturity, Next"
+            "Qualified Financing, Change of Control, at Election of Holder), what are the"
+            "terms?"
+        ),
+    ]
+    warrant_expiration_date: Optional[
         Annotated[
-            Union[
-                AutomaticConversionOnConditionTrigger,
-                AutomaticConversionOnDateTrigger,
-                ElectiveConversionAtWillTrigger,
-                ElectiveConversionInDateRangeTrigger,
-                ElectiveConversionOnConditionTrigger,
-                UnspecifiedConversionTrigger,
-            ],
-            Field(discriminator="type"),
+            Date,
+            Field(description="What is expiration date of the warrant (if applicable)"),
         ]
     ]
-    # What is expiration date of the warrant (if applicable)
-    warrant_expiration_date: Optional[Date]
-    # Identifier of the VestingTerms to which this security is subject. If not
-    # present, security is fully vested on issuance.
-    vesting_terms_id: Optional[str]
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Identifier for the security (stock, plan security, warrant, or convertible) by
-    # which it can be referenced by other transaction objects. Note that while this
-    # identifier is created with an issuance object, it should be different than the
-    # issuance object's `id` field which identifies the issuance transaction object
-    # itself. All future transactions on the security (e.g. acceptance, transfer,
-    # cancel, etc.) must reference this `security_id` to qualify which security the
-    # transaction applies to.
-    security_id: str
-    # Date on which the transaction occurred
-    date: Date
-    # A custom ID for this security (e.g. CN-1.)
-    custom_id: str
-    # Identifier for the stakeholder that holds legal title to this security
-    stakeholder_id: str
-    # Date of board approval for the security
-    board_approval_date: Optional[Date]
-    # Unstructured text description of consideration provided in exchange for security
-    # issuance
-    consideration_text: Optional[str]
-    # List of security law exemptions (and applicable jurisdictions) for this security
-    security_law_exemptions: list[SecurityExemption]
+    vesting_terms_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier of the VestingTerms to which this security is subject. If not"
+                "present, security is fully vested on issuance."
+            ),
+        ]
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    security_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the security (stock, plan security, warrant, or convertible) by"
+            "which it can be referenced by other transaction objects. Note that while this"
+            "identifier is created with an issuance object, it should be different than the"
+            "issuance object's `id` field which identifies the issuance transaction object"
+            "itself. All future transactions on the security (e.g. acceptance, transfer,"
+            "cancel, etc.) must reference this `security_id` to qualify which security the"
+            "transaction applies to."
+        ),
+    ]
+    date: Annotated[Date, Field(description="Date on which the transaction occurred")]
+    custom_id: Annotated[
+        str, Field(description="A custom ID for this security (e.g. CN-1.)")
+    ]
+    stakeholder_id: Annotated[
+        str,
+        Field(
+            description="Identifier for the stakeholder that holds legal title to this security"
+        ),
+    ]
+    board_approval_date: Optional[
+        Annotated[Date, Field(description="Date of board approval for the security")]
+    ]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "issuance"
+            ),
+        ]
+    ]
+    security_law_exemptions: Annotated[
+        list[SecurityExemption],
+        Field(
+            description="List of security law exemptions (and applicable jurisdictions) for this security"
+        ),
+    ]

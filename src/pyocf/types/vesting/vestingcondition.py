@@ -28,18 +28,28 @@ from typing import Union
 class VestingCondition(BaseModel):
     """Describes condition / triggers to be satisfied for vesting to occur"""
 
-    # Reference identifier for this condition
-    id: str
-    # Detailed description of the condition
-    description: Optional[str]
-    # If specified, the fractional part of the whole security that is vested, e.g.
-    # 25:100 for 25%. Use `quantity` for a fixed vesting amount.
-    portion: Optional[VestingConditionPortion]
-    # If specified, the fixed amount of the whole security to vest, e.g. 10000 shares.
-    # Use `portion` for a proportional vesting amount.
-    quantity: Optional[Numeric]
-    # Describes how this vesting condition is met, resulting in vesting the specified
-    # tranche of shares
+    id: Annotated[str, Field(description="Reference identifier for this condition")]
+    description: Optional[
+        Annotated[str, Field(description="Detailed description of the condition")]
+    ]
+    portion: Optional[
+        Annotated[
+            VestingConditionPortion,
+            Field(
+                description="If specified, the fractional part of the whole security that is vested, e.g."
+                "25:100 for 25%. Use `quantity` for a fixed vesting amount."
+            ),
+        ]
+    ]
+    quantity: Optional[
+        Annotated[
+            Numeric,
+            Field(
+                description="If specified, the fixed amount of the whole security to vest, e.g. 10000 shares."
+                "Use `portion` for a proportional vesting amount."
+            ),
+        ]
+    ]
     trigger: Annotated[
         Union[
             VestingStartTrigger,
@@ -47,10 +57,18 @@ class VestingCondition(BaseModel):
             VestingScheduleRelativeTrigger,
             VestingEventTrigger,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="Describes how this vesting condition is met, resulting in vesting the specified"
+            "tranche of shares",
+        ),
     ]
-    # List of ALL VestingCondition IDs that can trigger after this one. If there are
-    # none, use an empty array.
-    # Conditions should be in priority order in the array, ordered from the highest
-    # priority to the lowest.
-    next_condition_ids: list[str]
+    next_condition_ids: Annotated[
+        list[str],
+        Field(
+            description="List of ALL VestingCondition IDs that can trigger after this one. If there are"
+            "none, use an empty array."
+            "Conditions should be in priority order in the array, ordered from the highest"
+            "priority to the lowest."
+        ),
+    ]

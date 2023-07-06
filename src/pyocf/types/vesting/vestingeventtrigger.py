@@ -9,9 +9,11 @@ occurs"""
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/types/vesting/VestingEventTrigger.schema.json
 
+from pydantic import Field
 from pyocf.primitives.types.vesting.vestingconditiontrigger import (
     VestingConditionTrigger,
 )
+from typing import Annotated
 from typing import Literal
 
 
@@ -20,4 +22,4 @@ class VestingEventTrigger(VestingConditionTrigger):
     occurs
     """
 
-    type: Literal["VESTING_EVENT"] = "VESTING_EVENT"
+    type: Annotated[Literal["VESTING_EVENT"], Field(description="")] = "VESTING_EVENT"

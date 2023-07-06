@@ -9,16 +9,22 @@
 # OCF/tree/v1.0.0/schema/primitives/objects/Object.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.objecttype import ObjectType
+from typing import Annotated
 from typing import Optional
 
 
 class Object(BaseModel):
     """Abstract object to be extended by all other objects"""
 
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
-    # Object type field
-    object_type: ObjectType
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]
+    object_type: Annotated[ObjectType, Field(description="Object type field")]

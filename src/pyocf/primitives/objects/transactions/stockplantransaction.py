@@ -11,6 +11,8 @@ affect a stock plan"""
 # on
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class StockPlanTransaction(BaseModel):
@@ -18,5 +20,9 @@ class StockPlanTransaction(BaseModel):
     affect a stock plan
     """
 
-    # Identifier of the Stock Plan object, a subject of this transaction
-    stock_plan_id: str
+    stock_plan_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the Stock Plan object, a subject of this transaction"
+        ),
+    ]

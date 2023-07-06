@@ -9,7 +9,9 @@ Terms"""
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/types/vesting/VestingPeriodInDays.schema.json
 
+from pydantic import Field
 from pyocf.primitives.types.vesting.vestingperiod import VestingPeriod
+from typing import Annotated
 from typing import Literal
 
 
@@ -18,10 +20,18 @@ class VestingPeriodInDays(VestingPeriod):
     Terms
     """
 
-    # The quantity of `type` units of time; e.g. for 3 months, this would be `3`; for
-    # 30 days, this would be `30`
-    length: int
-    type: Literal["DAYS"] = "DAYS"
-    # The number of times this vesting period triggers. If vesting occurs monthly for
-    # 36 months, for example, this would be `36`
-    occurrences: int
+    length: Annotated[
+        int,
+        Field(
+            description="The quantity of `type` units of time; e.g. for 3 months, this would be `3`; for"
+            "30 days, this would be `30`"
+        ),
+    ]
+    type: Annotated[Literal["DAYS"], Field(description="")] = "DAYS"
+    occurrences: Annotated[
+        int,
+        Field(
+            description="The number of times this vesting period triggers. If vesting occurs monthly for"
+            "36 months, for example, this would be `36`"
+        ),
+    ]

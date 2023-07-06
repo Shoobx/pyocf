@@ -9,10 +9,12 @@ Stock Class"""
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
 # ree/v1.0.0/schema/types/conversion_rights/StockClassConversionRight.schema.json
 
+from pydantic import Field
 from pyocf.primitives.types.conversion_rights.conversionright import ConversionRight
 from pyocf.types.conversion_mechanisms.ratioconversionmechanism import (
     RatioConversionMechanism,
 )
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -23,12 +25,24 @@ class StockClassConversionRight(ConversionRight):
     """
 
     type: Optional[
-        Literal["STOCK_CLASS_CONVERSION_RIGHT"]
+        Annotated[Literal["STOCK_CLASS_CONVERSION_RIGHT"], Field(description="")]
     ] = "STOCK_CLASS_CONVERSION_RIGHT"
-    conversion_mechanism: RatioConversionMechanism
-    # Is this stock class potentially convertible into a future, as-yet undetermined
-    # stock class (e.g. Founder Preferred)
-    converts_to_future_round: Optional[bool]
-    # The identifier of the existing, known stock class this stock class can convert
-    # into
-    converts_to_stock_class_id: Optional[str]
+    conversion_mechanism: Annotated[RatioConversionMechanism, Field(description="")]
+    converts_to_future_round: Optional[
+        Annotated[
+            bool,
+            Field(
+                description="Is this stock class potentially convertible into a future, as-yet undetermined"
+                "stock class (e.g. Founder Preferred)"
+            ),
+        ]
+    ]
+    converts_to_stock_class_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="The identifier of the existing, known stock class this stock class can convert"
+                "into"
+            ),
+        ]
+    ]

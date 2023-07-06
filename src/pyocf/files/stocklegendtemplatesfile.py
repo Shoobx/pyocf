@@ -8,16 +8,20 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/files/StockLegendTemplatesFile.schema.json
 
+from pydantic import Field
 from pyocf.objects.stocklegendtemplate import StockLegendTemplate
 from pyocf.primitives.files.file import FileObject
+from typing import Annotated
 from typing import Literal
 
 
 class StockLegendTemplatesFile(FileObject):
     """JSON containing file type identifier and list of stock legend templates"""
 
-    # List of OCF stock legend template objects
-    items: list[StockLegendTemplate]
-    file_type: Literal[
-        "OCF_STOCK_LEGEND_TEMPLATES_FILE"
+    items: Annotated[
+        list[StockLegendTemplate],
+        Field(description="List of OCF stock legend template objects"),
+    ]
+    file_type: Annotated[
+        Literal["OCF_STOCK_LEGEND_TEMPLATES_FILE"], Field(description="")
     ] = "OCF_STOCK_LEGEND_TEMPLATES_FILE"

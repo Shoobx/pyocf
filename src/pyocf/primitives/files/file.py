@@ -9,11 +9,17 @@
 # OCF/tree/v1.0.0/schema/primitives/files/File.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.filetype import FileType
+from typing import Annotated
 
 
 class FileObject(BaseModel):
     """Abstract file to be extended by all other files"""
 
-    # File type field (used to select proper schema for validation)
-    file_type: FileType
+    file_type: Annotated[
+        FileType,
+        Field(
+            description="File type field (used to select proper schema for validation)"
+        ),
+    ]

@@ -10,6 +10,8 @@ unstructured description and a country code for ease of processing and analysis"
 # OCF/tree/v1.0.0/schema/types/SecurityExemption.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 
 
 class SecurityExemption(BaseModel):
@@ -17,10 +19,18 @@ class SecurityExemption(BaseModel):
     unstructured description and a country code for ease of processing and analysis
     """
 
-    # Description of an applicable security law exemption governing the issuance
-    description: str
-    # Jurisdiction of the applicable law. This is a free-text field as there is no
-    # known enumeration of all global legal jurisdictions, but please try to use ISO
-    # 3166-1 alpha-2, if appropriate. Otherwise, we rely on implementers to choose an
-    # appropriate value here.
-    jurisdiction: str
+    description: Annotated[
+        str,
+        Field(
+            description="Description of an applicable security law exemption governing the issuance"
+        ),
+    ]
+    jurisdiction: Annotated[
+        str,
+        Field(
+            description="Jurisdiction of the applicable law. This is a free-text field as there is no"
+            "known enumeration of all global legal jurisdictions, but please try to use ISO"
+            "3166-1 alpha-2, if appropriate. Otherwise, we rely on implementers to choose an"
+            "appropriate value here."
+        ),
+    ]

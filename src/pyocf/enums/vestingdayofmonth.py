@@ -1,5 +1,5 @@
-"""Enumeration representing a vesting "day of month". Since not all months have 29,
-30, or 31 days, this enum requires those values to also specify an overflow
+"""Enumeration representing a vesting \"day of month\". Since not all months have
+29, 30, or 31 days, this enum requires those values to also specify an overflow
 behavior.
  - `01` - `28` : Day 1, 2... 28 of the month; e.g. `03` means vesting occurs on
 the 3rd of the month.
@@ -25,8 +25,8 @@ from enum import Enum
 
 
 class VestingDayOfMonth(Enum):
-    """Enumeration representing a vesting "day of month". Since not all months have 29,
-    30, or 31 days, this enum requires those values to also specify an overflow
+    """Enumeration representing a vesting \"day of month\". Since not all months have
+    29, 30, or 31 days, this enum requires those values to also specify an overflow
     behavior.
      - `01` - `28` : Day 1, 2... 28 of the month; e.g. `03` means vesting occurs on
     the 3rd of the month.

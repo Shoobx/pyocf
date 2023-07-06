@@ -9,13 +9,16 @@
 # OCF/tree/v1.0.0/schema/types/Email.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.enums.emailtype import EmailType
+from typing import Annotated
 
 
 class Email(BaseModel):
     """Type representation of an email address"""
 
-    # Type of e-mail address (e.g. personal or business)
-    email_type: EmailType
-    # A valid e-mail address
-    email_address: str
+    email_type: Annotated[
+        EmailType,
+        Field(description="Type of e-mail address (e.g. personal or business)"),
+    ]
+    email_address: Annotated[str, Field(description="A valid e-mail address")]

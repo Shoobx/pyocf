@@ -38,7 +38,7 @@ class ConvertibleConversionRight(ConversionRight):
     """
 
     type: Optional[
-        Literal["CONVERTIBLE_CONVERSION_RIGHT"]
+        Annotated[Literal["CONVERTIBLE_CONVERSION_RIGHT"], Field(description="")]
     ] = "CONVERTIBLE_CONVERSION_RIGHT"
     conversion_mechanism: Annotated[
         Union[
@@ -48,11 +48,23 @@ class ConvertibleConversionRight(ConversionRight):
             PercentCapitalizationConversionMechanism,
             FixedAmountConversionMechanism,
         ],
-        Field(discriminator="type"),
+        Field(discriminator="type", description=""),
     ]
-    # Is this stock class potentially convertible into a future, as-yet undetermined
-    # stock class (e.g. Founder Preferred)
-    converts_to_future_round: Optional[bool]
-    # The identifier of the existing, known stock class this stock class can convert
-    # into
-    converts_to_stock_class_id: Optional[str]
+    converts_to_future_round: Optional[
+        Annotated[
+            bool,
+            Field(
+                description="Is this stock class potentially convertible into a future, as-yet undetermined"
+                "stock class (e.g. Founder Preferred)"
+            ),
+        ]
+    ]
+    converts_to_stock_class_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="The identifier of the existing, known stock class this stock class can convert"
+                "into"
+            ),
+        ]
+    ]

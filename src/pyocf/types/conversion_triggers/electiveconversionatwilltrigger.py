@@ -32,20 +32,35 @@ class ElectiveConversionAtWillTrigger(ConversionTrigger):
     valid and outstanding).
     """
 
-    # Id for this conversion trigger, unique within list of ConversionTriggers in
-    # parent convertible issuance's `conversion_triggers` field.
-    trigger_id: str
-    # Human-friendly nickname to describe the conversion right
-    nickname: Optional[str]
-    # Long-form description of the trigger
-    trigger_description: Optional[str]
-    type: Literal["ELECTIVE_AT_WILL"] = "ELECTIVE_AT_WILL"
-    # When the conditions of the trigger are met, how does the convertible convert?
+    trigger_id: Annotated[
+        str,
+        Field(
+            description="Id for this conversion trigger, unique within list of ConversionTriggers in"
+            "parent convertible issuance's `conversion_triggers` field."
+        ),
+    ]
+    nickname: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Human-friendly nickname to describe the conversion right"
+            ),
+        ]
+    ]
+    trigger_description: Optional[
+        Annotated[str, Field(description="Long-form description of the trigger")]
+    ]
+    type: Annotated[
+        Literal["ELECTIVE_AT_WILL"], Field(description="")
+    ] = "ELECTIVE_AT_WILL"
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,
             WarrantConversionRight,
             StockClassConversionRight,
         ],
-        Field(discriminator="type"),
+        Field(
+            discriminator="type",
+            description="When the conditions of the trigger are met, how does the convertible convert?",
+        ),
     ]

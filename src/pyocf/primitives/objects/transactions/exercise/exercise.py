@@ -9,14 +9,26 @@
 # ree/v1.0.0/schema/primitives/objects/transactions/exercise/Exercise.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
+from typing import Annotated
 from typing import Optional
 
 
 class Exercise(BaseModel):
     """Abstract object describing fields common to all exercise transaction objects"""
 
-    # Unstructured text description of consideration provided in exchange for security
-    # exercise
-    consideration_text: Optional[str]
-    # Identifier for the security (or securities) that resulted from the exercise
-    resulting_security_ids: list[str]
+    consideration_text: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Unstructured text description of consideration provided in exchange for security"
+                "exercise"
+            ),
+        ]
+    ]
+    resulting_security_ids: Annotated[
+        list[str],
+        Field(
+            description="Identifier for the security (or securities) that resulted from the exercise"
+        ),
+    ]

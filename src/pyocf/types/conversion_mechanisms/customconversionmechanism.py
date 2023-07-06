@@ -11,9 +11,11 @@ type"""
 # ree/v1.0.0/schema/types/conversion_mechanisms/CustomConversionMechanism.schema.j
 # son
 
+from pydantic import Field
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
+from typing import Annotated
 from typing import Literal
 
 
@@ -23,7 +25,13 @@ class CustomConversionMechanism(ConversionMechanism):
     type
     """
 
-    type: Literal["CUSTOM_CONVERSION"] = "CUSTOM_CONVERSION"
-    # Detailed description of how the number of resulting shares should be determined?
-    # Use legal language from an instrument where possible
-    custom_conversion_description: str
+    type: Annotated[
+        Literal["CUSTOM_CONVERSION"], Field(description="")
+    ] = "CUSTOM_CONVERSION"
+    custom_conversion_description: Annotated[
+        str,
+        Field(
+            description="Detailed description of how the number of resulting shares should be determined?"
+            "Use legal language from an instrument where possible"
+        ),
+    ]

@@ -8,9 +8,11 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/objects/StockPlan.schema.json
 
+from pydantic import Field
 from pyocf.primitives.objects.object import Object
 from pyocf.types.date import Date
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 from typing import Literal
 from typing import Optional
 
@@ -18,22 +20,41 @@ from typing import Optional
 class StockPlan(Object):
     """Object describing a plan which stock options are issued from"""
 
-    object_type: Literal["STOCK_PLAN"] = "STOCK_PLAN"
-    # Name for the stock plan
-    plan_name: str
-    # Date on which board approved the plan
-    board_approval_date: Optional[Date]
-    # This optional field tracks when the stockholders approved this stock plan. This
-    # is intended for use by US companies that want to issue Incentive Stock Options
-    # (ISOs), as the issuing StockPlan must receive shareholder approval within a
-    # specified time frame in order to issue valid ISOs.
-    stockholder_approval_date: Optional[Date]
-    # The initial number of shares reserved in the pool for this stock plan by the
-    # Board or equivalent body.
-    initial_shares_reserved: Numeric
-    # Identifier of the StockClass object this plan is composed of
-    stock_class_id: str
-    # Identifier for the object
-    id: str
-    # Unstructured text comments related to and stored for the object
-    comments: Optional[list[str]]
+    object_type: Annotated[Literal["STOCK_PLAN"], Field(description="")] = "STOCK_PLAN"
+    plan_name: Annotated[str, Field(description="Name for the stock plan")]
+    board_approval_date: Optional[
+        Annotated[Date, Field(description="Date on which board approved the plan")]
+    ]
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(
+                description="This optional field tracks when the stockholders approved this stock plan. This"
+                "is intended for use by US companies that want to issue Incentive Stock Options"
+                "(ISOs), as the issuing StockPlan must receive shareholder approval within a"
+                "specified time frame in order to issue valid ISOs."
+            ),
+        ]
+    ]
+    initial_shares_reserved: Annotated[
+        Numeric,
+        Field(
+            description="The initial number of shares reserved in the pool for this stock plan by the"
+            "Board or equivalent body."
+        ),
+    ]
+    stock_class_id: Annotated[
+        str,
+        Field(
+            description="Identifier of the StockClass object this plan is composed of"
+        ),
+    ]
+    id: Annotated[str, Field(description="Identifier for the object")]
+    comments: Optional[
+        Annotated[
+            list[str],
+            Field(
+                description="Unstructured text comments related to and stored for the object"
+            ),
+        ]
+    ]

@@ -11,7 +11,9 @@ fungible and need unique identifiers *per share*"""
 # OCF/tree/v1.0.0/schema/types/ShareNumberRange.schema.json
 
 from pydantic import BaseModel
+from pydantic import Field
 from pyocf.types.numeric import Numeric
+from typing import Annotated
 
 
 class ShareNumberRange(BaseModel):
@@ -20,9 +22,17 @@ class ShareNumberRange(BaseModel):
     fungible and need unique identifiers *per share*
     """
 
-    # The starting share number of a range of shares impacted by a particular event
-    # (**INCLUSIVE** and assuming **share counts start at 1**)
-    starting_share_number: Numeric
-    # The ending share number of a range of shares impacted by a particular event
-    # (**INCLUSIVE**)
-    ending_share_number: Numeric
+    starting_share_number: Annotated[
+        Numeric,
+        Field(
+            description="The starting share number of a range of shares impacted by a particular event"
+            "(**INCLUSIVE** and assuming **share counts start at 1**)"
+        ),
+    ]
+    ending_share_number: Annotated[
+        Numeric,
+        Field(
+            description="The ending share number of a range of shares impacted by a particular event"
+            "(**INCLUSIVE**)"
+        ),
+    ]

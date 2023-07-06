@@ -8,14 +8,19 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/files/StockPlansFile.schema.json
 
+from pydantic import Field
 from pyocf.objects.stockplan import StockPlan
 from pyocf.primitives.files.file import FileObject
+from typing import Annotated
 from typing import Literal
 
 
 class StockPlansFile(FileObject):
     """JSON containing file type identifier and list of stock plans"""
 
-    # List of OCF stock plan objects
-    items: list[StockPlan]
-    file_type: Literal["OCF_STOCK_PLANS_FILE"] = "OCF_STOCK_PLANS_FILE"
+    items: Annotated[
+        list[StockPlan], Field(description="List of OCF stock plan objects")
+    ]
+    file_type: Annotated[
+        Literal["OCF_STOCK_PLANS_FILE"], Field(description="")
+    ] = "OCF_STOCK_PLANS_FILE"
