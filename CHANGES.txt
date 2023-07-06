@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0.1 (unreleased)
+1.0.1 (2023-07-06)
 ------------------
 
 - Made all properties have a Field with a description, to improve documentation.
