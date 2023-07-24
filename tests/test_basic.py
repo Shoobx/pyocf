@@ -64,9 +64,11 @@ def test_minimal():
     assert sh.file_type == "OCF_STAKEHOLDERS_FILE"
 
 
-def test_constrained_strings():
+def test_country_codes():
     # Many types uses a root validator, test that:
     CountryCode("SE")
+    CountryCode("AE")
+    CountryCode("ID")
 
     with pytest.raises(ValueError):
         CountryCode("S2")
