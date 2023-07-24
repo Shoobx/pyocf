@@ -8,11 +8,40 @@
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/types/CountryCode.schema.json
 
-from pydantic import constr
+from __future__ import annotations
+
+from typing import Any, Dict
+
+import pycountry
 from pyocf.simplebase import SimpleBaseModel
+
+
+class Iso3166Alpha2Country(str):
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
+        field_schema.update(type="string", examples="AE")
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v) -> Iso3166Alpha2Country:
+        if not isinstance(v, str):
+            raise TypeError("string for Iso3166Alpha2Country is required")
+
+        try:
+            pycountry.countries.lookup(value=v)
+        except LookupError:
+            raise ValueError("Unrecognized country")
+
+        return cls(v)
+
+    def __repr__(self):
+        return f"Iso3166Alpha2Country({super().__repr__()})"
 
 
 class CountryCode(SimpleBaseModel):
     """Type representation of an ISO 3166-1 alpha 2 country code"""
 
-    __root__: constr(regex=r"^[A-Z]{2}$")
+    __root__: Iso3166Alpha2Country
