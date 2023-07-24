@@ -65,12 +65,6 @@ def test_minimal():
 
 
 def test_constrained_strings():
-    # Phone numbers must be phone numbers:
-    Phone(phone_type="HOME", phone_number="+1 555 123 4567")
-
-    with pytest.raises(ValueError):
-        Phone(phone_type="HOME", phone_number="It's a pizza")
-
     # Many types uses a root validator, test that:
     CountryCode("SE")
 
@@ -79,3 +73,15 @@ def test_constrained_strings():
 
     with pytest.raises(ValueError):
         CountryCode("SPUT")
+
+
+def test_phone_numbers():
+    # Phone numbers must be phone numbers:
+    Phone(phone_type="HOME", phone_number="+18004444444")
+
+    # Non USA numbers should also work:
+    Phone(phone_type="BUSINESS", phone_number="+971505555555")
+    Phone(phone_type="BUSINESS", phone_number="+62817555555")
+
+    with pytest.raises(ValueError):
+        Phone(phone_type="HOME", phone_number="It's a pizza")

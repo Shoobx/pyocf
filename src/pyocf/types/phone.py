@@ -7,12 +7,42 @@
 # Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
 # OCF/tree/v1.0.0/schema/types/Phone.schema.json
+from __future__ import annotations
 
+import phonenumbers
+from phonenumbers.phonenumberutil import NumberParseException
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic import constr
 from pyocf.enums.phonetype import PhoneType
-from typing import Annotated
+from typing import Annotated, Any, Dict
+
+
+class PhoneNumber(str):
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
+        field_schema.update(type="string", examples="+971505555555")
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v) -> PhoneNumber:
+        if not isinstance(v, str):
+            raise TypeError("string for PhoneNumber is required")
+
+        try:
+            number = phonenumbers.parse(v)
+        except NumberParseException:
+            raise ValueError("Not a phone number")
+
+        if not phonenumbers.is_valid_number(number):
+            raise ValueError("Invalid phone number")
+
+        return cls(v)
+
+    def __repr__(self):
+        return f"PhoneNumber({super().__repr__()})"
 
 
 class Phone(BaseModel):
@@ -23,7 +53,7 @@ class Phone(BaseModel):
         Field(description="Type of phone number (e.g. mobile, home or business)"),
     ]
     phone_number: Annotated[
-        constr(regex=r"^\+\d{1,3}\s\d{2,3}\s\d{2,3}\s\d{4}$"),
+        PhoneNumber,
         Field(
             description="A valid phone number string in ITU E.123 international notation (e.g. +123 123"
             "456 7890)"
