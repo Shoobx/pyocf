@@ -39,12 +39,12 @@ class SAFEConversionMechanism(ConversionMechanism):
                 "(decimal representation - e.g. 0.125 for 12.5%)"
             ),
         ]
-    ]
+    ] = None
     conversion_valuation_cap: Optional[
         Annotated[
             Monetary, Field(description="What is the valuation cap (if applicable)?")
         ]
-    ]
+    ] = None
     exit_multiple: Optional[
         Annotated[
             Ratio,
@@ -52,7 +52,7 @@ class SAFEConversionMechanism(ConversionMechanism):
                 description="For cash proceeds calculation during a liquidity event."
             ),
         ]
-    ]
+    ] = None
     conversion_mfn: Annotated[bool, Field(description="Is this an MFN flavored SAFE?")]
     conversion_timing: Annotated[
         ConversionTimingType,
@@ -68,4 +68,4 @@ class SAFEConversionMechanism(ConversionMechanism):
                 "include the legal language from the instrument."
             ),
         ]
-    ]
+    ] = None

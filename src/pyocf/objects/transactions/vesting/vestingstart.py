@@ -44,7 +44,7 @@ class VestingStart(Object, Transaction, SecurityTransaction):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     date: Annotated[Date, Field(description="Date on which the transaction occurred")]
     security_id: Annotated[
         str,

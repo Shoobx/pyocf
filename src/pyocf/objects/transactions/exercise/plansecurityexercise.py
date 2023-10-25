@@ -37,7 +37,7 @@ class PlanSecurityExercise(Object, Transaction, SecurityTransaction, Exercise):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -59,7 +59,7 @@ class PlanSecurityExercise(Object, Transaction, SecurityTransaction, Exercise):
                 "exercise"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

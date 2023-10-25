@@ -40,7 +40,7 @@ class StockTransfer(Object, Transaction, SecurityTransaction, Transfer):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -62,7 +62,7 @@ class StockTransfer(Object, Transaction, SecurityTransaction, Transfer):
                 "transfer"
             ),
         ]
-    ]
+    ] = None
     balance_security_id: Optional[
         Annotated[
             str,
@@ -71,7 +71,7 @@ class StockTransfer(Object, Transaction, SecurityTransaction, Transfer):
                 "transfers)"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

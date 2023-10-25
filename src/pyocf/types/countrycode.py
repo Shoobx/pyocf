@@ -15,4 +15,4 @@ from pyocf.simplebase import SimpleBaseModel
 class CountryCode(SimpleBaseModel):
     """Type representation of an ISO 3166-1 alpha 2 country code"""
 
-    __root__: constr(regex=r"^[A-Z]{2}$")
+    root: constr(pattern=r"^[A-Z]{2}$")

@@ -31,7 +31,7 @@ class VestingCondition(BaseModel):
     id: Annotated[str, Field(description="Reference identifier for this condition")]
     description: Optional[
         Annotated[str, Field(description="Detailed description of the condition")]
-    ]
+    ] = None
     portion: Optional[
         Annotated[
             VestingConditionPortion,
@@ -40,7 +40,7 @@ class VestingCondition(BaseModel):
                 "25:100 for 25%. Use `quantity` for a fixed vesting amount."
             ),
         ]
-    ]
+    ] = None
     quantity: Optional[
         Annotated[
             Numeric,
@@ -49,7 +49,7 @@ class VestingCondition(BaseModel):
                 "Use `portion` for a proportional vesting amount."
             ),
         ]
-    ]
+    ] = None
     trigger: Annotated[
         Union[
             VestingStartTrigger,

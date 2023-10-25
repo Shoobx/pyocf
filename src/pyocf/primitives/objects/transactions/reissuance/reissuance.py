@@ -33,10 +33,10 @@ class Reissuance(BaseModel):
                 "the respective stock class split transaction. It is not set otherwise."
             ),
         ]
-    ]
+    ] = None
     reason_text: Optional[
         Annotated[
             str,
             Field(description="Free-form human-readable reason for stock reissuance"),
         ]
-    ]
+    ] = None

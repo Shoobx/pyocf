@@ -49,4 +49,4 @@ class VestingConditionPortion(BaseModel):
                 "120 shares -- 1/5 of the 600 unvested."
             ),
         ]
-    ]
+    ] = None

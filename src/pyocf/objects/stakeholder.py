@@ -39,7 +39,7 @@ class Stakeholder(Object):
                 "an internal company ID for an employee stakeholder"
             ),
         ]
-    ]
+    ] = None
     current_relationship: Optional[
         Annotated[
             StakeholderRelationshipType,
@@ -47,19 +47,19 @@ class Stakeholder(Object):
                 description="What is the current relationship of the stakeholder to the issuer?"
             ),
         ]
-    ]
+    ] = None
     primary_contact: Optional[
         Annotated[
             ContactInfo,
             Field(description="The primary contact info for the stakeholder"),
         ]
-    ]
+    ] = None
     addresses: Optional[
         Annotated[list[Address], Field(description="Addresses for the stakeholder")]
-    ]
+    ] = None
     tax_ids: Optional[
         Annotated[list[TaxID], Field(description="The tax ids for this stakeholder")]
-    ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
@@ -68,4 +68,4 @@ class Stakeholder(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

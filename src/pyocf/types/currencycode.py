@@ -15,4 +15,4 @@ from pyocf.simplebase import SimpleBaseModel
 class CurrencyCode(SimpleBaseModel):
     """Type representation of an ISO 4217 currency code"""
 
-    __root__: constr(regex=r"^[A-Z]{3}$")
+    root: constr(pattern=r"^[A-Z]{3}$")

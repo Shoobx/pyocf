@@ -36,7 +36,7 @@ class StockPlanPoolAdjustment(Object, Transaction, StockPlanTransaction):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     date: Annotated[Date, Field(description="Date on which the transaction occurred")]
     stock_plan_id: Annotated[
         str,
@@ -57,7 +57,7 @@ class StockPlanPoolAdjustment(Object, Transaction, StockPlanTransaction):
                 "shareholder approval within a specified time frame in order to issue valid ISOs."
             ),
         ]
-    ]
+    ] = None
     shares_reserved: Annotated[
         Numeric,
         Field(

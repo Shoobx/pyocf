@@ -25,7 +25,7 @@ class Transfer(BaseModel):
                 "transfer"
             ),
         ]
-    ]
+    ] = None
     balance_security_id: Optional[
         Annotated[
             str,
@@ -34,7 +34,7 @@ class Transfer(BaseModel):
                 "transfers)"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

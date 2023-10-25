@@ -26,5 +26,5 @@ class Object(BaseModel):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     object_type: Annotated[ObjectType, Field(description="Object type field")]

@@ -35,7 +35,7 @@ class StockClassSplit(Object, Transaction, StockClassTransaction):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     date: Annotated[Date, Field(description="Date on which the transaction occurred")]
     stock_class_id: Annotated[
         str,

@@ -49,7 +49,7 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "share numbers 1 - 100 and 250-300."
             ),
         ]
-    ]
+    ] = None
     share_price: Annotated[
         Monetary,
         Field(description="The price per share paid for the stock by the holder"),
@@ -65,12 +65,12 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "present, security is fully vested on issuance."
             ),
         ]
-    ]
+    ] = None
     cost_basis: Optional[
         Annotated[
             Monetary, Field(description="The cost basis for this particular stock")
         ]
-    ]
+    ] = None
     stock_legend_ids: Annotated[
         list[str],
         Field(description="List of stock legend ids that apply to this stock"),
@@ -83,7 +83,7 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -108,7 +108,7 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
-    ]
+    ] = None
     consideration_text: Optional[
         Annotated[
             str,
@@ -117,7 +117,7 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "issuance"
             ),
         ]
-    ]
+    ] = None
     security_law_exemptions: Annotated[
         list[SecurityExemption],
         Field(

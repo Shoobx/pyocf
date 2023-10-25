@@ -33,7 +33,7 @@ class ConvertibleConversion(Object, Transaction, SecurityTransaction, Conversion
     reason_text: Annotated[str, Field(description="Reason for the conversion")]
     quantity_converted: Optional[
         Annotated[Numeric, Field(description="Quantity of security units converted")]
-    ]
+    ] = None
     balance_security_id: Optional[
         Annotated[
             str,
@@ -42,7 +42,7 @@ class ConvertibleConversion(Object, Transaction, SecurityTransaction, Conversion
                 "conversions)"
             ),
         ]
-    ]
+    ] = None
     trigger_id: Annotated[
         str,
         Field(
@@ -62,7 +62,7 @@ class ConvertibleConversion(Object, Transaction, SecurityTransaction, Conversion
                 "datastructure)."
             ),
         ]
-    ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
@@ -71,7 +71,7 @@ class ConvertibleConversion(Object, Transaction, SecurityTransaction, Conversion
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(

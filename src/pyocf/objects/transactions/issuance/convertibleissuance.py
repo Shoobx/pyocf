@@ -92,7 +92,7 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 description="What pro-rata (if any) is the holder entitled to buy at the next round?"
             ),
         ]
-    ]
+    ] = None
     seniority: Annotated[
         int,
         Field(
@@ -109,7 +109,7 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -134,7 +134,7 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
-    ]
+    ] = None
     consideration_text: Optional[
         Annotated[
             str,
@@ -143,7 +143,7 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "issuance"
             ),
         ]
-    ]
+    ] = None
     security_law_exemptions: Annotated[
         list[SecurityExemption],
         Field(

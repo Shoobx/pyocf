@@ -23,7 +23,7 @@ class Phone(BaseModel):
         Field(description="Type of phone number (e.g. mobile, home or business)"),
     ]
     phone_number: Annotated[
-        constr(regex=r"^\+\d{1,3}\s\d{2,3}\s\d{2,3}\s\d{4}$"),
+        constr(pattern=r"^\+\d{1,3}\s\d{2,3}\s\d{2,3}\s\d{4}$"),
         Field(
             description="A valid phone number string in ITU E.123 international notation (e.g. +123 123"
             "456 7890)"

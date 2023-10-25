@@ -43,7 +43,7 @@ class Release(BaseModel):
                 "release"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

@@ -52,7 +52,7 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
             OptionType,
             Field(description="If the plan security is an option, what kind?"),
         ]
-    ]
+    ] = None
     quantity: Annotated[
         Numeric, Field(description="How many shares are subject to this plan security?")
     ]
@@ -67,7 +67,7 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "present, security is fully vested on issuance."
             ),
         ]
-    ]
+    ] = None
     expiration_date: Union[None, Date]
     termination_exercise_windows: Annotated[
         list[TerminationWindow],
@@ -84,7 +84,7 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -109,7 +109,7 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
-    ]
+    ] = None
     consideration_text: Optional[
         Annotated[
             str,
@@ -118,7 +118,7 @@ class PlanSecurityIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "issuance"
             ),
         ]
-    ]
+    ] = None
     security_law_exemptions: Annotated[
         list[SecurityExemption],
         Field(

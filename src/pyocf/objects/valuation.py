@@ -24,7 +24,7 @@ class Valuation(Object):
     object_type: Annotated[Literal["VALUATION"], Field(description="")] = "VALUATION"
     provider: Optional[
         Annotated[str, Field(description="Entity which provided the valuation")]
-    ]
+    ] = None
     board_approval_date: Optional[
         Annotated[
             Date,
@@ -33,7 +33,7 @@ class Valuation(Object):
                 "valuations, in particular, which require the Board to approve the valuation."
             ),
         ]
-    ]
+    ] = None
     price_per_share: Annotated[Monetary, Field(description="Valued price per share")]
     effective_date: Annotated[
         Date, Field(description="Date on which this valuation is first valid")
@@ -55,4 +55,4 @@ class Valuation(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

@@ -221,7 +221,7 @@ def test_load_sample_vesting_terms():
     # You can instantiate simple types by just passing in the value
     assert condition.portion.numerator == api.Numeric("12")
     # But pydantic will pass it in with the name "__root__"
-    assert condition.portion.denominator == api.Numeric(__root__="48")
+    assert condition.portion.denominator == api.Numeric(root="48")
 
     trigger = condition.trigger
     assert isinstance(trigger, api.VestingScheduleRelativeTrigger)

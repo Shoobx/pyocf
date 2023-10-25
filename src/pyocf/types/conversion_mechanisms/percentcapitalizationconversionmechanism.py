@@ -44,4 +44,4 @@ class PercentCapitalizationConversionMechanism(ConversionMechanism):
                 "include the legal language from the instrument."
             ),
         ]
-    ]
+    ] = None

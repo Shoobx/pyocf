@@ -24,8 +24,8 @@ class StockClassConversionRight(ConversionRight):
     Stock Class
     """
 
-    type: Optional[
-        Annotated[Literal["STOCK_CLASS_CONVERSION_RIGHT"], Field(description="")]
+    type: Annotated[
+        Literal["STOCK_CLASS_CONVERSION_RIGHT"], Field(description="")
     ] = "STOCK_CLASS_CONVERSION_RIGHT"
     conversion_mechanism: Annotated[RatioConversionMechanism, Field(description="")]
     converts_to_future_round: Optional[
@@ -36,7 +36,7 @@ class StockClassConversionRight(ConversionRight):
                 "stock class (e.g. Founder Preferred)"
             ),
         ]
-    ]
+    ] = None
     converts_to_stock_class_id: Optional[
         Annotated[
             str,
@@ -45,4 +45,4 @@ class StockClassConversionRight(ConversionRight):
                 "into"
             ),
         ]
-    ]
+    ] = None

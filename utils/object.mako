@@ -20,7 +20,7 @@ class ${schema.name}(${schema.superclass_string}):
     """
 
     % if schema.root_constraint:
-    __root__: ${schema.root_constraint}
+    root: ${schema.root_constraint}
 
     % endif
     % for property in schema.properties:

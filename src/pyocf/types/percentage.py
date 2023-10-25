@@ -18,4 +18,4 @@ class Percentage(SimpleBaseModel):
     1.0 (up to 10 decimal places supported)
     """
 
-    __root__: constr(regex=r"^0?(\.[0-9]{1,10})?$|^1(\.0{1,10})?$")
+    root: constr(pattern=r"^0?(\.[0-9]{1,10})?$|^1(\.0{1,10})?$")

@@ -34,7 +34,7 @@ class Repurchase(BaseModel):
                 "repurchase"
             ),
         ]
-    ]
+    ] = None
     balance_security_id: Optional[
         Annotated[
             str,
@@ -43,4 +43,4 @@ class Repurchase(BaseModel):
                 "repurchases)"
             ),
         ]
-    ]
+    ] = None

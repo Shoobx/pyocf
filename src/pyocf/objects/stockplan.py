@@ -24,7 +24,7 @@ class StockPlan(Object):
     plan_name: Annotated[str, Field(description="Name for the stock plan")]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date on which board approved the plan")]
-    ]
+    ] = None
     stockholder_approval_date: Optional[
         Annotated[
             Date,
@@ -35,7 +35,7 @@ class StockPlan(Object):
                 "specified time frame in order to issue valid ISOs."
             ),
         ]
-    ]
+    ] = None
     initial_shares_reserved: Annotated[
         Numeric,
         Field(
@@ -57,4 +57,4 @@ class StockPlan(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

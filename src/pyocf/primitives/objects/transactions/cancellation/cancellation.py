@@ -26,5 +26,5 @@ class Cancellation(BaseModel):
                 "cancellations)"
             ),
         ]
-    ]
+    ] = None
     reason_text: Annotated[str, Field(description="Reason for the cancellation")]

@@ -18,4 +18,4 @@ class Md5(SimpleBaseModel):
     characters composed of letters (uppercase or lowercase) and numbers
     """
 
-    __root__: constr(regex=r"^[a-fA-F0-9]{32}$")
+    root: constr(pattern=r"^[a-fA-F0-9]{32}$")
