@@ -1,10 +1,10 @@
 Changes
 =======
 
-1.0.3 (unreleased)
-------------------
+1.1.0b1 (2023-10-25)
+--------------------
 
-- Nothing changed yet.
+- Updated to Pydantic 2.
 
 
 1.0.2 (2023-10-24)
