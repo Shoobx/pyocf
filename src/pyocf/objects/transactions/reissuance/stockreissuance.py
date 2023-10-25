@@ -35,7 +35,7 @@ class StockReissuance(Object, Transaction, SecurityTransaction, Reissuance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -64,10 +64,10 @@ class StockReissuance(Object, Transaction, SecurityTransaction, Reissuance):
                 "the respective stock class split transaction. It is not set otherwise."
             ),
         ]
-    ]
+    ] = None
     reason_text: Optional[
         Annotated[
             str,
             Field(description="Free-form human-readable reason for stock reissuance"),
         ]
-    ]
+    ] = None

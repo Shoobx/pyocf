@@ -37,8 +37,8 @@ class ConvertibleConversionRight(ConversionRight):
     plan security
     """
 
-    type: Optional[
-        Annotated[Literal["CONVERTIBLE_CONVERSION_RIGHT"], Field(description="")]
+    type: Annotated[
+        Literal["CONVERTIBLE_CONVERSION_RIGHT"], Field(description="")
     ] = "CONVERTIBLE_CONVERSION_RIGHT"
     conversion_mechanism: Annotated[
         Union[
@@ -58,7 +58,7 @@ class ConvertibleConversionRight(ConversionRight):
                 "stock class (e.g. Founder Preferred)"
             ),
         ]
-    ]
+    ] = None
     converts_to_stock_class_id: Optional[
         Annotated[
             str,
@@ -67,4 +67,4 @@ class ConvertibleConversionRight(ConversionRight):
                 "into"
             ),
         ]
-    ]
+    ] = None

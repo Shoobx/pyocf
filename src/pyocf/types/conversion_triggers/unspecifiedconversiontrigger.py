@@ -46,10 +46,10 @@ class UnspecifiedConversionTrigger(ConversionTrigger):
                 description="Human-friendly nickname to describe the conversion right"
             ),
         ]
-    ]
+    ] = None
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
-    ]
+    ] = None
     type: Annotated[Literal["UNSPECIFIED"], Field(description="")] = "UNSPECIFIED"
     conversion_right: Annotated[
         Union[

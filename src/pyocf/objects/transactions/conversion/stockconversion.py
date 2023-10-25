@@ -36,7 +36,7 @@ class StockConversion(Object, Transaction, SecurityTransaction, Conversion):
                 "conversions)"
             ),
         ]
-    ]
+    ] = None
     quantity_converted: Annotated[
         Numeric, Field(description="Quantity of non-monetary security units converted")
     ]
@@ -48,7 +48,7 @@ class StockConversion(Object, Transaction, SecurityTransaction, Conversion):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(

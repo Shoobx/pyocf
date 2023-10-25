@@ -28,8 +28,8 @@ class Address(BaseModel):
     ]
     street_suite: Optional[
         Annotated[str, Field(description="Street address (multi-line string)")]
-    ]
-    city: Optional[Annotated[str, Field(description="City")]]
+    ] = None
+    city: Optional[Annotated[str, Field(description="City")]] = None
     country_subdivision: Optional[
         Annotated[
             CountrySubdivisionCode,
@@ -38,9 +38,11 @@ class Address(BaseModel):
                 "country"
             ),
         ]
-    ]
+    ] = None
     country: Annotated[
         CountryCode,
         Field(description="Country code for this address (ISO 3166-1 alpha-2)"),
     ]
-    postal_code: Optional[Annotated[str, Field(description="Address postal code")]]
+    postal_code: Optional[
+        Annotated[str, Field(description="Address postal code")]
+    ] = None

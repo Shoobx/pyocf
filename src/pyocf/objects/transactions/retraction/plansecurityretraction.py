@@ -36,7 +36,7 @@ class PlanSecurityRetraction(Object, Transaction, SecurityTransaction, Retractio
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(

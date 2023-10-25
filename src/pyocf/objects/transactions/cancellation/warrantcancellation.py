@@ -40,7 +40,7 @@ class WarrantCancellation(Object, Transaction, SecurityTransaction, Cancellation
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -62,5 +62,5 @@ class WarrantCancellation(Object, Transaction, SecurityTransaction, Cancellation
                 "cancellations)"
             ),
         ]
-    ]
+    ] = None
     reason_text: Annotated[str, Field(description="Reason for the cancellation")]

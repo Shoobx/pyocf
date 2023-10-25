@@ -35,7 +35,7 @@ class StockAcceptance(Object, Transaction, SecurityTransaction, Acceptance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(

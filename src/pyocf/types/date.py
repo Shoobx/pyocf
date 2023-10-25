@@ -15,4 +15,4 @@ from pyocf.simplebase import SimpleBaseModel
 class Date(SimpleBaseModel):
     """Type represention of an ISO-8601 date, e.g. 2022-01-28"""
 
-    __root__: date
+    root: date

@@ -61,12 +61,12 @@ class NoteConversionMechanism(ConversionMechanism):
                 "(decimal representation - e.g. 0.125 for 12.5%)"
             ),
         ]
-    ]
+    ] = None
     conversion_valuation_cap: Optional[
         Annotated[
             Monetary, Field(description="What is the valuation cap (if applicable)?")
         ]
-    ]
+    ] = None
     exit_multiple: Optional[
         Annotated[
             Ratio,
@@ -74,7 +74,7 @@ class NoteConversionMechanism(ConversionMechanism):
                 description="For cash proceeds calculation during a liquidity event."
             ),
         ]
-    ]
+    ] = None
     conversion_mfn: Optional[
         Annotated[
             bool,
@@ -82,4 +82,4 @@ class NoteConversionMechanism(ConversionMechanism):
                 description="Is this an MFN (Most Favored Nations) flavored Convertible Note?"
             ),
         ]
-    ]
+    ] = None

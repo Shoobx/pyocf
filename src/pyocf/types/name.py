@@ -22,7 +22,7 @@ class Name(BaseModel):
     ]
     first_name: Optional[
         Annotated[str, Field(description="First/given name for the individual")]
-    ]
+    ] = None
     last_name: Optional[
         Annotated[str, Field(description="Last/family name for the individual")]
-    ]
+    ] = None

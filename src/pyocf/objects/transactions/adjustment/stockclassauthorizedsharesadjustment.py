@@ -39,7 +39,7 @@ class StockClassAuthorizedSharesAdjustment(Object, Transaction, StockClassTransa
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     date: Annotated[Date, Field(description="Date on which the transaction occurred")]
     stock_class_id: Annotated[
         str,
@@ -61,4 +61,4 @@ class StockClassAuthorizedSharesAdjustment(Object, Transaction, StockClassTransa
                 description="Date on which the board approved the change to the stock class"
             ),
         ]
-    ]
+    ] = None

@@ -45,7 +45,7 @@ class ConversionRight(BaseModel):
             ConversionRightType,
             Field(description="What kind of conversion right is this?"),
         ]
-    ]
+    ] = None
     conversion_mechanism: Annotated[
         Union[
             SAFEConversionMechanism,
@@ -69,7 +69,7 @@ class ConversionRight(BaseModel):
                 "stock class (e.g. Founder Preferred)"
             ),
         ]
-    ]
+    ] = None
     converts_to_stock_class_id: Optional[
         Annotated[
             str,
@@ -78,4 +78,4 @@ class ConversionRight(BaseModel):
                 "into"
             ),
         ]
-    ]
+    ] = None

@@ -90,7 +90,7 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
             Date,
             Field(description="What is expiration date of the warrant (if applicable)"),
         ]
-    ]
+    ] = None
     vesting_terms_id: Optional[
         Annotated[
             str,
@@ -99,7 +99,7 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "present, security is fully vested on issuance."
             ),
         ]
-    ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
@@ -108,7 +108,7 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -133,7 +133,7 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
-    ]
+    ] = None
     consideration_text: Optional[
         Annotated[
             str,
@@ -142,7 +142,7 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
                 "issuance"
             ),
         ]
-    ]
+    ] = None
     security_law_exemptions: Annotated[
         list[SecurityExemption],
         Field(

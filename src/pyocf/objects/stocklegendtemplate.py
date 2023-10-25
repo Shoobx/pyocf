@@ -31,4 +31,4 @@ class StockLegendTemplate(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

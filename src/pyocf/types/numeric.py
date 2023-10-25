@@ -18,4 +18,4 @@ class Numeric(SimpleBaseModel):
     supported)
     """
 
-    __root__: Decimal
+    root: Decimal

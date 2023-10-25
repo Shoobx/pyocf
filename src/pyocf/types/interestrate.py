@@ -41,4 +41,4 @@ class InterestRate(BaseModel):
                 "interest rate commences"
             ),
         ]
-    ]
+    ] = None

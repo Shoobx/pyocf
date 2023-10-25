@@ -51,10 +51,10 @@ class AutomaticConversionOnConditionTrigger(ConversionTrigger):
                 description="Human-friendly nickname to describe the conversion right"
             ),
         ]
-    ]
+    ] = None
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
-    ]
+    ] = None
     type: Annotated[
         Literal["AUTOMATIC_ON_CONDITION"], Field(description="")
     ] = "AUTOMATIC_ON_CONDITION"

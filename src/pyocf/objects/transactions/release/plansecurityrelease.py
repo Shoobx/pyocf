@@ -37,7 +37,7 @@ class PlanSecurityRelease(Object, Transaction, SecurityTransaction, Release):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -74,7 +74,7 @@ class PlanSecurityRelease(Object, Transaction, SecurityTransaction, Release):
                 "release"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

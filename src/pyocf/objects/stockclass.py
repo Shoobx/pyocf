@@ -56,7 +56,7 @@ class StockClass(Object):
         Annotated[
             Date, Field(description="Date on which the board approved the stock class")
         ]
-    ]
+    ] = None
     votes_per_share: Annotated[
         Numeric,
         Field(description="The number of votes each share of this stock class gets"),
@@ -65,13 +65,13 @@ class StockClass(Object):
         Annotated[
             Monetary, Field(description="Per-share par value of this stock class")
         ]
-    ]
+    ] = None
     price_per_share: Optional[
         Annotated[
             Monetary,
             Field(description="Per-share price this stock class was issued for"),
         ]
-    ]
+    ] = None
     seniority: Annotated[
         Numeric,
         Field(
@@ -97,7 +97,7 @@ class StockClass(Object):
                 description="List of stock class conversion rights possible for this stock class"
             ),
         ]
-    ]
+    ] = None
     liquidation_preference_multiple: Optional[
         Annotated[
             Numeric,
@@ -105,7 +105,7 @@ class StockClass(Object):
                 description="The liquidation preference per share for this stock class"
             ),
         ]
-    ]
+    ] = None
     participation_cap_multiple: Optional[
         Annotated[
             Numeric,
@@ -113,7 +113,7 @@ class StockClass(Object):
                 description="The participation cap multiple per share for this stock class"
             ),
         ]
-    ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
@@ -122,4 +122,4 @@ class StockClass(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

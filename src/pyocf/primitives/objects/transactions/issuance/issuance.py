@@ -30,7 +30,7 @@ class Issuance(BaseModel):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
-    ]
+    ] = None
     consideration_text: Optional[
         Annotated[
             str,
@@ -39,7 +39,7 @@ class Issuance(BaseModel):
                 "issuance"
             ),
         ]
-    ]
+    ] = None
     security_law_exemptions: Annotated[
         list[SecurityExemption],
         Field(

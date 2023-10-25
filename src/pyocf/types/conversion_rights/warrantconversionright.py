@@ -31,8 +31,8 @@ class WarrantConversionRight(ConversionRight):
     plan security
     """
 
-    type: Optional[
-        Annotated[Literal["WARRANT_CONVERSION_RIGHT"], Field(description="")]
+    type: Annotated[
+        Literal["WARRANT_CONVERSION_RIGHT"], Field(description="")
     ] = "WARRANT_CONVERSION_RIGHT"
     conversion_mechanism: Annotated[
         Union[
@@ -54,7 +54,7 @@ class WarrantConversionRight(ConversionRight):
                 "stock class (e.g. Founder Preferred)"
             ),
         ]
-    ]
+    ] = None
     converts_to_stock_class_id: Optional[
         Annotated[
             str,
@@ -63,4 +63,4 @@ class WarrantConversionRight(ConversionRight):
                 "into"
             ),
         ]
-    ]
+    ] = None

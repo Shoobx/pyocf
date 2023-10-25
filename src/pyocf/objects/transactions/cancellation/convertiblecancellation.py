@@ -38,7 +38,7 @@ class ConvertibleCancellation(Object, Transaction, SecurityTransaction, Cancella
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -60,5 +60,5 @@ class ConvertibleCancellation(Object, Transaction, SecurityTransaction, Cancella
                 "cancellations)"
             ),
         ]
-    ]
+    ] = None
     reason_text: Annotated[str, Field(description="Reason for the cancellation")]

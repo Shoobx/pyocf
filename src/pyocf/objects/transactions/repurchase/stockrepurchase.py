@@ -37,7 +37,7 @@ class StockRepurchase(Object, Transaction, SecurityTransaction, Repurchase):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(
@@ -65,7 +65,7 @@ class StockRepurchase(Object, Transaction, SecurityTransaction, Repurchase):
                 "repurchase"
             ),
         ]
-    ]
+    ] = None
     balance_security_id: Optional[
         Annotated[
             str,
@@ -74,4 +74,4 @@ class StockRepurchase(Object, Transaction, SecurityTransaction, Repurchase):
                 "repurchases)"
             ),
         ]
-    ]
+    ] = None

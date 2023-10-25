@@ -30,7 +30,7 @@ class Issuer(Object):
 
     object_type: Annotated[Literal["ISSUER"], Field(description="")] = "ISSUER"
     legal_name: Annotated[str, Field(description="Legal name of the issuer")]
-    dba: Optional[Annotated[str, Field(description="Doing Business As name")]]
+    dba: Optional[Annotated[str, Field(description="Doing Business As name")]] = None
     formation_date: Annotated[Date, Field(description="Date of formation")]
     country_of_formation: Annotated[
         CountryCode,
@@ -45,16 +45,16 @@ class Issuer(Object):
                 description="The state, province, or subdivision where the issuer company was legally formed"
             ),
         ]
-    ]
+    ] = None
     tax_ids: Optional[
         Annotated[list[TaxID], Field(description="The tax ids for this issuer company")]
-    ]
+    ] = None
     email: Optional[
         Annotated[
             Email,
             Field(description="A work email that the issuer company can be reached at"),
         ]
-    ]
+    ] = None
     phone: Optional[
         Annotated[
             Phone,
@@ -62,13 +62,13 @@ class Issuer(Object):
                 description="A phone number that the issuer company can be reached at"
             ),
         ]
-    ]
+    ] = None
     address: Optional[
         Annotated[
             Address,
             Field(description="The headquarters address of the issuing company"),
         ]
-    ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
@@ -77,4 +77,4 @@ class Issuer(Object):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None

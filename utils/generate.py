@@ -74,7 +74,7 @@ class Property:
             type_ = f"{self.get_python_type(self.json['oneOf'])}"
 
         if type_ == "str" and "pattern" in self.json:
-            return f"""constr(regex=r"{self.json['pattern']}")"""
+            return f"""constr(pattern=r"{self.json['pattern']}")"""
 
         return type_
 
@@ -158,8 +158,8 @@ class Property:
         else:
             type_ = f"Annotated[{type_}, " f"Field(description='{self.description}')]"
 
-        if not self.required:
-            type_ = f"Optional[{type_}]"
+        if not self.required and "const" not in self.json:
+            type_ = f"Optional[{type_}] = None"
 
         type_ = f"{self.name}: {type_}"
 
@@ -371,7 +371,7 @@ class Schema:
             return "Decimal"
 
         if "pattern" in self.json:
-            return f"""constr(regex=r"{self.json.get("pattern")}")"""
+            return f"""constr(pattern=r"{self.json.get("pattern")}")"""
 
         return None
 

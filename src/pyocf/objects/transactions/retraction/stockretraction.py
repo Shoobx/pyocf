@@ -35,7 +35,7 @@ class StockRetraction(Object, Transaction, SecurityTransaction, Retraction):
                 description="Unstructured text comments related to and stored for the object"
             ),
         ]
-    ]
+    ] = None
     security_id: Annotated[
         str,
         Field(

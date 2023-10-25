@@ -48,7 +48,7 @@ class OCFManifestFile(FileObject):
                 description="Unstructured text comments related to and stored for the cap table"
             ),
         ]
-    ]
+    ] = None
     stock_plans_files: Annotated[
         list[File],
         Field(

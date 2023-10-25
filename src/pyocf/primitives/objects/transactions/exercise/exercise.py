@@ -25,7 +25,7 @@ class Exercise(BaseModel):
                 "exercise"
             ),
         ]
-    ]
+    ] = None
     resulting_security_ids: Annotated[
         list[str],
         Field(

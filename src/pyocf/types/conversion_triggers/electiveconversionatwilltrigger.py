@@ -46,10 +46,10 @@ class ElectiveConversionAtWillTrigger(ConversionTrigger):
                 description="Human-friendly nickname to describe the conversion right"
             ),
         ]
-    ]
+    ] = None
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
-    ]
+    ] = None
     type: Annotated[
         Literal["ELECTIVE_AT_WILL"], Field(description="")
     ] = "ELECTIVE_AT_WILL"
