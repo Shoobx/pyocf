@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_triggers/ElectiveConversionOnConditionTrigger
+# ree/v1.1.0/schema/types/conversion_triggers/ElectiveConversionOnConditionTrigger
 # .schema.json
 
 from pydantic import Field
@@ -55,9 +55,9 @@ class ElectiveConversionOnConditionTrigger(ConversionTrigger):
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
     ] = None
-    type: Annotated[
-        Literal["ELECTIVE_ON_CONDITION"], Field(description="")
-    ] = "ELECTIVE_ON_CONDITION"
+    type: Annotated[Literal["ELECTIVE_ON_CONDITION"], Field(description="")] = (
+        "ELECTIVE_ON_CONDITION"
+    )
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,

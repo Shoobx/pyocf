@@ -5,11 +5,12 @@ stakeholder"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/transactions/issuance/StockIssuance.schema.json
+# OCF/tree/v1.1.0/schema/objects/transactions/issuance/StockIssuance.schema.json
 
 from pydantic import Field
+from pyocf.enums.stockissuancetype import StockIssuanceType
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.issuance.issuance import Issuance
 from pyocf.primitives.objects.transactions.securitytransaction import (
@@ -31,12 +32,21 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
     stakeholder
     """
 
-    object_type: Annotated[
-        Literal["TX_STOCK_ISSUANCE"], Field(description="")
-    ] = "TX_STOCK_ISSUANCE"
+    object_type: Annotated[Literal["TX_STOCK_ISSUANCE"], Field(description="")] = (
+        "TX_STOCK_ISSUANCE"
+    )
     stock_class_id: Annotated[
         str, Field(description="Identifier of the stock class for this stock issuance")
     ]
+    stock_plan_id: Optional[
+        Annotated[
+            str,
+            Field(
+                description="Identifier of StockPlan the Stock was issued from (in the case of RSAs or Stock"
+                "issued from a plan)."
+            ),
+        ]
+    ] = None
     share_numbers_issued: Optional[
         Annotated[
             list[ShareNumberRange],
@@ -75,6 +85,14 @@ class StockIssuance(Object, Transaction, SecurityTransaction, Issuance):
         list[str],
         Field(description="List of stock legend ids that apply to this stock"),
     ]
+    issuance_type: Optional[
+        Annotated[
+            StockIssuanceType,
+            Field(
+                description="Optional field to flag certain special types of issuances (like RSAs)"
+            ),
+        ]
+    ] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[

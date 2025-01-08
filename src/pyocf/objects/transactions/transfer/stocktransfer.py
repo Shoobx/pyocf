@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/transactions/transfer/StockTransfer.schema.json
+# OCF/tree/v1.1.0/schema/objects/transactions/transfer/StockTransfer.schema.json
 
 from pydantic import Field
 from pyocf.primitives.objects.object import Object
@@ -25,9 +25,9 @@ from typing import Optional
 class StockTransfer(Object, Transaction, SecurityTransaction, Transfer):
     """Object describing a transfer or secondary sale of a stock security"""
 
-    object_type: Annotated[
-        Literal["TX_STOCK_TRANSFER"], Field(description="")
-    ] = "TX_STOCK_TRANSFER"
+    object_type: Annotated[Literal["TX_STOCK_TRANSFER"], Field(description="")] = (
+        "TX_STOCK_TRANSFER"
+    )
     quantity: Annotated[
         Numeric,
         Field(description="Quantity of non-monetary security units transferred"),

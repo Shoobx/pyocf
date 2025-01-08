@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_triggers/AutomaticConversionOnDateTrigger.sch
+# ree/v1.1.0/schema/types/conversion_triggers/AutomaticConversionOnDateTrigger.sch
 # ema.json
 
 from pydantic import Field
@@ -54,9 +54,9 @@ class AutomaticConversionOnDateTrigger(ConversionTrigger):
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
     ] = None
-    type: Annotated[
-        Literal["AUTOMATIC_ON_DATE"], Field(description="")
-    ] = "AUTOMATIC_ON_DATE"
+    type: Annotated[Literal["AUTOMATIC_ON_DATE"], Field(description="")] = (
+        "AUTOMATIC_ON_DATE"
+    )
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,

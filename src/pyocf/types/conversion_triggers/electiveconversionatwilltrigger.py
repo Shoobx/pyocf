@@ -5,9 +5,9 @@ valid and outstanding)."""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_triggers/ElectiveConversionAtWillTrigger.sche
+# ree/v1.1.0/schema/types/conversion_triggers/ElectiveConversionAtWillTrigger.sche
 # ma.json
 
 from pydantic import Field
@@ -50,9 +50,9 @@ class ElectiveConversionAtWillTrigger(ConversionTrigger):
     trigger_description: Optional[
         Annotated[str, Field(description="Long-form description of the trigger")]
     ] = None
-    type: Annotated[
-        Literal["ELECTIVE_AT_WILL"], Field(description="")
-    ] = "ELECTIVE_AT_WILL"
+    type: Annotated[Literal["ELECTIVE_AT_WILL"], Field(description="")] = (
+        "ELECTIVE_AT_WILL"
+    )
     conversion_right: Annotated[
         Union[
             ConvertibleConversionRight,

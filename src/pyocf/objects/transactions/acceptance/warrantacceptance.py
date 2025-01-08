@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/objects/transactions/acceptance/WarrantAcceptance.schema.json
+# ree/v1.1.0/schema/objects/transactions/acceptance/WarrantAcceptance.schema.json
 
 from pydantic import Field
 from pyocf.primitives.objects.object import Object
@@ -24,9 +24,9 @@ from typing import Optional
 class WarrantAcceptance(Object, Transaction, SecurityTransaction, Acceptance):
     """Object describing a warrant acceptance transaction"""
 
-    object_type: Annotated[
-        Literal["TX_WARRANT_ACCEPTANCE"], Field(description="")
-    ] = "TX_WARRANT_ACCEPTANCE"
+    object_type: Annotated[Literal["TX_WARRANT_ACCEPTANCE"], Field(description="")] = (
+        "TX_WARRANT_ACCEPTANCE"
+    )
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[

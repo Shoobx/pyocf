@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/types/ContactInfo.schema.json
+# OCF/tree/v1.1.0/schema/types/ContactInfo.schema.json
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -14,13 +14,18 @@ from pyocf.types.email import Email
 from pyocf.types.name import Name
 from pyocf.types.phone import Phone
 from typing import Annotated
+from typing import Optional
 
 
 class ContactInfo(BaseModel):
     """Type representation of a primary contact person for a stakeholder (e.g. a fund)"""
 
-    name: Annotated[Name, Field(description="Contact's name")]
-    phone_numbers: Annotated[
-        list[Phone], Field(description="Phone numbers to reach the contact at")
-    ]
-    emails: Annotated[list[Email], Field(description="Emails to reach the contact at")]
+    name: Optional[Annotated[Name, Field(description="Contact's name")]] = None
+    phone_numbers: Optional[
+        Annotated[
+            list[Phone], Field(description="Phone numbers to reach the contact at")
+        ]
+    ] = None
+    emails: Optional[
+        Annotated[list[Email], Field(description="Emails to reach the contact at")]
+    ] = None
