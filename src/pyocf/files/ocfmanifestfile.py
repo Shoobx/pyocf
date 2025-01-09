@@ -5,12 +5,11 @@ references ocf files containing transactions, stakeholders, stock classes, etc."
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/files/OCFManifestFile.schema.json
+# OCF/tree/v1.1.0/schema/files/OCFManifestFile.schema.json
 
 from pydantic import Field
-from pyocf.enums.ocfversiontype import OCFVersionType
 from pyocf.objects.issuer import Issuer
 from pyocf.primitives.files.file import FileObject
 from pyocf.types.date import Date
@@ -25,10 +24,16 @@ class OCFManifestFile(FileObject):
     references ocf files containing transactions, stakeholders, stock classes, etc.
     """
 
-    ocf_version: Annotated[OCFVersionType, Field(description="OCF Version Identifier")]
-    file_type: Annotated[
-        Literal["OCF_MANIFEST_FILE"], Field(description="")
-    ] = "OCF_MANIFEST_FILE"
+    ocf_version: Annotated[
+        Literal["1.1.0"],
+        Field(
+            description="OCF Version Identifier -- the current semantic version"
+            "(https://semver.org/spec/v2.0.0.html)"
+        ),
+    ] = "1.1.0"
+    file_type: Annotated[Literal["OCF_MANIFEST_FILE"], Field(description="")] = (
+        "OCF_MANIFEST_FILE"
+    )
     issuer: Annotated[Issuer, Field(description="Issuer for the cap table")]
     as_of: Annotated[
         Date, Field(description="The point-in-time represented by this OCF Package")

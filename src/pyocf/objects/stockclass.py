@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/StockClass.schema.json
+# OCF/tree/v1.1.0/schema/objects/StockClass.schema.json
 
 from pydantic import Field
 from pyocf.enums.stockclasstype import StockClassType
@@ -25,9 +25,9 @@ from typing import Optional
 class StockClass(Object):
     """Object describing a class of stock issued by the issuer"""
 
-    object_type: Annotated[
-        Literal["STOCK_CLASS"], Field(description="")
-    ] = "STOCK_CLASS"
+    object_type: Annotated[Literal["STOCK_CLASS"], Field(description="")] = (
+        "STOCK_CLASS"
+    )
     name: Annotated[
         str,
         Field(

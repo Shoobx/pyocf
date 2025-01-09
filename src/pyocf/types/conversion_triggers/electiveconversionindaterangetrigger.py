@@ -5,9 +5,9 @@ or before end_date."""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_triggers/ElectiveConversionInDateRangeTrigger
+# ree/v1.1.0/schema/types/conversion_triggers/ElectiveConversionInDateRangeTrigger
 # .schema.json
 
 from pydantic import Field
@@ -40,9 +40,9 @@ class ElectiveConversionInDateRangeTrigger(ConversionTrigger):
             "parent convertible issuance's `conversion_triggers` field."
         ),
     ]
-    type: Annotated[
-        Literal["ELECTIVE_IN_RANGE"], Field(description="")
-    ] = "ELECTIVE_IN_RANGE"
+    type: Annotated[Literal["ELECTIVE_IN_RANGE"], Field(description="")] = (
+        "ELECTIVE_IN_RANGE"
+    )
     start_date: Annotated[Date, Field(description="Start date of range (inclusive)")]
     end_date: Annotated[Date, Field(description="End date of range (inclusive)")]
     nickname: Optional[

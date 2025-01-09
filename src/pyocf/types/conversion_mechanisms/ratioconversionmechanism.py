@@ -6,9 +6,9 @@ Common)"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_mechanisms/RatioConversionMechanism.schema.js
+# ree/v1.1.0/schema/types/conversion_mechanisms/RatioConversionMechanism.schema.js
 # on
 
 from pydantic import Field
@@ -28,9 +28,9 @@ class RatioConversionMechanism(ConversionMechanism):
     Common)
     """
 
-    type: Annotated[
-        Literal["RATIO_CONVERSION"], Field(description="")
-    ] = "RATIO_CONVERSION"
+    type: Annotated[Literal["RATIO_CONVERSION"], Field(description="")] = (
+        "RATIO_CONVERSION"
+    )
     conversion_price: Annotated[
         Monetary,
         Field(

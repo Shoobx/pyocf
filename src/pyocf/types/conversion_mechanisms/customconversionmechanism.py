@@ -6,9 +6,9 @@ type"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_mechanisms/CustomConversionMechanism.schema.j
+# ree/v1.1.0/schema/types/conversion_mechanisms/CustomConversionMechanism.schema.j
 # son
 
 from pydantic import Field
@@ -25,9 +25,9 @@ class CustomConversionMechanism(ConversionMechanism):
     type
     """
 
-    type: Annotated[
-        Literal["CUSTOM_CONVERSION"], Field(description="")
-    ] = "CUSTOM_CONVERSION"
+    type: Annotated[Literal["CUSTOM_CONVERSION"], Field(description="")] = (
+        "CUSTOM_CONVERSION"
+    )
     custom_conversion_description: Annotated[
         str,
         Field(

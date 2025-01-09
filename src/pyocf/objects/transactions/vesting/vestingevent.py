@@ -5,9 +5,9 @@ associated with a security"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/transactions/vesting/VestingEvent.schema.json
+# OCF/tree/v1.1.0/schema/objects/transactions/vesting/VestingEvent.schema.json
 
 from pydantic import Field
 from pyocf.primitives.objects.object import Object
@@ -26,9 +26,9 @@ class VestingEvent(Object, Transaction, SecurityTransaction):
     associated with a security
     """
 
-    object_type: Annotated[
-        Literal["TX_VESTING_EVENT"], Field(description="")
-    ] = "TX_VESTING_EVENT"
+    object_type: Annotated[Literal["TX_VESTING_EVENT"], Field(description="")] = (
+        "TX_VESTING_EVENT"
+    )
     vesting_condition_id: Annotated[
         str,
         Field(

@@ -6,15 +6,16 @@ capitalization at some point in time)"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_mechanisms/PercentCapitalizationConversionMec
+# ree/v1.1.0/schema/types/conversion_mechanisms/PercentCapitalizationConversionMec
 # hanism.schema.json
 
 from pydantic import Field
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
+from pyocf.types.capitalizationdefinitionrules import CapitalizationDefinitionRules
 from pyocf.types.percentage import Percentage
 from typing import Annotated
 from typing import Literal
@@ -42,6 +43,15 @@ class PercentCapitalizationConversionMechanism(ConversionMechanism):
             Field(
                 description="How is company capitalization defined for purposes of conversion? If possible,"
                 "include the legal language from the instrument."
+            ),
+        ]
+    ] = None
+    capitalization_definition_rules: Optional[
+        Annotated[
+            CapitalizationDefinitionRules,
+            Field(
+                description="The rules for which types of securities would be included in the capitalization"
+                "definition."
             ),
         ]
     ] = None

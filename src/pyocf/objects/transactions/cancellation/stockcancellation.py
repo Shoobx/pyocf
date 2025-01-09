@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/objects/transactions/cancellation/StockCancellation.schema.jso
+# ree/v1.1.0/schema/objects/transactions/cancellation/StockCancellation.schema.jso
 # n
 
 from pydantic import Field
@@ -26,9 +26,9 @@ from typing import Optional
 class StockCancellation(Object, Transaction, SecurityTransaction, Cancellation):
     """Object describing a cancellation of a stock security"""
 
-    object_type: Annotated[
-        Literal["TX_STOCK_CANCELLATION"], Field(description="")
-    ] = "TX_STOCK_CANCELLATION"
+    object_type: Annotated[Literal["TX_STOCK_CANCELLATION"], Field(description="")] = (
+        "TX_STOCK_CANCELLATION"
+    )
     quantity: Annotated[
         Numeric, Field(description="Quantity of non-monetary security units cancelled")
     ]

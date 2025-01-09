@@ -8,8 +8,6 @@ import json
 import pathlib
 import zipfile
 
-from packaging import version
-from pyocf.enums import ocfversiontype
 from pyocf.files import ocfmanifestfile
 from pyocf.files import stakeholdersfile
 from pyocf.files import stockclassesfile
@@ -123,11 +121,6 @@ class Captable:
                 manifest_data[filetype + "_files"] = [
                     file.File(filepath=ocffilename, md5=md5)
                 ]
-
-        # Make a new manifest, keeping the data if it exists:
-        manifest_data["ocf_version"] = str(
-            max(version.parse(x.value) for x in ocfversiontype.OCFVersionType)
-        )
 
         if self.manifest is not None:
             manifest_data.update(

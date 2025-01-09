@@ -18,6 +18,8 @@ PROPERTY_TYPES_MAP = {
 }
 # Schema object storage
 all_schemas = {}
+all_aliases = {}
+all_types = {}
 
 
 def multilinewrap(text):
@@ -72,6 +74,15 @@ class Property:
 
         elif "oneOf" in self.json:
             type_ = f"{self.get_python_type(self.json['oneOf'])}"
+
+        elif "enum" in self.json:
+            # This is an enum without the "const", which happens for the type,
+            # in cases with backwards compatibilities.
+            print(
+                f"Warning: In {self.schema.path} the {self.name} property is an enum "
+                f"without a const. This should be a Literal, pick the last one."
+            )
+            type_ = f'Literal["{self.json["enum"][-1]}"]'
 
         if type_ == "str" and "pattern" in self.json:
             return f"""constr(pattern=r"{self.json['pattern']}")"""
@@ -133,10 +144,20 @@ class Property:
             elif "$ref" in items or "type" in items:
                 subtype = self.get_python_type(items["$ref"])
             elif "anyOf" in items:
-                types = [self.get_python_type(t["$ref"]) for t in items["anyOf"]]
+                types = []
+                for t in items["anyOf"]:
+                    r = t["$ref"]
+                    types.append(self.get_python_type(r))
                 subtype = f"""Union[{", ".join(types)}]"""
+
             elif "oneOf" in items:
-                types = [self.get_python_type(t["$ref"]) for t in items["oneOf"]]
+                types = []
+                for t in items["oneOf"]:
+                    r = t["$ref"]
+                    types.append(self.get_python_type(r))
+                    schema = r.resolve()
+                    if schema.aliases:
+                        types.extend(all_types[x].name for x in schema.aliases)
                 subtype = f"""Union[{", ".join(types)}]"""
 
             discriminator = self.get_discriminator(items)
@@ -164,7 +185,10 @@ class Property:
         type_ = f"{self.name}: {type_}"
 
         if "Literal" in type_:
-            type_ += f' = "{self.json["const"]}"'
+            if "const" in self.json:
+                type_ += f' = "{self.json["const"]}"'
+            else:
+                type_ += f' = "{self.json["enum"][-1]}"'
 
         return type_
 
@@ -187,6 +211,7 @@ class Schema:
 
         self._references = set()
         self.dereference_all(self.json)
+        self.aliases = []
 
     def dereference_all(self, json_value):
         if not isinstance(json_value, Mapping):
@@ -214,6 +239,11 @@ class Schema:
     def metatype(self):
         if "enum" in self.json:
             return "enum"
+        if "type" not in self.json:
+            print(
+                f"Warning: {self.path} doesn't have a type field. Defaulting to 'object' type."
+            )
+            return "object"
         if self.json["type"] == "string":
             # This is a string with restrictions, currenly we ignore the
             # restrictions, and just make a string subclass
@@ -225,7 +255,11 @@ class Schema:
     def object_type(self):
         for prop in ("file_type", "object_type", "type"):
             if prop in self.json.get("properties", {}):
-                return self.json["properties"][prop].get("const")
+                if "enum" in self.json["properties"][prop]:
+                    return tuple(self.json["properties"][prop]["enum"])
+                elif "const" in self.json["properties"][prop]:
+                    return self.json["properties"][prop]["const"]
+                print(self.json["properties"])
 
         return None
 
@@ -304,6 +338,13 @@ class Schema:
 
         if "$ref" in json:
             imports.add(json["$ref"].import_statement)
+            if json["$ref"].resolve().aliases:
+                imports.update(
+                    [
+                        all_types[alias].import_statement
+                        for alias in json["$ref"].resolve().aliases
+                    ]
+                )
         elif "oneOf" in json:
             for j in json["oneOf"]:
                 imports.update(self._get_imports_from_json(j))
@@ -377,11 +418,16 @@ class Schema:
 
 
 def load_schemas(path):
+    # Load all schemas
     for directory in pathlib.Path(path).rglob("*.schema.json"):
         print(f"importing {directory}")
         schema = Schema(directory, json.loads(directory.read_text("utf8")))
         print(f"found {schema.name}")
         all_schemas[schema.id] = schema
+
+    # Now make the type mapping:
+    for schema in all_schemas.values():
+        all_types[schema.object_type] = schema
 
     return all_schemas
 
@@ -405,6 +451,28 @@ def generate_files():
     types = defaultdict(dict)
     roottypes = defaultdict(dict)
     all_classes = {}
+
+    # Firs look for backwards compatibility classes
+    for type_, schema in all_types.items():
+        if type_ is None:
+            continue
+        if isinstance(type_, tuple):
+            # Find the new main type
+            main_type = None
+            for bbb_type in type_:
+                if bbb_type not in all_types:
+                    # This is the main type, actually
+                    main_type = bbb_type
+                    break
+            del schema.json["properties"]["object_type"]["enum"]
+            schema.json["properties"]["object_type"]["const"] = main_type
+
+            for bbb_type in type_:
+                if bbb_type != main_type:
+                    # This is a bbb type
+                    all_aliases[bbb_type] = schema
+                    schema.aliases.append(bbb_type)
+
     for schema in all_schemas.values():
         rootlevel = schema.path.parts.index("schema") + 1
         schema_dir = pathlib.Path(*schema.path.parts[rootlevel:-1])

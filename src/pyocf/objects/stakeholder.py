@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/Stakeholder.schema.json
+# OCF/tree/v1.1.0/schema/objects/Stakeholder.schema.json
 
 from pydantic import Field
 from pyocf.enums.stakeholderrelationshiptype import StakeholderRelationshipType
@@ -14,6 +14,7 @@ from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.primitives.objects.object import Object
 from pyocf.types.address import Address
 from pyocf.types.contactinfo import ContactInfo
+from pyocf.types.contactinfowithoutname import ContactInfoWithoutName
 from pyocf.types.name import Name
 from pyocf.types.taxid import TaxID
 from typing import Annotated
@@ -24,9 +25,9 @@ from typing import Optional
 class Stakeholder(Object):
     """Object describing a stakeholder"""
 
-    object_type: Annotated[
-        Literal["STAKEHOLDER"], Field(description="")
-    ] = "STAKEHOLDER"
+    object_type: Annotated[Literal["STAKEHOLDER"], Field(description="")] = (
+        "STAKEHOLDER"
+    )
     name: Annotated[Name, Field(description="Name for the stakeholder")]
     stakeholder_type: Annotated[
         StakeholderType, Field(description="Distinguish individuals from institutions")
@@ -51,7 +52,15 @@ class Stakeholder(Object):
     primary_contact: Optional[
         Annotated[
             ContactInfo,
-            Field(description="The primary contact info for the stakeholder"),
+            Field(
+                description="The primary contact info for an institutional stakeholder"
+            ),
+        ]
+    ] = None
+    contact_info: Optional[
+        Annotated[
+            ContactInfoWithoutName,
+            Field(description="The contact info for an individual stakeholder"),
         ]
     ] = None
     addresses: Optional[

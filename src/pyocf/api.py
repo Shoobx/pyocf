@@ -18,7 +18,6 @@ from pyocf.enums.emailtype import EmailType
 from pyocf.enums.filetype import FileType
 from pyocf.enums.interestpayouttype import InterestPayoutType
 from pyocf.enums.objecttype import ObjectType
-from pyocf.enums.ocfversiontype import OCFVersionType
 from pyocf.enums.optiontype import OptionType
 from pyocf.enums.parentsecuritytype import ParentSecurityType
 from pyocf.enums.periodtype import PeriodType
@@ -27,6 +26,10 @@ from pyocf.enums.roundingtype import RoundingType
 from pyocf.enums.stakeholderrelationshiptype import StakeholderRelationshipType
 from pyocf.enums.stakeholdertype import StakeholderType
 from pyocf.enums.stockclasstype import StockClassType
+from pyocf.enums.stockissuancetype import StockIssuanceType
+from pyocf.enums.stockplancancellationbehaviortype import (
+    StockPlanCancellationBehaviorType,
+)
 from pyocf.enums.terminationwindowtype import TerminationWindowType
 from pyocf.enums.valuationtype import ValuationType
 from pyocf.enums.vestingdayofmonth import VestingDayOfMonth
@@ -47,6 +50,9 @@ from pyocf.objects.stockplan import StockPlan
 from pyocf.objects.transactions.acceptance.convertibleacceptance import (
     ConvertibleAcceptance,
 )
+from pyocf.objects.transactions.acceptance.equitycompensationacceptance import (
+    EquityCompensationAcceptance,
+)
 from pyocf.objects.transactions.acceptance.plansecurityacceptance import (
     PlanSecurityAcceptance,
 )
@@ -64,6 +70,9 @@ from pyocf.objects.transactions.adjustment.stockplanpooladjustment import (
 from pyocf.objects.transactions.cancellation.convertiblecancellation import (
     ConvertibleCancellation,
 )
+from pyocf.objects.transactions.cancellation.equitycompensationcancellation import (
+    EquityCompensationCancellation,
+)
 from pyocf.objects.transactions.cancellation.plansecuritycancellation import (
     PlanSecurityCancellation,
 )
@@ -75,29 +84,47 @@ from pyocf.objects.transactions.conversion.convertibleconversion import (
     ConvertibleConversion,
 )
 from pyocf.objects.transactions.conversion.stockconversion import StockConversion
+from pyocf.objects.transactions.exercise.equitycompensationexercise import (
+    EquityCompensationExercise,
+)
 from pyocf.objects.transactions.exercise.plansecurityexercise import (
     PlanSecurityExercise,
 )
 from pyocf.objects.transactions.exercise.warrantexercise import WarrantExercise
 from pyocf.objects.transactions.issuance.convertibleissuance import ConvertibleIssuance
+from pyocf.objects.transactions.issuance.equitycompensationissuance import (
+    EquityCompensationIssuance,
+)
 from pyocf.objects.transactions.issuance.plansecurityissuance import (
     PlanSecurityIssuance,
 )
 from pyocf.objects.transactions.issuance.stockissuance import StockIssuance
 from pyocf.objects.transactions.issuance.warrantissuance import WarrantIssuance
 from pyocf.objects.transactions.reissuance.stockreissuance import StockReissuance
+from pyocf.objects.transactions.release.equitycompensationrelease import (
+    EquityCompensationRelease,
+)
 from pyocf.objects.transactions.release.plansecurityrelease import PlanSecurityRelease
 from pyocf.objects.transactions.repurchase.stockrepurchase import StockRepurchase
 from pyocf.objects.transactions.retraction.convertibleretraction import (
     ConvertibleRetraction,
+)
+from pyocf.objects.transactions.retraction.equitycompensationretraction import (
+    EquityCompensationRetraction,
 )
 from pyocf.objects.transactions.retraction.plansecurityretraction import (
     PlanSecurityRetraction,
 )
 from pyocf.objects.transactions.retraction.stockretraction import StockRetraction
 from pyocf.objects.transactions.retraction.warrantretraction import WarrantRetraction
+from pyocf.objects.transactions.return_to_pool.stockplanreturntopool import (
+    StockPlanReturnToPool,
+)
 from pyocf.objects.transactions.split.stockclasssplit import StockClassSplit
 from pyocf.objects.transactions.transfer.convertibletransfer import ConvertibleTransfer
+from pyocf.objects.transactions.transfer.equitycompensationtransfer import (
+    EquityCompensationTransfer,
+)
 from pyocf.objects.transactions.transfer.plansecuritytransfer import (
     PlanSecurityTransfer,
 )
@@ -119,6 +146,9 @@ from pyocf.primitives.objects.transactions.reissuance.reissuance import Reissuan
 from pyocf.primitives.objects.transactions.release.release import Release
 from pyocf.primitives.objects.transactions.repurchase.repurchase import Repurchase
 from pyocf.primitives.objects.transactions.retraction.retraction import Retraction
+from pyocf.primitives.objects.transactions.return_to_pool.returntopool import (
+    ReturnToPool,
+)
 from pyocf.primitives.objects.transactions.securitytransaction import (
     SecurityTransaction,
 )
@@ -143,7 +173,9 @@ from pyocf.primitives.types.vesting.vestingconditiontrigger import (
 from pyocf.primitives.types.vesting.vestingperiod import VestingPeriod
 from pyocf.types.address import Address
 from pyocf.types.capitalizationdefinition import CapitalizationDefinition
+from pyocf.types.capitalizationdefinitionrules import CapitalizationDefinitionRules
 from pyocf.types.contactinfo import ContactInfo
+from pyocf.types.contactinfowithoutname import ContactInfoWithoutName
 from pyocf.types.conversion_mechanisms.customconversionmechanism import (
     CustomConversionMechanism,
 )
@@ -229,9 +261,11 @@ __all__ = [
     AutomaticConversionOnDateTrigger,
     Cancellation,
     CapitalizationDefinition,
+    CapitalizationDefinitionRules,
     CompensationType,
     CompoundingType,
     ContactInfo,
+    ContactInfoWithoutName,
     Conversion,
     ConversionMechanism,
     ConversionMechanismType,
@@ -259,6 +293,13 @@ __all__ = [
     ElectiveConversionOnConditionTrigger,
     Email,
     EmailType,
+    EquityCompensationAcceptance,
+    EquityCompensationCancellation,
+    EquityCompensationExercise,
+    EquityCompensationIssuance,
+    EquityCompensationRelease,
+    EquityCompensationRetraction,
+    EquityCompensationTransfer,
     Exercise,
     File,
     FileObject,
@@ -274,7 +315,6 @@ __all__ = [
     NoteConversionMechanism,
     Numeric,
     OCFManifestFile,
-    OCFVersionType,
     Object,
     ObjectType,
     OptionType,
@@ -297,6 +337,7 @@ __all__ = [
     Release,
     Repurchase,
     Retraction,
+    ReturnToPool,
     RoundingType,
     SAFEConversionMechanism,
     SecurityExemption,
@@ -318,11 +359,14 @@ __all__ = [
     StockClassesFile,
     StockConversion,
     StockIssuance,
+    StockIssuanceType,
     StockLegendTemplate,
     StockLegendTemplatesFile,
     StockParent,
     StockPlan,
+    StockPlanCancellationBehaviorType,
     StockPlanPoolAdjustment,
+    StockPlanReturnToPool,
     StockPlanTransaction,
     StockPlansFile,
     StockReissuance,

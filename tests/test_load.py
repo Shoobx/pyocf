@@ -16,7 +16,6 @@ def test_load_sample_manifest():
     with path.open("rt") as infile:
         obj = api.OCFManifestFile(**json.load(infile))
 
-    assert obj.ocf_version == api.OCFVersionType.ENUM_100
     assert obj.comments == [
         "This is an optional comment",
         """These md5 hashes are just dummy values. They've not been recalculated """
@@ -137,7 +136,7 @@ def test_load_sample_transactions():
     assert ir.accrual_start_date == datetime.date(2021, 1, 1)
     assert ir.accrual_end_date is None
 
-    item = obj.items[58]
+    item = obj.items[61]
     assert isinstance(item, api.WarrantAcceptance)
     assert item.id == "test-warrant-acceptance-full-fields"
     assert item.security_id == "test-security-id"
@@ -145,7 +144,7 @@ def test_load_sample_transactions():
     assert item.date == datetime.date(2022, 2, 1)
     assert item.comments == ["Here is a comment", "Here is another comment"]
 
-    item = obj.items[63]
+    item = obj.items[66]
     assert isinstance(item, api.WarrantIssuance)
     assert item.id == "test-warrant-issuance-minimal"
     assert item.custom_id == "W-1"
@@ -172,7 +171,7 @@ def test_load_sample_transactions():
     assert cm.type == "FIXED_AMOUNT_CONVERSION"
     assert cm.converts_to_quantity == decimal.Decimal("10000.00")
 
-    item = obj.items[67]
+    item = obj.items[70]
     assert isinstance(item, api.WarrantRetraction)
     assert item.id == "test-warrant-retraction-full-fields"
     assert item.security_id == "test-security-id"

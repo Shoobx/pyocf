@@ -4,11 +4,14 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.0.0/schema/objects/StockPlan.schema.json
+# OCF/tree/v1.1.0/schema/objects/StockPlan.schema.json
 
 from pydantic import Field
+from pyocf.enums.stockplancancellationbehaviortype import (
+    StockPlanCancellationBehaviorType,
+)
 from pyocf.primitives.objects.object import Object
 from pyocf.types.date import Date
 from pyocf.types.numeric import Numeric
@@ -43,6 +46,19 @@ class StockPlan(Object):
             "Board or equivalent body."
         ),
     ]
+    default_cancellation_behavior: Optional[
+        Annotated[
+            StockPlanCancellationBehaviorType,
+            Field(
+                description="If a security issued under this Stock Plan is cancelled, what happens to the"
+                "reserved shares by default? NOTE: for any given security issued from the pool,"
+                "the Plan's default cancellation behavior can be overridden by subsequent"
+                "transactions cancelling the reserved stock, returning it to pool or marking it"
+                "as capital stock. The event chain should always control - do not rely on this"
+                "field and fail to traverse the events."
+            ),
+        ]
+    ] = None
     stock_class_id: Annotated[
         str,
         Field(

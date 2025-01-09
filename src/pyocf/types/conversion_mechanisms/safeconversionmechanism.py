@@ -5,9 +5,9 @@ inputs of the Y Combinator SAFE)"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/types/conversion_mechanisms/SAFEConversionMechanism.schema.jso
+# ree/v1.1.0/schema/types/conversion_mechanisms/SAFEConversionMechanism.schema.jso
 # n
 
 from pydantic import Field
@@ -15,6 +15,7 @@ from pyocf.enums.conversiontimingtype import ConversionTimingType
 from pyocf.primitives.types.conversion_mechanisms.conversionmechanism import (
     ConversionMechanism,
 )
+from pyocf.types.capitalizationdefinitionrules import CapitalizationDefinitionRules
 from pyocf.types.monetary import Monetary
 from pyocf.types.percentage import Percentage
 from pyocf.types.ratio import Ratio
@@ -28,9 +29,9 @@ class SAFEConversionMechanism(ConversionMechanism):
     inputs of the Y Combinator SAFE)
     """
 
-    type: Annotated[
-        Literal["SAFE_CONVERSION"], Field(description="")
-    ] = "SAFE_CONVERSION"
+    type: Annotated[Literal["SAFE_CONVERSION"], Field(description="")] = (
+        "SAFE_CONVERSION"
+    )
     conversion_discount: Optional[
         Annotated[
             Percentage,
@@ -54,18 +55,29 @@ class SAFEConversionMechanism(ConversionMechanism):
         ]
     ] = None
     conversion_mfn: Annotated[bool, Field(description="Is this an MFN flavored SAFE?")]
-    conversion_timing: Annotated[
-        ConversionTimingType,
-        Field(
-            description="Should the conversion amount be based on pre or post money capitalization"
-        ),
-    ]
+    conversion_timing: Optional[
+        Annotated[
+            ConversionTimingType,
+            Field(
+                description="Should the conversion amount be based on pre or post money capitalization"
+            ),
+        ]
+    ] = None
     capitalization_definition: Optional[
         Annotated[
             str,
             Field(
                 description="How is company capitalization defined for purposes of conversion? If possible,"
                 "include the legal language from the instrument."
+            ),
+        ]
+    ] = None
+    capitalization_definition_rules: Optional[
+        Annotated[
+            CapitalizationDefinitionRules,
+            Field(
+                description="The rules for which types of securities would be included in the capitalization"
+                "definition."
             ),
         ]
     ] = None

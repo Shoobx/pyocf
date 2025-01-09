@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2022 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.0.0/schema/objects/transactions/reissuance/StockReissuance.schema.json
+# ree/v1.1.0/schema/objects/transactions/reissuance/StockReissuance.schema.json
 
 from pydantic import Field
 from pyocf.primitives.objects.object import Object
@@ -24,9 +24,9 @@ from typing import Optional
 class StockReissuance(Object, Transaction, SecurityTransaction, Reissuance):
     """Object describing a re-issuance of stock"""
 
-    object_type: Annotated[
-        Literal["TX_STOCK_REISSUANCE"], Field(description="")
-    ] = "TX_STOCK_REISSUANCE"
+    object_type: Annotated[Literal["TX_STOCK_REISSUANCE"], Field(description="")] = (
+        "TX_STOCK_REISSUANCE"
+    )
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[
