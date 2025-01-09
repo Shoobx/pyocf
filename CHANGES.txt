@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.1.0 (unreleased)
+1.1.0 (2025-01-09)
 ------------------
 
 - Updated the OCF Schema to 1.1.0
