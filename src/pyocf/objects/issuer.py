@@ -5,22 +5,25 @@ is)"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/objects/Issuer.schema.json
+# OCF/tree/v1.2.0/schema/objects/Issuer.schema.json
 
 from pydantic import Field
+from pyocf.enums.authorizedshares import AuthorizedShares
 from pyocf.primitives.objects.object import Object
 from pyocf.types.address import Address
 from pyocf.types.countrycode import CountryCode
 from pyocf.types.countrysubdivisioncode import CountrySubdivisionCode
 from pyocf.types.date import Date
 from pyocf.types.email import Email
+from pyocf.types.numeric import Numeric
 from pyocf.types.phone import Phone
 from pyocf.types.taxid import TaxID
 from typing import Annotated
 from typing import Literal
 from typing import Optional
+from typing import Union
 
 
 class Issuer(Object):
@@ -69,6 +72,7 @@ class Issuer(Object):
             Field(description="The headquarters address of the issuing company"),
         ]
     ] = None
+    initial_shares_authorized: Optional[Union[AuthorizedShares, Numeric]] = None
     id: Annotated[str, Field(description="Identifier for the object")]
     comments: Optional[
         Annotated[

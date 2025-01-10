@@ -441,8 +441,14 @@ def make_inits(path, types):
         elif not filepath.name.endswith(".py"):
             continue
 
-    with pathlib.Path(path, "__init__.py").open("wt", encoding="utf-8") as initfile:
-        initfile.write(f'"""OCF {path.parts[-1]}"""')
+    folder_dupe = pathlib.Path(path.parent, path.name + ".py")
+    if folder_dupe.exists():
+        # Move it
+        target = pathlib.Path(path, "__init__.py")
+        folder_dupe.replace(target)
+    else:
+        with pathlib.Path(path, "__init__.py").open("wt", encoding="utf-8") as initfile:
+            initfile.write(f'"""OCF {path.parts[-1]}"""')
 
 
 def generate_files():

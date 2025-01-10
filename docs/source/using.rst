@@ -51,8 +51,8 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
     ... )
 
     >>> cap.transactions.append(
-    ...     api.PlanSecurityIssuance(
-    ...             object_type="TX_PLAN_SECURITY_ISSUANCE",
+    ...     api.EquityCompensationIssuance(
+    ...             object_type="TX_EQUITY_COMPENSATION_ISSUANCE",
     ...             stock_plan_id="test",
     ...             id="Success OPTION",
     ...             custom_id="test",
@@ -65,6 +65,7 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
     ...             security_id="",
     ...             date="2022-12-12",
     ...             security_law_exemptions=[],
+    ...             expiration_date=None,
     ...      )
     ... )
 
@@ -105,9 +106,9 @@ A captable will then be created and Python objects will be stored in it.
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
     last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
     'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
-    primary_contact=None, addresses=None, tax_ids=None),
+    primary_contact=None, contact_info=None, addresses=None, tax_ids=None),
     Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
     last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
     'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
-    primary_contact=None, addresses=None, tax_ids=None)]
+    primary_contact=None, contact_info=None, addresses=None, tax_ids=None)]
