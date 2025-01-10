@@ -5,11 +5,12 @@ stakeholder"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/objects/transactions/issuance/WarrantIssuance.schema.json
+# OCF/tree/v1.2.0/schema/objects/transactions/issuance/WarrantIssuance.schema.json
 
 from pydantic import Field
+from pyocf.enums.quantitysourcetype import QuantitySourceType
 from pyocf.primitives.objects.object import Object
 from pyocf.primitives.objects.transactions.issuance.issuance import Issuance
 from pyocf.primitives.objects.transactions.securitytransaction import (
@@ -38,6 +39,7 @@ from pyocf.types.date import Date
 from pyocf.types.monetary import Monetary
 from pyocf.types.numeric import Numeric
 from pyocf.types.securityexemption import SecurityExemption
+from pyocf.types.vesting import Vesting
 from typing import Annotated
 from typing import Literal
 from typing import Optional
@@ -52,12 +54,15 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
     object_type: Annotated[Literal["TX_WARRANT_ISSUANCE"], Field(description="")] = (
         "TX_WARRANT_ISSUANCE"
     )
-    quantity: Annotated[
-        Numeric, Field(description="Quantity of shares the warrant is exercisable for")
-    ]
-    exercise_price: Annotated[
-        Monetary, Field(description="The exercise price of the warrant")
-    ]
+    quantity: Optional[
+        Annotated[
+            Numeric,
+            Field(description="Quantity of shares the warrant is exercisable for"),
+        ]
+    ] = None
+    exercise_price: Optional[
+        Annotated[Monetary, Field(description="The exercise price of the warrant")]
+    ] = None
     purchase_price: Annotated[
         Monetary,
         Field(
@@ -95,8 +100,29 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
         Annotated[
             str,
             Field(
-                description="Identifier of the VestingTerms to which this security is subject. If not"
-                "present, security is fully vested on issuance."
+                description="Identifier of the VestingTerms to which this security is subject. If neither"
+                "`vesting_terms_id` or `vestings` are present then the security is fully vested"
+                "on issuance."
+            ),
+        ]
+    ] = None
+    vestings: Optional[
+        Annotated[
+            list[Vesting],
+            Field(
+                description="List of exact vesting dates and amounts for this security. When `vestings` array"
+                "is present then `vesting_terms_id` may be ignored."
+            ),
+        ]
+    ] = None
+    quantity_source: Optional[
+        Annotated[
+            QuantitySourceType,
+            Field(
+                description="If quantity is provided, use this to specify where the number came from - e.g."
+                "was it a fixed value from the instrument (`INSTRUMENT_FIXED`), a human estimate"
+                "(`HUMAN_ESTIMATED`), etc. If quantity is provided and this field is not, this is"
+                "assumed to be `UNSPECIFIED`"
             ),
         ]
     ] = None
@@ -133,6 +159,12 @@ class WarrantIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
+    ] = None
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(description="Date on which the stockholders approved the security"),
+        ]
     ] = None
     consideration_text: Optional[
         Annotated[

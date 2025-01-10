@@ -6,9 +6,9 @@ here intentionally and should be modelled using Stock Issuances)."""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.1.0/schema/objects/transactions/issuance/EquityCompensationIssuance.schem
+# ree/v1.2.0/schema/objects/transactions/issuance/EquityCompensationIssuance.schem
 # a.json
 
 from pydantic import Field
@@ -25,6 +25,7 @@ from pyocf.types.monetary import Monetary
 from pyocf.types.numeric import Numeric
 from pyocf.types.securityexemption import SecurityExemption
 from pyocf.types.terminationwindow import TerminationWindow
+from pyocf.types.vesting import Vesting
 from typing import Annotated
 from typing import Literal
 from typing import Optional
@@ -58,9 +59,8 @@ class EquityCompensationIssuance(Object, Transaction, SecurityTransaction, Issua
         Annotated[
             str,
             Field(
-                description="If the equity compensation was NOT issued from a plan (don't forget, plan-less"
-                "options are a thing), we need to know what underlying stock class it converts"
-                "to."
+                description="The stock class options will exercise into. Especially important for plan-less"
+                "options and any issuances from a plan that supports multiple share classes."
             ),
         ]
     ] = None
@@ -94,12 +94,33 @@ class EquityCompensationIssuance(Object, Transaction, SecurityTransaction, Issua
             ),
         ]
     ] = None
+    early_exercisable: Optional[
+        Annotated[
+            bool,
+            Field(
+                description="Is this Equity Compensation exercisable prior to completion of vesting? If so,"
+                "it's assumed the vesting schedule will remain in effect but, instead of vesting"
+                "a right to exercise, it becomes the schedule determining when a right to"
+                "repurchase the resulting stock lapses."
+            ),
+        ]
+    ] = None
     vesting_terms_id: Optional[
         Annotated[
             str,
             Field(
-                description="Identifier of the VestingTerms to which this security is subject.  If not"
-                "present, security is fully vested on issuance."
+                description="Identifier of the VestingTerms to which this security is subject. If neither"
+                "`vesting_terms_id` or `vestings` are present then the security is fully vested"
+                "on issuance."
+            ),
+        ]
+    ] = None
+    vestings: Optional[
+        Annotated[
+            list[Vesting],
+            Field(
+                description="List of exact vesting dates and amounts for this security. When `vestings` array"
+                "is present then `vesting_terms_id` may be ignored."
             ),
         ]
     ] = None
@@ -144,6 +165,12 @@ class EquityCompensationIssuance(Object, Transaction, SecurityTransaction, Issua
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
+    ] = None
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(description="Date on which the stockholders approved the security"),
+        ]
     ] = None
     consideration_text: Optional[
         Annotated[

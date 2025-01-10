@@ -6,6 +6,7 @@
 from pyocf.enums.accrualperiodtype import AccrualPeriodType
 from pyocf.enums.addresstype import AddressType
 from pyocf.enums.allocationtype import AllocationType
+from pyocf.enums.authorizedshares import AuthorizedShares
 from pyocf.enums.compensationtype import CompensationType
 from pyocf.enums.compoundingtype import CompoundingType
 from pyocf.enums.conversionmechanismtype import ConversionMechanismType
@@ -22,6 +23,7 @@ from pyocf.enums.optiontype import OptionType
 from pyocf.enums.parentsecuritytype import ParentSecurityType
 from pyocf.enums.periodtype import PeriodType
 from pyocf.enums.phonetype import PhoneType
+from pyocf.enums.quantitysourcetype import QuantitySourceType
 from pyocf.enums.roundingtype import RoundingType
 from pyocf.enums.stakeholderrelationshiptype import StakeholderRelationshipType
 from pyocf.enums.stakeholdertype import StakeholderType
@@ -31,9 +33,12 @@ from pyocf.enums.stockplancancellationbehaviortype import (
     StockPlanCancellationBehaviorType,
 )
 from pyocf.enums.terminationwindowtype import TerminationWindowType
+from pyocf.enums.valuationbasedformulatype import ValuationBasedFormulaType
 from pyocf.enums.valuationtype import ValuationType
 from pyocf.enums.vestingdayofmonth import VestingDayOfMonth
 from pyocf.enums.vestingtriggertype import VestingTriggerType
+from pyocf.files.documentsfile import DocumentsFile
+from pyocf.files.financingsfile import FinancingsFile
 from pyocf.files.ocfmanifestfile import OCFManifestFile
 from pyocf.files.stakeholdersfile import StakeholdersFile
 from pyocf.files.stockclassesfile import StockClassesFile
@@ -42,6 +47,8 @@ from pyocf.files.stockplansfile import StockPlansFile
 from pyocf.files.transactionsfile import TransactionsFile
 from pyocf.files.valuationsfile import ValuationsFile
 from pyocf.files.vestingtermsfile import VestingTermsFile
+from pyocf.objects.document import Document
+from pyocf.objects.financing import Financing
 from pyocf.objects.issuer import Issuer
 from pyocf.objects.stakeholder import Stakeholder
 from pyocf.objects.stockclass import StockClass
@@ -58,6 +65,9 @@ from pyocf.objects.transactions.acceptance.plansecurityacceptance import (
 )
 from pyocf.objects.transactions.acceptance.stockacceptance import StockAcceptance
 from pyocf.objects.transactions.acceptance.warrantacceptance import WarrantAcceptance
+from pyocf.objects.transactions.adjustment.issuerauthorizedsharesadjustment import (
+    IssuerAuthorizedSharesAdjustment,
+)
 from pyocf.objects.transactions.adjustment.stockclassauthorizedsharesadjustment import (
     StockClassAuthorizedSharesAdjustment,
 )
@@ -142,6 +152,7 @@ from pyocf.primitives.objects.transactions.cancellation.cancellation import Canc
 from pyocf.primitives.objects.transactions.conversion.conversion import Conversion
 from pyocf.primitives.objects.transactions.exercise.exercise import Exercise
 from pyocf.primitives.objects.transactions.issuance.issuance import Issuance
+from pyocf.primitives.objects.transactions.issuertransaction import IssuerTransaction
 from pyocf.primitives.objects.transactions.reissuance.reissuance import Reissuance
 from pyocf.primitives.objects.transactions.release.release import Release
 from pyocf.primitives.objects.transactions.repurchase.repurchase import Repurchase
@@ -194,6 +205,12 @@ from pyocf.types.conversion_mechanisms.ratioconversionmechanism import (
 from pyocf.types.conversion_mechanisms.safeconversionmechanism import (
     SAFEConversionMechanism,
 )
+from pyocf.types.conversion_mechanisms.sharepricebasedconversionmechanism import (
+    SharePriceBasedConversionMechanism,
+)
+from pyocf.types.conversion_mechanisms.valuationbasedconversionmechanism import (
+    ValuationBasedConversionMechanism,
+)
 from pyocf.types.conversion_rights.convertibleconversionright import (
     ConvertibleConversionRight,
 )
@@ -230,6 +247,7 @@ from pyocf.types.md5 import Md5
 from pyocf.types.monetary import Monetary
 from pyocf.types.name import Name
 from pyocf.types.numeric import Numeric
+from pyocf.types.objectreference import ObjectReference
 from pyocf.types.percentage import Percentage
 from pyocf.types.phone import Phone
 from pyocf.types.ratio import Ratio
@@ -238,6 +256,7 @@ from pyocf.types.sharenumberrange import ShareNumberRange
 from pyocf.types.stockparent import StockParent
 from pyocf.types.taxid import TaxID
 from pyocf.types.terminationwindow import TerminationWindow
+from pyocf.types.vesting import Vesting
 from pyocf.types.vesting.vestingcondition import VestingCondition
 from pyocf.types.vesting.vestingconditionportion import VestingConditionPortion
 from pyocf.types.vesting.vestingeventtrigger import VestingEventTrigger
@@ -257,6 +276,7 @@ __all__ = [
     Address,
     AddressType,
     AllocationType,
+    AuthorizedShares,
     AutomaticConversionOnConditionTrigger,
     AutomaticConversionOnDateTrigger,
     Cancellation,
@@ -288,6 +308,8 @@ __all__ = [
     CustomConversionMechanism,
     Date,
     DayCountType,
+    Document,
+    DocumentsFile,
     ElectiveConversionAtWillTrigger,
     ElectiveConversionInDateRangeTrigger,
     ElectiveConversionOnConditionTrigger,
@@ -304,11 +326,15 @@ __all__ = [
     File,
     FileObject,
     FileType,
+    Financing,
+    FinancingsFile,
     FixedAmountConversionMechanism,
     InterestPayoutType,
     InterestRate,
     Issuance,
     Issuer,
+    IssuerAuthorizedSharesAdjustment,
+    IssuerTransaction,
     Md5,
     Monetary,
     Name,
@@ -316,6 +342,7 @@ __all__ = [
     Numeric,
     OCFManifestFile,
     Object,
+    ObjectReference,
     ObjectType,
     OptionType,
     ParentSecurityType,
@@ -331,6 +358,7 @@ __all__ = [
     PlanSecurityRelease,
     PlanSecurityRetraction,
     PlanSecurityTransfer,
+    QuantitySourceType,
     Ratio,
     RatioConversionMechanism,
     Reissuance,
@@ -343,6 +371,7 @@ __all__ = [
     SecurityExemption,
     SecurityTransaction,
     ShareNumberRange,
+    SharePriceBasedConversionMechanism,
     Stakeholder,
     StakeholderRelationshipType,
     StakeholderType,
@@ -381,8 +410,11 @@ __all__ = [
     Transfer,
     UnspecifiedConversionTrigger,
     Valuation,
+    ValuationBasedConversionMechanism,
+    ValuationBasedFormulaType,
     ValuationType,
     ValuationsFile,
+    Vesting,
     VestingAcceleration,
     VestingCondition,
     VestingConditionPortion,

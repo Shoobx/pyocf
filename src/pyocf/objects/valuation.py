@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/objects/Valuation.schema.json
+# OCF/tree/v1.2.0/schema/objects/Valuation.schema.json
 
 from pydantic import Field
 from pyocf.enums.valuationtype import ValuationType
@@ -31,6 +31,14 @@ class Valuation(Object):
             Field(
                 description="Date on which board approved the valuation. This is essential for 409A"
                 "valuations, in particular, which require the Board to approve the valuation."
+            ),
+        ]
+    ] = None
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(
+                description="This optional field tracks when the stockholders approved the valuation."
             ),
         ]
     ] = None

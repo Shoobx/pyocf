@@ -5,9 +5,9 @@ for validation"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/enums/FileType.schema.json
+# OCF/tree/v1.2.0/schema/enums/FileType.schema.json
 
 from enum import Enum
 
@@ -25,3 +25,5 @@ class FileType(Enum):
     ENUM_OCF_TRANSACTIONS_FILE = "OCF_TRANSACTIONS_FILE"
     ENUM_OCF_VALUATIONS_FILE = "OCF_VALUATIONS_FILE"
     ENUM_OCF_VESTING_TERMS_FILE = "OCF_VESTING_TERMS_FILE"
+    ENUM_OCF_FINANCINGS_FILE = "OCF_FINANCINGS_FILE"
+    ENUM_OCF_DOCUMENTS_FILE = "OCF_DOCUMENTS_FILE"
