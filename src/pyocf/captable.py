@@ -8,6 +8,8 @@ import json
 import pathlib
 import zipfile
 
+from pyocf.files import documentsfile
+from pyocf.files import financingsfile
 from pyocf.files import ocfmanifestfile
 from pyocf.files import stakeholdersfile
 from pyocf.files import stockclassesfile
@@ -16,6 +18,8 @@ from pyocf.files import stockplansfile
 from pyocf.files import transactionsfile
 from pyocf.files import valuationsfile
 from pyocf.files import vestingtermsfile
+from pyocf.objects.document import Document
+from pyocf.objects.financing import Financing
 from pyocf.objects.stakeholder import Stakeholder
 from pyocf.objects.stockclass import StockClass
 from pyocf.objects.stocklegendtemplate import StockLegendTemplate
@@ -26,25 +30,29 @@ from pyocf.primitives.objects.transactions.transaction import Transaction
 from pyocf.types import file
 
 FILEMAP = [
-    ("stock_plans", stockplansfile.StockPlansFile),
-    ("stock_legend_templates", stocklegendtemplatesfile.StockLegendTemplatesFile),
-    ("stock_classes", stockclassesfile.StockClassesFile),
-    ("vesting_terms", vestingtermsfile.VestingTermsFile),
-    ("valuations", valuationsfile.ValuationsFile),
-    ("transactions", transactionsfile.TransactionsFile),
+    ("documents", documentsfile.DocumentsFile),
+    ("financings", financingsfile.FinancingsFile),
     ("stakeholders", stakeholdersfile.StakeholdersFile),
+    ("stock_classes", stockclassesfile.StockClassesFile),
+    ("stock_legend_templates", stocklegendtemplatesfile.StockLegendTemplatesFile),
+    ("stock_plans", stockplansfile.StockPlansFile),
+    ("transactions", transactionsfile.TransactionsFile),
+    ("valuations", valuationsfile.ValuationsFile),
+    ("vesting_terms", vestingtermsfile.VestingTermsFile),
 ]
 
 
 class Captable:
     manifest: ocfmanifestfile.OCFManifestFile = None
-    stock_plans: list[StockPlan] = []
-    stock_legend_templates: list[StockLegendTemplate] = []
-    stock_classes: list[StockClass] = []
-    vesting_terms: list[VestingTerms] = []
-    valuations: list[Valuation] = []
-    transactions: list[Transaction] = []
+    documents: list[Document] = []
+    financings: list[Financing] = []
     stakeholders: list[Stakeholder] = []
+    stock_classes: list[StockClass] = []
+    stock_legend_templates: list[StockLegendTemplate] = []
+    stock_plans: list[StockPlan] = []
+    transactions: list[Transaction] = []
+    valuations: list[Valuation] = []
+    vesting_terms: list[VestingTerms] = []
 
     @classmethod
     def load(cls, location):
@@ -82,7 +90,10 @@ class Captable:
                 return open(pathlib.Path(basedir, p))
 
         for filetype, filecls in FILEMAP:
-            for fileob in getattr(captable.manifest, filetype + "_files"):
+            fileobjs = getattr(captable.manifest, filetype + "_files")
+            if fileobjs is None:
+                continue
+            for fileob in fileobjs:
                 infile = file_factory(fileob.filepath)
                 items = filecls(**json.load(infile)).items
                 getattr(captable, filetype).extend(items)
@@ -104,6 +115,8 @@ class Captable:
             if self.manifest:
                 # Check if there is a different filename in the manifest:
                 ocffilename = getattr(self.manifest, filetype + "_files", [])
+                if ocffilename is None:
+                    continue
                 if len(ocffilename) >= 1:
                     ocffilename = ocffilename[0].filepath
 

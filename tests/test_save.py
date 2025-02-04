@@ -20,9 +20,9 @@ def test_save_zip():
 
             captable.save(outpath, pretty=True)
             with zipfile.ZipFile(outpath) as zipped:
-                assert len(zipped.filelist) == 8
+                assert len(zipped.filelist) == 9
                 # Make sure the manifest file is in there
-                assert zipped.filelist[7].filename == "Manifest.ocf.json"
+                assert zipped.filelist[-1].filename == "Manifest.ocf.json"
 
                 manifest = zipped.open("Manifest.ocf.json")
                 data = manifest.read()
@@ -49,7 +49,7 @@ def test_save_directory():
 
             path = Path(outdir)
             files = [x for x in path.iterdir()]
-            assert len(files) == 8
+            assert len(files) == 9
             # Make sure the manifest file is in there
             manifest = [x for x in files if x.name == "Manifest.ocf.json"][0]
             data = manifest.open("rb").read()
