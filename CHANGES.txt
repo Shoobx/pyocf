@@ -4,7 +4,7 @@ Changes
 1.2.0b2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Added the new files to the format.
 
 
 1.2.0b1 (2025-01-10)
