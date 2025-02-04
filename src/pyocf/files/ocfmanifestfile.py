@@ -5,9 +5,9 @@ references ocf files containing transactions, stakeholders, stock classes, etc."
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/files/OCFManifestFile.schema.json
+# OCF/tree/v1.2.0/schema/files/OCFManifestFile.schema.json
 
 from pydantic import Field
 from pyocf.objects.issuer import Issuer
@@ -25,12 +25,12 @@ class OCFManifestFile(FileObject):
     """
 
     ocf_version: Annotated[
-        Literal["1.1.0"],
+        Literal["1.2.0"],
         Field(
             description="OCF Version Identifier -- the current semantic version"
             "(https://semver.org/spec/v2.0.0.html)"
         ),
-    ] = "1.1.0"
+    ] = "1.2.0"
     file_type: Annotated[Literal["OCF_MANIFEST_FILE"], Field(description="")] = (
         "OCF_MANIFEST_FILE"
     )
@@ -111,3 +111,23 @@ class OCFManifestFile(FileObject):
             "separate /schema/files/stakeholders_file schema to validate loaded files)"
         ),
     ]
+    financings_files: Optional[
+        Annotated[
+            list[File],
+            Field(
+                description="List of files containing lists of financings, indexed from the file containing"
+                "the first such object created to the file containing the last (See separate"
+                "/schema/files/financings_file schema to validate loaded files)"
+            ),
+        ]
+    ] = None
+    documents_files: Optional[
+        Annotated[
+            list[File],
+            Field(
+                description="List of files containing lists of document paths, indexed from the file"
+                "containing the first such object created to the file containing the last (See"
+                "separate /schema/files/documents_file schema to validate loaded files)"
+            ),
+        ]
+    ] = None

@@ -30,7 +30,7 @@ def test_load_sample_stakeholders():
     path = Path(Path(__file__).parent, Path(sample_path, "Stakeholders.ocf.json"))
     with path.open("rt") as infile:
         obj = api.StakeholdersFile(**json.load(infile))
-    assert len(obj.items) == 2
+    assert len(obj.items) == 4
     item = obj.items[0]
     assert isinstance(item, api.Stakeholder)
     assert item.object_type == "STAKEHOLDER"
@@ -79,7 +79,7 @@ def test_load_sample_stock_plans():
     assert item.plan_name == "2021 Stock Incentive Plan"
     assert item.board_approval_date == datetime.date(1983, 12, 31)
     assert item.initial_shares_reserved == decimal.Decimal("10000000")
-    assert item.stock_class_id == "8d8371e8-d41d-4a49-9f42-b91758fd155d"
+    assert item.stock_class_ids == ["8d8371e8-d41d-4a49-9f42-b91758fd155d"]
     assert item.comments == [
         "Using new form of SOP released by Firm Y's benefits & comp team on 10/10/2021."
     ]
@@ -89,14 +89,14 @@ def test_load_sample_transactions():
     path = Path(Path(__file__).parent, Path(sample_path, "Transactions.ocf.json"))
     with path.open("rt") as infile:
         obj = api.TransactionsFile(**json.load(infile))
-    item = obj.items[0]
+    item = obj.items[2]
     assert isinstance(item, api.ConvertibleAcceptance)
     assert item.id == "test-convertible-acceptance-minimal"
     assert item.security_id == "2936wa8yefhdsvcn"
     assert item.object_type == "TX_CONVERTIBLE_ACCEPTANCE"
     assert item.date == datetime.date(2022, 1, 20)
 
-    item = obj.items[8]
+    item = obj.items[10]
     assert isinstance(item, api.ConvertibleIssuance)
     assert item.id == "test-convertible-issuance-minimal"
     assert item.security_id == "con_123456"
@@ -136,7 +136,7 @@ def test_load_sample_transactions():
     assert ir.accrual_start_date == datetime.date(2021, 1, 1)
     assert ir.accrual_end_date is None
 
-    item = obj.items[61]
+    item = obj.items[64]
     assert isinstance(item, api.WarrantAcceptance)
     assert item.id == "test-warrant-acceptance-full-fields"
     assert item.security_id == "test-security-id"
@@ -144,7 +144,7 @@ def test_load_sample_transactions():
     assert item.date == datetime.date(2022, 2, 1)
     assert item.comments == ["Here is a comment", "Here is another comment"]
 
-    item = obj.items[66]
+    item = obj.items[69]
     assert isinstance(item, api.WarrantIssuance)
     assert item.id == "test-warrant-issuance-minimal"
     assert item.custom_id == "W-1"
@@ -171,7 +171,7 @@ def test_load_sample_transactions():
     assert cm.type == "FIXED_AMOUNT_CONVERSION"
     assert cm.converts_to_quantity == decimal.Decimal("10000.00")
 
-    item = obj.items[70]
+    item = obj.items[76]
     assert isinstance(item, api.WarrantRetraction)
     assert item.id == "test-warrant-retraction-full-fields"
     assert item.security_id == "test-security-id"

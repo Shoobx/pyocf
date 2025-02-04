@@ -5,9 +5,9 @@ plan security"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.1.0/schema/types/conversion_rights/WarrantConversionRight.schema.json
+# ree/v1.2.0/schema/types/conversion_rights/WarrantConversionRight.schema.json
 
 from pydantic import Field
 from pyocf.primitives.types.conversion_rights.conversionright import ConversionRight
@@ -19,6 +19,12 @@ from pyocf.types.conversion_mechanisms.fixedamountconversionmechanism import (
 )
 from pyocf.types.conversion_mechanisms.percentcapitalizationconversionmechanism import (
     PercentCapitalizationConversionMechanism,
+)
+from pyocf.types.conversion_mechanisms.sharepricebasedconversionmechanism import (
+    SharePriceBasedConversionMechanism,
+)
+from pyocf.types.conversion_mechanisms.valuationbasedconversionmechanism import (
+    ValuationBasedConversionMechanism,
 )
 from typing import Annotated
 from typing import Literal
@@ -39,6 +45,8 @@ class WarrantConversionRight(ConversionRight):
             CustomConversionMechanism,
             PercentCapitalizationConversionMechanism,
             FixedAmountConversionMechanism,
+            ValuationBasedConversionMechanism,
+            SharePriceBasedConversionMechanism,
         ],
         Field(
             discriminator="type",

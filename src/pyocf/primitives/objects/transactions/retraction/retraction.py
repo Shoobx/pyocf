@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.1.0/schema/primitives/objects/transactions/retraction/Retraction.schema.j
+# ree/v1.2.0/schema/primitives/objects/transactions/retraction/Retraction.schema.j
 # son
 
 from pydantic import BaseModel

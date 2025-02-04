@@ -5,9 +5,9 @@ held by a stakeholder"""
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.1.0/schema/objects/transactions/issuance/ConvertibleIssuance.schema.json
+# ree/v1.2.0/schema/objects/transactions/issuance/ConvertibleIssuance.schema.json
 
 from pydantic import Field
 from pyocf.enums.convertibletype import ConvertibleType
@@ -134,6 +134,12 @@ class ConvertibleIssuance(Object, Transaction, SecurityTransaction, Issuance):
     ]
     board_approval_date: Optional[
         Annotated[Date, Field(description="Date of board approval for the security")]
+    ] = None
+    stockholder_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(description="Date on which the stockholders approved the security"),
+        ]
     ] = None
     consideration_text: Optional[
         Annotated[
