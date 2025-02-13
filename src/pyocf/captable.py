@@ -103,7 +103,7 @@ class Captable:
     def _save_ocf_files(self, manifest_path, issuer, file_factory, pretty):
         if issuer is None and self.manifest is None:
             raise ValueError(
-                "You must specify an issuer, either by passing the value to the"
+                "You must specify an issuer, either by passing the value to the "
                 "save method, or by creating a Manifest."
             )
 
@@ -125,7 +125,7 @@ class Captable:
 
             with file_factory(ocffilename) as ocffile:
                 itemfile = fileob(items=getattr(self, filetype))
-                jsonstr = itemfile.json(exclude_unset=True)
+                jsonstr = itemfile.model_dump_json()
                 if pretty:
                     jsonstr = json.dumps(json.loads(jsonstr), indent=4)
                 jsonstr = jsonstr.encode("UTF-8")
@@ -156,7 +156,7 @@ class Captable:
         self.manifest = ocfmanifestfile.OCFManifestFile(**manifest_data)
 
         with file_factory(manifest_path) as ocffile:
-            jsonstr = self.manifest.json()
+            jsonstr = self.manifest.model_dump_json()
             if pretty:
                 jsonstr = json.dumps(json.loads(jsonstr), indent=4)
             ocffile.write(jsonstr.encode("UTF-8"))

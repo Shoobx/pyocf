@@ -4,7 +4,7 @@ Changes
 1.2.0b3 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Now includes default values when saving, making the OCF files larger.
 
 
 1.2.0b2 (2025-02-04)
