@@ -57,6 +57,11 @@ def test_save_directory():
             # Do some simple checks on the data
             assert b'"file_type": "OCF_MANIFEST_FILE"' in data
             assert b'"filepath": "StockLegends.ocf.json",' in data
+
+            transactions = [x for x in files if x.name == "Transactions.ocf.json"][0]
+            data = transactions.open("rb").read()
+            assert b'"object_type": "TX_EQUITY_COMPENSATION_RELEASE"' in data
+
     except (PermissionError, NotADirectoryError):
         # Bugs in windows give permission errors for absolutely no reason
         # when deleting temporary files. Ignore them.

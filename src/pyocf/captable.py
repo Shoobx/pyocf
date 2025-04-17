@@ -43,16 +43,40 @@ FILEMAP = [
 
 
 class Captable:
-    manifest: ocfmanifestfile.OCFManifestFile = None
-    documents: list[Document] = []
-    financings: list[Financing] = []
-    stakeholders: list[Stakeholder] = []
-    stock_classes: list[StockClass] = []
-    stock_legend_templates: list[StockLegendTemplate] = []
-    stock_plans: list[StockPlan] = []
-    transactions: list[Transaction] = []
-    valuations: list[Valuation] = []
-    vesting_terms: list[VestingTerms] = []
+    manifest: ocfmanifestfile.OCFManifestFile
+    documents: list[Document]
+    financings: list[Financing]
+    stakeholders: list[Stakeholder]
+    stock_classes: list[StockClass]
+    stock_legend_templates: list[StockLegendTemplate]
+    stock_plans: list[StockPlan]
+    transactions: list[Transaction]
+    valuations: list[Valuation]
+    vesting_terms: list[VestingTerms]
+
+    def __init__(
+        self,
+        manifest: ocfmanifestfile.OCFManifestFile = None,
+        documents: list[Document] = None,
+        financings: list[Financing] = None,
+        stakeholders: list[Stakeholder] = None,
+        stock_classes: list[StockClass] = None,
+        stock_legend_templates: list[StockLegendTemplate] = None,
+        stock_plans: list[StockPlan] = None,
+        transactions: list[Transaction] = None,
+        valuations: list[Valuation] = None,
+        vesting_terms: list[VestingTerms] = None,
+    ):
+        self.manifest = manifest
+        self.documents = documents or []
+        self.financings = financings or []
+        self.stakeholders = stakeholders or []
+        self.stock_classes = stock_classes or []
+        self.stock_legend_templates = stock_legend_templates or []
+        self.stock_plans = stock_plans or []
+        self.transactions = transactions or []
+        self.valuations = valuations or []
+        self.vesting_terms = vesting_terms or []
 
     @classmethod
     def load(cls, location):
@@ -103,7 +127,7 @@ class Captable:
     def _save_ocf_files(self, manifest_path, issuer, file_factory, pretty):
         if issuer is None and self.manifest is None:
             raise ValueError(
-                "You must specify an issuer, either by passing the value to the"
+                "You must specify an issuer, either by passing the value to the "
                 "save method, or by creating a Manifest."
             )
 
@@ -125,7 +149,7 @@ class Captable:
 
             with file_factory(ocffilename) as ocffile:
                 itemfile = fileob(items=getattr(self, filetype))
-                jsonstr = itemfile.json(exclude_unset=True)
+                jsonstr = itemfile.model_dump_json()
                 if pretty:
                     jsonstr = json.dumps(json.loads(jsonstr), indent=4)
                 jsonstr = jsonstr.encode("UTF-8")
@@ -156,7 +180,7 @@ class Captable:
         self.manifest = ocfmanifestfile.OCFManifestFile(**manifest_data)
 
         with file_factory(manifest_path) as ocffile:
-            jsonstr = self.manifest.json()
+            jsonstr = self.manifest.model_dump_json()
             if pretty:
                 jsonstr = json.dumps(json.loads(jsonstr), indent=4)
             ocffile.write(jsonstr.encode("UTF-8"))
