@@ -46,7 +46,6 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
     ...         id="d6c49a5a-257d-4b41-9f1d-073a77dfe719",
     ...         name={"legal_name": "Person Y"},
     ...         stakeholder_type="INDIVIDUAL",
-    ...         comments=[],
     ...      )
     ... )
 
@@ -68,6 +67,20 @@ but you then need to create ``File`` objects for each file, with dummy md5 hashe
     ...             expiration_date=None,
     ...      )
     ... )
+
+It is also possible to create the list of objects first, and pass them in to the
+Captable constructor::
+
+    >>> sh_list = [
+    ...     api.Stakeholder(
+    ...         object_type="STAKEHOLDER",
+    ...         id="'917efd77a370-d1f9-14b4-d752-a5a94c6d",
+    ...         name={"legal_name": "Person X"},
+    ...         stakeholder_type="INDIVIDUAL",
+    ...      )
+    ... }
+
+    >>> cap2 = Captable(stakeholders=sh_list)
 
 And once you have filled in all the lists with all the information, you save
 the captable:
@@ -102,12 +115,7 @@ A captable will then be created and Python objects will be stored in it.
     'pyocf example docs'
 
     >>> cap.stakeholders  # doctest: +NORMALIZE_WHITESPACE
-    [Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
-    object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
-    last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
-    'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,
-    primary_contact=None, contact_info=None, addresses=None, tax_ids=None),
-    Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=[],
+    [Stakeholder(id='d6c49a5a-257d-4b41-9f1d-073a77dfe719', comments=None,
     object_type='STAKEHOLDER', name=Name(legal_name='Person Y', first_name=None,
     last_name=None), stakeholder_type=<StakeholderType.ENUM_INDIVIDUAL:
     'INDIVIDUAL'>, issuer_assigned_id=None, current_relationship=None,

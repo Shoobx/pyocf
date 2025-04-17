@@ -43,16 +43,40 @@ FILEMAP = [
 
 
 class Captable:
-    manifest: ocfmanifestfile.OCFManifestFile = None
-    documents: list[Document] = []
-    financings: list[Financing] = []
-    stakeholders: list[Stakeholder] = []
-    stock_classes: list[StockClass] = []
-    stock_legend_templates: list[StockLegendTemplate] = []
-    stock_plans: list[StockPlan] = []
-    transactions: list[Transaction] = []
-    valuations: list[Valuation] = []
-    vesting_terms: list[VestingTerms] = []
+    manifest: ocfmanifestfile.OCFManifestFile
+    documents: list[Document]
+    financings: list[Financing]
+    stakeholders: list[Stakeholder]
+    stock_classes: list[StockClass]
+    stock_legend_templates: list[StockLegendTemplate]
+    stock_plans: list[StockPlan]
+    transactions: list[Transaction]
+    valuations: list[Valuation]
+    vesting_terms: list[VestingTerms]
+
+    def __init__(
+        self,
+        manifest: ocfmanifestfile.OCFManifestFile = None,
+        documents: list[Document] = None,
+        financings: list[Financing] = None,
+        stakeholders: list[Stakeholder] = None,
+        stock_classes: list[StockClass] = None,
+        stock_legend_templates: list[StockLegendTemplate] = None,
+        stock_plans: list[StockPlan] = None,
+        transactions: list[Transaction] = None,
+        valuations: list[Valuation] = None,
+        vesting_terms: list[VestingTerms] = None,
+    ):
+        self.manifest = manifest
+        self.documents = documents or []
+        self.financings = financings or []
+        self.stakeholders = stakeholders or []
+        self.stock_classes = stock_classes or []
+        self.stock_legend_templates = stock_legend_templates or []
+        self.stock_plans = stock_plans or []
+        self.transactions = transactions or []
+        self.valuations = valuations or []
+        self.vesting_terms = vesting_terms or []
 
     @classmethod
     def load(cls, location):

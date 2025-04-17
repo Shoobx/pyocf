@@ -7,6 +7,7 @@ from pyocf.api import StakeholderType
 from pyocf.api import StakeholdersFile
 from pyocf.api import Stakeholder
 from pyocf.api import Name, Phone, CountryCode
+from pyocf.captable import Captable
 
 
 def test_basic_loading():
@@ -79,3 +80,15 @@ def test_constrained_strings():
 
     with pytest.raises(ValueError):
         CountryCode("SPUT")
+
+
+def test_captable_init():
+    stakeholders = [
+        Stakeholder(
+            id="steve",
+            name=Name(legal_name="Stake Holder"),
+            stakeholder_type=StakeholderType.ENUM_INDIVIDUAL,
+        )
+    ]
+    captable = Captable(stakeholders=stakeholders)
+    assert captable.stakeholders[0].name.legal_name == "Stake Holder"
