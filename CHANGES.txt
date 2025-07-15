@@ -4,7 +4,9 @@ Changes
 1.2.0b4 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Stopped waiting for this bugfix to be merged:
+  https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/pull/541
+  Releaseing 1.2.0 using my OCF fork.
 
 
 1.2.0b3 (2025-04-17)
