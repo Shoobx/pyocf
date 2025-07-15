@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/t
-# ree/v1.1.0/schema/objects/transactions/adjustment/StockPlanPoolAdjustment.schema
+# ree/v1.2.0/schema/objects/transactions/adjustment/StockPlanPoolAdjustment.schema
 # .json
 
 from pydantic import Field
@@ -44,9 +44,12 @@ class StockPlanPoolAdjustment(Object, Transaction, StockPlanTransaction):
             description="Identifier of the Stock Plan object, a subject of this transaction"
         ),
     ]
-    board_approval_date: Annotated[
-        Date, Field(description="Date on which board approved the change to the plan.")
-    ]
+    board_approval_date: Optional[
+        Annotated[
+            Date,
+            Field(description="Date on which board approved the change to the plan."),
+        ]
+    ] = None
     stockholder_approval_date: Optional[
         Annotated[
             Date,

@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/enums/ConversionMechanismType.schema.json
+# OCF/tree/v1.2.0/schema/enums/ConversionMechanismType.schema.json
 
 from enum import Enum
 
@@ -20,5 +20,7 @@ class ConversionMechanismType(Enum):
     )
     ENUM_RATIO_CONVERSION = "RATIO_CONVERSION"
     ENUM_SAFE_CONVERSION = "SAFE_CONVERSION"
+    ENUM_VALUATION_BASED_CONVERSION = "VALUATION_BASED_CONVERSION"
     ENUM_CONVERTIBLE_NOTE_CONVERSION = "CONVERTIBLE_NOTE_CONVERSION"
     ENUM_CUSTOM_CONVERSION = "CUSTOM_CONVERSION"
+    ENUM_PPS_BASED_CONVERSION = "PPS_BASED_CONVERSION"

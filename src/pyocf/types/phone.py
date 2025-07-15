@@ -4,9 +4,9 @@
 # Copyright © 2023 FMR LLC
 #
 # Based on the Open Captable Format schema:
-# Copyright © 2023 Open Cap Table Coalition (https://opencaptablecoalition.com) /
+# Copyright © 2024 Open Cap Table Coalition (https://opencaptablecoalition.com) /
 # Original File: https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-
-# OCF/tree/v1.1.0/schema/types/Phone.schema.json
+# OCF/tree/v1.2.0/schema/types/Phone.schema.json
 
 from pydantic import BaseModel
 from pydantic import Field
@@ -23,9 +23,13 @@ class Phone(BaseModel):
         Field(description="Type of phone number (e.g. mobile, home or business)"),
     ]
     phone_number: Annotated[
-        constr(pattern=r"^\+\d{1,3}\s\d{2,3}\s\d{2,3}\s\d{4}$"),
+        constr(
+            pattern=r"^\+\d{1,3}\s\d{2,3}\s\d{2,3}\s\d{4}(\s(ext.|extension)\s\d+)?$"
+        ),
         Field(
             description="A valid phone number string in ITU E.123 international notation (e.g. +123 123"
-            "456 7890)"
+            "456 7890). An extension number, if applicable, should be separated by words"
+            "''extension'' or ''ext.'' after the phone number (e.g. +123 123 456 7890"
+            "ext. 100)."
         ),
     ]

@@ -20,9 +20,9 @@ def test_save_zip():
 
             captable.save(outpath, pretty=True)
             with zipfile.ZipFile(outpath) as zipped:
-                assert len(zipped.filelist) == 8
+                assert len(zipped.filelist) == 9
                 # Make sure the manifest file is in there
-                assert zipped.filelist[7].filename == "Manifest.ocf.json"
+                assert zipped.filelist[-1].filename == "Manifest.ocf.json"
 
                 manifest = zipped.open("Manifest.ocf.json")
                 data = manifest.read()
@@ -49,7 +49,7 @@ def test_save_directory():
 
             path = Path(outdir)
             files = [x for x in path.iterdir()]
-            assert len(files) == 8
+            assert len(files) == 9
             # Make sure the manifest file is in there
             manifest = [x for x in files if x.name == "Manifest.ocf.json"][0]
             data = manifest.open("rb").read()
@@ -57,6 +57,11 @@ def test_save_directory():
             # Do some simple checks on the data
             assert b'"file_type": "OCF_MANIFEST_FILE"' in data
             assert b'"filepath": "StockLegends.ocf.json",' in data
+
+            transactions = [x for x in files if x.name == "Transactions.ocf.json"][0]
+            data = transactions.open("rb").read()
+            assert b'"object_type": "TX_EQUITY_COMPENSATION_RELEASE"' in data
+
     except (PermissionError, NotADirectoryError):
         # Bugs in windows give permission errors for absolutely no reason
         # when deleting temporary files. Ignore them.
