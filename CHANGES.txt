@@ -1,8 +1,8 @@
 Changes
 =======
 
-1.2.0b4 (unreleased)
---------------------
+1.2.0 (2025-07-15)
+------------------
 
 - Stopped waiting for this bugfix to be merged:
   https://github.com/Open-Cap-Table-Coalition/Open-Cap-Format-OCF/pull/541
